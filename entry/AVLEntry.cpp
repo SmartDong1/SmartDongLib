@@ -20,14 +20,14 @@ int main() {
     BalancedBinaryTree<int,char> node11(11,'e');
     BalancedBinaryTree<int,char> node9(9,'e');
     BalancedBinaryTree<int,char> node26(26,'e');
-    BalancedBinaryTree<int,char> node18(18,'e');
+    BalancedBinaryTree<int,char> node18(18,'k');
 //    root->insertNode(node3)->insertNode(node6)->insertNode(node2)->insertNode(node4);
 //    root=root->insertNode(node1);
     root=root->insertNode(node3)->insertNode(node7);
     root=root->insertNode(node11)->insertNode(node9);
     root=root->insertNode(node26);
     root=root->insertNode(node18);
-    root=root->deleteNodeByKey(18);
+    root=root->deleteNodeByElem('k');
     root=root->deleteNodeByKey(16);
     root=root->deleteNodeByKey(26);
 

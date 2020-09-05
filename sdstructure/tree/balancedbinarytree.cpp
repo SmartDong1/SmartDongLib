@@ -56,7 +56,7 @@ namespace SmartDongLib {
 
 
     /**
-     * <p>根据elem删除节点,TODO：未测
+     * <p>根据elem删除节点,
      * @tparam KeyType
      * @tparam ElemType
      * @param elem
@@ -70,7 +70,7 @@ namespace SmartDongLib {
             //未找到对应的节点,直接返回
             return  getThis();
         }
-        return  deleteNodeptr(elem);
+        return  deleteNodeptr(delnode);
     }
     /**
      * <p>根据 Key值查询节点
@@ -89,7 +89,7 @@ namespace SmartDongLib {
         return ret;
     }
     /**
-     * <p> 根据elem查询节点,TODO：未测
+     * <p> 根据elem查询节点,
      * @tparam KeyType
      * @tparam ElemType
      * @param elem
