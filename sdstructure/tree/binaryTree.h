@@ -2,6 +2,8 @@
 // Created by hu on 2020/8/27.
 //
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "HidingNonVirtualFunction"
 #ifndef SMARTDONGLIB_BINARYTREE_H
 #define SMARTDONGLIB_BINARYTREE_H
 #include "tree.cpp"
@@ -74,7 +76,7 @@ namespace SmartDongLib {
             return aa;
         }
 
-        virtual boost::shared_ptr<BinaryTree<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
+        boost::shared_ptr<BinaryTree<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByKey(KeyType key);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByElem(ElemType elem);
@@ -90,3 +92,5 @@ namespace SmartDongLib {
 
 }
 #endif //SMARTDONGLIB_BINARYTREE_H
+
+#pragma clang diagnostic pop

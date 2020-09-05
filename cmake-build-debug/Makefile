@@ -47,10 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2020.1.1\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Users\Administrator\CLionProjects\SmartDongLib
+CMAKE_SOURCE_DIR = D:\CProject\SmartDongLib
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug
+CMAKE_BINARY_DIR = D:\CProject\SmartDongLib\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,32 +122,32 @@ SmartDongLib/fast:
 	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/build
 .PHONY : SmartDongLib/fast
 
-entry/BSTEntry.obj: entry/BSTEntry.cpp.obj
+entry/AVLEntry.obj: entry/AVLEntry.cpp.obj
 
-.PHONY : entry/BSTEntry.obj
+.PHONY : entry/AVLEntry.obj
 
 # target to build an object file
-entry/BSTEntry.cpp.obj:
-	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj
-.PHONY : entry/BSTEntry.cpp.obj
+entry/AVLEntry.cpp.obj:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj
+.PHONY : entry/AVLEntry.cpp.obj
 
-entry/BSTEntry.i: entry/BSTEntry.cpp.i
+entry/AVLEntry.i: entry/AVLEntry.cpp.i
 
-.PHONY : entry/BSTEntry.i
+.PHONY : entry/AVLEntry.i
 
 # target to preprocess a source file
-entry/BSTEntry.cpp.i:
-	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.i
-.PHONY : entry/BSTEntry.cpp.i
+entry/AVLEntry.cpp.i:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.i
+.PHONY : entry/AVLEntry.cpp.i
 
-entry/BSTEntry.s: entry/BSTEntry.cpp.s
+entry/AVLEntry.s: entry/AVLEntry.cpp.s
 
-.PHONY : entry/BSTEntry.s
+.PHONY : entry/AVLEntry.s
 
 # target to generate assembly for a file
-entry/BSTEntry.cpp.s:
-	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.s
-.PHONY : entry/BSTEntry.cpp.s
+entry/AVLEntry.cpp.s:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.s
+.PHONY : entry/AVLEntry.cpp.s
 
 sdstructure/linearlist/Array.obj: sdstructure/linearlist/Array.cpp.obj
 
@@ -311,6 +311,33 @@ sdstructure/linearlist/tsMatrix.cpp.s:
 	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.s
 .PHONY : sdstructure/linearlist/tsMatrix.cpp.s
 
+sdstructure/tree/balancedbinarytree.obj: sdstructure/tree/balancedbinarytree.cpp.obj
+
+.PHONY : sdstructure/tree/balancedbinarytree.obj
+
+# target to build an object file
+sdstructure/tree/balancedbinarytree.cpp.obj:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj
+.PHONY : sdstructure/tree/balancedbinarytree.cpp.obj
+
+sdstructure/tree/balancedbinarytree.i: sdstructure/tree/balancedbinarytree.cpp.i
+
+.PHONY : sdstructure/tree/balancedbinarytree.i
+
+# target to preprocess a source file
+sdstructure/tree/balancedbinarytree.cpp.i:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.i
+.PHONY : sdstructure/tree/balancedbinarytree.cpp.i
+
+sdstructure/tree/balancedbinarytree.s: sdstructure/tree/balancedbinarytree.cpp.s
+
+.PHONY : sdstructure/tree/balancedbinarytree.s
+
+# target to generate assembly for a file
+sdstructure/tree/balancedbinarytree.cpp.s:
+	$(MAKE) -f CMakeFiles\SmartDongLib.dir\build.make CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.s
+.PHONY : sdstructure/tree/balancedbinarytree.cpp.s
+
 sdstructure/tree/binarySearchTree.obj: sdstructure/tree/binarySearchTree.cpp.obj
 
 .PHONY : sdstructure/tree/binarySearchTree.obj
@@ -455,9 +482,9 @@ help:
 	@echo ... SmartDongLib
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... entry/BSTEntry.obj
-	@echo ... entry/BSTEntry.i
-	@echo ... entry/BSTEntry.s
+	@echo ... entry/AVLEntry.obj
+	@echo ... entry/AVLEntry.i
+	@echo ... entry/AVLEntry.s
 	@echo ... sdstructure/linearlist/Array.obj
 	@echo ... sdstructure/linearlist/Array.i
 	@echo ... sdstructure/linearlist/Array.s
@@ -476,6 +503,9 @@ help:
 	@echo ... sdstructure/linearlist/tsMatrix.obj
 	@echo ... sdstructure/linearlist/tsMatrix.i
 	@echo ... sdstructure/linearlist/tsMatrix.s
+	@echo ... sdstructure/tree/balancedbinarytree.obj
+	@echo ... sdstructure/tree/balancedbinarytree.i
+	@echo ... sdstructure/tree/balancedbinarytree.s
 	@echo ... sdstructure/tree/binarySearchTree.obj
 	@echo ... sdstructure/tree/binarySearchTree.i
 	@echo ... sdstructure/tree/binarySearchTree.s

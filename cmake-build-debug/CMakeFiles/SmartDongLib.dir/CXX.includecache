@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+../sdstructure/tree/balancedbinarytree.cpp
+balancedbinarytree.h
+../sdstructure/tree/balancedbinarytree.h
+
+../sdstructure/tree/balancedbinarytree.h
+binarySearchTree.cpp
+../sdstructure/tree/binarySearchTree.cpp
+
 ../sdstructure/tree/binarySearchTree.cpp
 binarySearchTree.h
 ../sdstructure/tree/binarySearchTree.h
@@ -46,29 +54,37 @@ boost/enable_shared_from_this.hpp
 iostream
 -
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/entry/BSTEntry.cpp
-tree/binarySearchTree.cpp
-D:/Users/Administrator/CLionProjects/SmartDongLib/entry/tree/binarySearchTree.cpp
+D:/CProject/SmartDongLib/entry/AVLEntry.cpp
+tree/balancedbinarytree.cpp
+D:/CProject/SmartDongLib/entry/tree/balancedbinarytree.cpp
 iostream
 -
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binarySearchTree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/balancedbinarytree.cpp
+balancedbinarytree.h
+D:/CProject/SmartDongLib/sdstructure/tree/balancedbinarytree.h
+
+D:/CProject/SmartDongLib/sdstructure/tree/balancedbinarytree.h
+binarySearchTree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/binarySearchTree.cpp
+
+D:/CProject/SmartDongLib/sdstructure/tree/binarySearchTree.cpp
 binarySearchTree.h
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binarySearchTree.h
+D:/CProject/SmartDongLib/sdstructure/tree/binarySearchTree.h
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binarySearchTree.h
+D:/CProject/SmartDongLib/sdstructure/tree/binarySearchTree.h
 binaryTree.cpp
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binaryTree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/binaryTree.cpp
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binaryTree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/binaryTree.cpp
 binaryTree.h
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binaryTree.h
+D:/CProject/SmartDongLib/sdstructure/tree/binaryTree.h
 stack
 -
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/binaryTree.h
+D:/CProject/SmartDongLib/sdstructure/tree/binaryTree.h
 tree.cpp
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/tree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/tree.cpp
 iostream
 -
 math.h
@@ -76,13 +92,13 @@ math.h
 queue
 -
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/tree.cpp
+D:/CProject/SmartDongLib/sdstructure/tree/tree.cpp
 stack
 -
 tree.h
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/tree.h
+D:/CProject/SmartDongLib/sdstructure/tree/tree.h
 
-D:/Users/Administrator/CLionProjects/SmartDongLib/sdstructure/tree/tree.h
+D:/CProject/SmartDongLib/sdstructure/tree/tree.h
 boost/shared_ptr.hpp
 -
 cstdarg

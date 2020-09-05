@@ -42,10 +42,10 @@ RM = "C:\Program Files\JetBrains\CLion 2020.1.1\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\Users\Administrator\CLionProjects\SmartDongLib
+CMAKE_SOURCE_DIR = D:\CProject\SmartDongLib
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug
+CMAKE_BINARY_DIR = D:\CProject\SmartDongLib\cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SmartDongLib.dir/depend.make
@@ -59,170 +59,184 @@ include CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj: ../sdstructure/linearlist/linkList.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\linkList.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\linkList.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\linkList.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\linkList.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\linkList.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\linkList.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\linkList.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj: ../sdstructure/linearlist/circularLinkedlist.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\circularLinkedlist.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\circularLinkedlist.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj: ../sdstructure/linearlist/SString.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\SString.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\SString.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\SString.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\SString.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\SString.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\SString.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\SString.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj: ../sdstructure/linearlist/Array.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\Array.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\Array.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\Array.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\Array.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\Array.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\Array.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\Array.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj: ../sdstructure/linearlist/tsMatrix.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\tsMatrix.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\tsMatrix.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj: ../sdstructure/linearlist/generalList.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\generalList.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\linearlist\generalList.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\generalList.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\linearlist\generalList.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\linearlist\generalList.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\linearlist\generalList.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\linearlist\generalList.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj: ../sdstructure/tree/binaryTree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binaryTree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\binaryTree.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binaryTree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\binaryTree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binaryTree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\binaryTree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binaryTree.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj: ../sdstructure/tree/tree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\tree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\tree.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\tree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\tree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\tree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\tree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\tree.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj: ../sdstructure/tree/commontree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\commontree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\commontree.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\commontree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\commontree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\commontree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\commontree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\commontree.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj: ../sdstructure/tree/huffmantree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\huffmantree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\huffmantree.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\huffmantree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\huffmantree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\huffmantree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\huffmantree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\huffmantree.cpp.s
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj: ../sdstructure/tree/binarySearchTree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binarySearchTree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\binarySearchTree.cpp
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binarySearchTree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.i
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\binarySearchTree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.i
 
 CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\sdstructure\tree\binarySearchTree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.s
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\binarySearchTree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\binarySearchTree.cpp.s
 
-CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
-CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
-CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj: ../entry/BSTEntry.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj"
-	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\entry\BSTEntry.cpp.obj -c D:\Users\Administrator\CLionProjects\SmartDongLib\entry\BSTEntry.cpp
+CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
+CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
+CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj: ../sdstructure/tree/balancedbinarytree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\balancedbinarytree.cpp.obj -c D:\CProject\SmartDongLib\sdstructure\tree\balancedbinarytree.cpp
 
-CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.i"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Users\Administrator\CLionProjects\SmartDongLib\entry\BSTEntry.cpp > CMakeFiles\SmartDongLib.dir\entry\BSTEntry.cpp.i
+CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.i"
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\sdstructure\tree\balancedbinarytree.cpp > CMakeFiles\SmartDongLib.dir\sdstructure\tree\balancedbinarytree.cpp.i
 
-CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.s"
-	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Users\Administrator\CLionProjects\SmartDongLib\entry\BSTEntry.cpp -o CMakeFiles\SmartDongLib.dir\entry\BSTEntry.cpp.s
+CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.s"
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\sdstructure\tree\balancedbinarytree.cpp -o CMakeFiles\SmartDongLib.dir\sdstructure\tree\balancedbinarytree.cpp.s
+
+CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj: CMakeFiles/SmartDongLib.dir/flags.make
+CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj: CMakeFiles/SmartDongLib.dir/includes_CXX.rsp
+CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj: ../entry/AVLEntry.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj"
+	D:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SmartDongLib.dir\entry\AVLEntry.cpp.obj -c D:\CProject\SmartDongLib\entry\AVLEntry.cpp
+
+CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.i"
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\CProject\SmartDongLib\entry\AVLEntry.cpp > CMakeFiles\SmartDongLib.dir\entry\AVLEntry.cpp.i
+
+CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.s"
+	D:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\CProject\SmartDongLib\entry\AVLEntry.cpp -o CMakeFiles\SmartDongLib.dir\entry\AVLEntry.cpp.s
 
 # Object files for target SmartDongLib
 SmartDongLib_OBJECTS = \
@@ -237,7 +251,8 @@ SmartDongLib_OBJECTS = \
 "CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj" \
 "CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj" \
 "CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj" \
-"CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj"
+"CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj" \
+"CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj"
 
 # External object files for target SmartDongLib
 SmartDongLib_EXTERNAL_OBJECTS =
@@ -253,12 +268,13 @@ SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/sdstructure/tree/tree.cpp.obj
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/sdstructure/tree/huffmantree.cpp.obj
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj
-SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj
+SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj
+SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/build.make
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/linklibs.rsp
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/objects1.rsp
 SmartDongLib.exe: CMakeFiles/SmartDongLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable SmartDongLib.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable SmartDongLib.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SmartDongLib.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -271,6 +287,6 @@ CMakeFiles/SmartDongLib.dir/clean:
 .PHONY : CMakeFiles/SmartDongLib.dir/clean
 
 CMakeFiles/SmartDongLib.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\Users\Administrator\CLionProjects\SmartDongLib D:\Users\Administrator\CLionProjects\SmartDongLib D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug D:\Users\Administrator\CLionProjects\SmartDongLib\cmake-build-debug\CMakeFiles\SmartDongLib.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" D:\CProject\SmartDongLib D:\CProject\SmartDongLib D:\CProject\SmartDongLib\cmake-build-debug D:\CProject\SmartDongLib\cmake-build-debug D:\CProject\SmartDongLib\cmake-build-debug\CMakeFiles\SmartDongLib.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SmartDongLib.dir/depend
 

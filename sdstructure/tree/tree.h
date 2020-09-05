@@ -35,6 +35,8 @@ namespace SmartDongLib {
         }
         int nodeCount();
         int treeDeep();
+        int nodeHeight(){return treeDeep();}
+        int nodeDeep();
         KeyType key() const {
             return key_;
         }

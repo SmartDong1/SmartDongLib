@@ -1,0 +1,46 @@
+//
+// Created by Administrator on 2020/9/5.
+//
+
+
+#include "tree/balancedbinarytree.cpp"
+#include <iostream>
+using namespace SmartDongLib;
+using namespace std;
+int main() {
+    // 5 3 6 2 4 1
+    boost::shared_ptr<BalancedBinaryTree<int,char>> root(new BalancedBinaryTree<int,char>(16,'-'));
+    BalancedBinaryTree<int,char> node2(2,'+');
+    BalancedBinaryTree<int,char> node3(3,'/');
+    BalancedBinaryTree<int,char> node4(4,'a');
+    BalancedBinaryTree<int,char> node1(1,'*');
+    BalancedBinaryTree<int,char> node6(6,'e');
+    BalancedBinaryTree<int,char> node16(16,'e');
+    BalancedBinaryTree<int,char> node7(7,'e');
+    BalancedBinaryTree<int,char> node11(11,'e');
+    BalancedBinaryTree<int,char> node9(9,'e');
+    BalancedBinaryTree<int,char> node26(26,'e');
+    BalancedBinaryTree<int,char> node18(18,'e');
+//    root->insertNode(node3)->insertNode(node6)->insertNode(node2)->insertNode(node4);
+//    root=root->insertNode(node1);
+    root=root->insertNode(node3)->insertNode(node7);
+    root=root->insertNode(node11)->insertNode(node9);
+    root=root->insertNode(node26);
+    root=root->insertNode(node18);
+    root=root->deleteNodeByKey(18);
+    root=root->deleteNodeByKey(16);
+    root=root->deleteNodeByKey(26);
+
+//    root=root->insertNode(node4);
+    cout << root->nodeCount() << endl;;
+    cout << root->treeDeep() << endl;
+    cout << root->getTreeType() << endl;
+    cout<<"------------postOrderTraversal------------------"<<endl;
+    root->postOrderTraversal();
+    cout<<"------------preOrderTraversal------------------"<<endl;
+    root->preOrderTraversal();
+    cout<<"------------inOrderTraversal------------------"<<endl;
+    root->inOrderTraversal();
+    cout<<"<<<<<finish>>>>>>>"<<endl;
+
+}

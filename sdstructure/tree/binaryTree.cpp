@@ -4,6 +4,8 @@
 
 #include "binaryTree.h"
 #include <stack>
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "HidingNonVirtualFunction"
 namespace SmartDongLib{
     /**
      * <p>判定树的类型 普通二叉树，满二叉树，完全二叉树.
@@ -223,3 +225,4 @@ namespace SmartDongLib{
 
 
 }
+#pragma clang diagnostic pop

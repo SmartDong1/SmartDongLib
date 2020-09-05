@@ -149,11 +149,12 @@ namespace SmartDongLib{
     boost::shared_ptr<TreeNode<KeyType, ElemType> >& TreeNode<KeyType, ElemType>::setChild(int i, boost::shared_ptr<TreeNode> &c) {
         if(i >= childnum_)
             throw TreeRunTimeException("childPointer out of range Exception");
-        if (c !=NULL)
+        if (c !=NULL){
             children_[i] =c;
+            (children_[i])->parent_=getThis();
+        }
         else
             children_[i] = NULL;
-        (children_[i])->parent_=getThis();
         return c;
     }
     /**
@@ -384,5 +385,23 @@ namespace SmartDongLib{
         }
         return -1;
 
+    }
+    /**
+     * <p>节点在树的深度,从根节点为1到自身位置的距离
+     * @tparam KeyType
+     * @tparam ElemType
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    int TreeNode<KeyType, ElemType>::nodeDeep() {
+        int ret=0;
+        if (getThis() !=NULL)
+            ret =1;
+        boost::shared_ptr<TreeNode<KeyType, ElemType>> node =getThis();
+        while(node->parent_){
+            ret ++ ;
+            node = node->parent_;
+        }
+        return ret;
     }
 }

@@ -1,11 +1,12 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SmartDongLib.dir/entry/BSTEntry.cpp.obj"
+  "CMakeFiles/SmartDongLib.dir/entry/AVLEntry.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/Array.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/SString.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/circularLinkedlist.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/generalList.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/linkList.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/linearlist/tsMatrix.cpp.obj"
+  "CMakeFiles/SmartDongLib.dir/sdstructure/tree/balancedbinarytree.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/tree/binarySearchTree.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/tree/binaryTree.cpp.obj"
   "CMakeFiles/SmartDongLib.dir/sdstructure/tree/commontree.cpp.obj"

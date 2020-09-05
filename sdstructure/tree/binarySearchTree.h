@@ -29,10 +29,10 @@ namespace SmartDongLib {
 
             return ret;
         }
-        boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> getBSTNodeByKey(KeyType key,bool mustleaf= false);
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);
-        boost::shared_ptr<BinaryTree<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
-
+        boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
+        boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> deleteNodeByKey(KeyType key);
+        boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> deleteNodeByElem(ElemType elem);
     protected:
         boost::shared_ptr<BinarySearchTree<KeyType,ElemType> > & leftChild(boost::shared_ptr<BinarySearchTree<KeyType,ElemType> > & c){
             boost::shared_ptr<TreeNode<KeyType,ElemType>> cc=boost::static_pointer_cast<TreeNode<KeyType,ElemType>>(c);

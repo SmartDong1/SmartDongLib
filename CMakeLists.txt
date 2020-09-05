@@ -34,4 +34,6 @@ add_executable(SmartDongLib
         sdstructure/tree/huffmantree.h
         sdstructure/tree/binarySearchTree.cpp
         sdstructure/tree/binarySearchTree.h
-        entry/BSTEntry.cpp)
+        sdstructure/tree/balancedbinarytree.cpp
+        sdstructure/tree/balancedbinarytree.h
+        entry/AVLEntry.cpp)
