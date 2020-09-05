@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.16)
+project(SmartDongLib)
+
+set(CMAKE_CXX_STANDARD 14)
+
+#add_compile_options(-fno-elide-constructors)
+include_directories(.)
+include_directories(sdstructure
+        sdstructure/linearlist
+        entry)
+add_executable(SmartDongLib
+        sdstructure/linearlist/linkList.cpp
+        sdstructure/linearlist/linkList.h
+        sdstructure/const.h
+        sdstructure/linearlist/circularLinkedlist.cpp
+        sdstructure/linearlist/circularLinkedlist.h
+        sdstructure/null.h
+        sdstructure/linearlist/SString.cpp
+        sdstructure/linearlist/SString.h
+        sdstructure/linearlist/Array.cpp
+        sdstructure/linearlist/Array.h
+        sdstructure/linearlist/tsMatrix.cpp
+        sdstructure/linearlist/tsMatrix.h
+        sdstructure/linearlist/generalList.cpp
+        sdstructure/linearlist/generalList.h
+        sdstructure/tree/tree.h
+        sdstructure/tree/binaryTree.cpp
+        sdstructure/tree/binaryTree.h
+        sdstructure/tree/tree.cpp
+        sdstructure/tree/forest.h
+        sdstructure/tree/commontree.cpp
+        sdstructure/tree/commontree.h
+        sdstructure/tree/huffmantree.cpp
+        sdstructure/tree/huffmantree.h
+        sdstructure/tree/binarySearchTree.cpp
+        sdstructure/tree/binarySearchTree.h
+        entry/BSTEntry.cpp)
