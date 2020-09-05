@@ -6,12 +6,26 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "HidingNonVirtualFunction"
 namespace SmartDongLib {
+    /**
+     * <p> 利用二叉搜索树原理插入节点，对节点开始重新平衡
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param a
+     * @return
+     */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> BalancedBinaryTree<KeyType, ElemType>::insertNode(BalancedBinaryTree &a) {
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> aa(new BalancedBinaryTree<KeyType, ElemType>(a));
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> ret =insertNode(aa);
         return ret;
     }
+    /**
+     * <p>利用二叉搜索树原理插入节点，对节点开始重新平衡
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param a
+     * @return
+     */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
     BalancedBinaryTree<KeyType, ElemType>::insertNode(boost::shared_ptr<BalancedBinaryTree> a) {
@@ -21,59 +35,51 @@ namespace SmartDongLib {
         ret=ret->resetBalance(a->key());
         return ret;
     }
+    /**
+     * <p> 利用二叉树删除节点法删除节点
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key
+     * @return
+     */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
     BalancedBinaryTree<KeyType, ElemType>::deleteNodeByKey(KeyType key) {
-        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> ret;
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> delnode=getNodeByKey(key);
         if (delnode == NULL){
             //未找到对应的节点,直接返回
             return  getThis();
         }
-        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
-        if (delnode ->leftChild()!=NULL){
-            targetNode = delnode ->leftChild();
-            //左子树不空,拿左子树的最深右子树替代
-            while (targetNode->rightChild() !=NULL){
-                targetNode = targetNode->rightChild();
-            }
-            delnode->key(targetNode->key());
-            delnode->elem(targetNode->elem());
-            ret=targetNode->deleteNodeByKey(targetNode->key());
-        }
-        else if(delnode ->rightChild() !=NULL){
-            targetNode = delnode ->rightChild();
-            //右子树不空,拿右子树的最深左子树替代
-            while (targetNode->leftChild() !=NULL){
-                targetNode = targetNode->leftChild();
-            }
-            delnode->key(targetNode->key());
-            delnode->elem(targetNode->elem());
-            ret=targetNode->deleteNodeByKey(targetNode->key());
-        }
-        else{
-            //叶子节点
-            if(delnode->parent() == NULL){
-                //如果删除唯一根节点
-                return  NULL;
-            }
-            KeyType parentKey= delnode->parent()->key();
-
-            int parentChildIndex=delnode->findIndexOnParent();
-            if (parentChildIndex == 0){
-                delnode->parent()->leftchild_=NULL;
-            }else if(parentChildIndex == 1){
-                delnode->parent()->rightchild_=NULL;
-            }
-            //**************************
-            return delnode->parent()->resetBalance(parentKey);
-            //*************************
-        }
-
-        return ret ;
+        return deleteNodeptr(delnode);
     }
 
+
+
+    /**
+     * <p>根据elem删除节点,TODO：未测
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param elem
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
+    BalancedBinaryTree<KeyType, ElemType>::deleteNodeByElem(ElemType elem)  {
+        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> delnode=getNodeByElem(elem);
+        if (delnode == NULL){
+            //未找到对应的节点,直接返回
+            return  getThis();
+        }
+        return  deleteNodeptr(elem);
+    }
+    /**
+     * <p>根据 Key值查询节点
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key
+     * @param mustleaf 是否要求是叶子节点
+     * @return
+     */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
     BalancedBinaryTree<KeyType, ElemType>::getNodeByKey(KeyType key, bool mustleaf) {
@@ -82,7 +88,14 @@ namespace SmartDongLib {
                 boost::static_pointer_cast<BalancedBinaryTree<KeyType, ElemType>>(aa);
         return ret;
     }
-
+    /**
+     * <p> 根据elem查询节点,TODO：未测
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param elem
+     * @param mustleaf 是否要求是叶子节点
+     * @return
+     */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
     BalancedBinaryTree<KeyType, ElemType>::getNodeByElem(ElemType elem, bool mustleaf) {
@@ -92,11 +105,11 @@ namespace SmartDongLib {
         return ret;
     }
     /**
-* <p>返回所有树节点.
-* @tparam KeyType
-* @tparam ElemType
-* @return BinarySearchTree智能指针集合
-*/
+    * <p>返回所有树节点.
+    * @tparam KeyType
+    * @tparam ElemType
+    * @return BinarySearchTree智能指针集合
+    */
     template<class KeyType, class ElemType>
     vector<boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>> BalancedBinaryTree<KeyType, ElemType>::getAllnode() {
         vector<boost::shared_ptr<TreeNode<KeyType, ElemType>> >temp;
@@ -168,7 +181,7 @@ namespace SmartDongLib {
     }
 
     /**
-     * <p>重新平衡
+     * <p>根据Key值重新平衡到根节点的所有节点
      * @tparam KeyType
      * @tparam ElemType
      * @param findKey
@@ -218,8 +231,8 @@ namespace SmartDongLib {
    * <p>寻找最小失衡树的孩子节点
    * @tparam KeyType
    * @tparam ElemType
-   * @param childBalanceFactor
-   * @return
+   * @param childBalanceFactor 失衡节点的孩子节点的位置(左孩子1    或   右孩子-1)
+   * @return    失衡节点的孩子节点
    */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
@@ -228,6 +241,7 @@ namespace SmartDongLib {
                 getNodeByKey(key);
         int leftDeep=0,rightDeep=0;
         childBalanceFactor=0;
+        //往父节点的方向开始找为平衡的节点和他的孩子节点和失衡位置
         while (root){
             leftDeep=0,rightDeep=0;
             if (root->leftChild()){
@@ -245,65 +259,66 @@ namespace SmartDongLib {
             childBalanceFactor =rootbalanceFactor;
             root= root->parent();
         }
-//        leftDeep=0,rightDeep=0;
-//        if (getThis()->leftChild()){
-//            leftDeep=root->leftChild()->treeDeep();
-//        }
-//        if (root->rightChild()){
-//            rightDeep=root->rightChild()->treeDeep();
-//        }
-//        childBalanceFactor = leftDeep - rightDeep;
-//        if(childBalanceFactor >=2){
-//            return root->leftChild();
-//        }else if (childBalanceFactor <=-2){
-//            return root->rightChild();
-//        }
         return NULL;
     }
 
 
-//    /**
-//     * <p>寻找最小失衡树的孩子节点
-//     * @tparam KeyType
-//     * @tparam ElemType
-//     * @param balanceFactor
-//     * @return
-//     */
-//    template<class KeyType, class ElemType>
-//    boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
-//    BalancedBinaryTree<KeyType, ElemType>::findLossBalanceChild(int & balanceFactor,
-//                                                                boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType>> startptr) {
-//        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> root=getThis();
-//        int leftDeep=0,rightDeep=0;
-//        if (root->leftChild()){
-//            leftDeep=root->leftChild()->treeDeep();
-//        }
-//        if (root->rightChild()){
-//            rightDeep=root->rightChild()->treeDeep();
-//        }
-//        balanceFactor = leftDeep - rightDeep;
-//        if (balanceFactor<=1 && balanceFactor>=-1)
-//            return  NULL;
-//        while (balanceFactor<-1 || balanceFactor >1){
-//            if(balanceFactor >=2){
-//                root=root->leftChild();
-//            }else if (balanceFactor <=-2){
-//                root=root->rightChild();
-//            }
-//            leftDeep=0,rightDeep=0;
-//            if (root->leftChild()){
-//                leftDeep=root->leftChild()->treeDeep();
-//            }
-//            if (root->rightChild()){
-//                rightDeep=root->rightChild()->treeDeep();
-//            }
-//            balanceFactor = leftDeep - rightDeep;
-//        }
-//        return root;
-//
-//        return boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>();
-//    }
-//
+
+
+    /**
+     * <p>根据Key删除节点,并且重新平衡节点
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param delnode
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> BalancedBinaryTree<KeyType, ElemType>::deleteNodeptr(
+            boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> delnode) {
+        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> ret;
+        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> targetNode = delnode;
+        int notnullChildIndex=-1; //最右孩子的位置
+        if (delnode ->leftChild()!=NULL){
+            targetNode = delnode ->leftChild();
+            //左子树不空,拿左子树的最深右子树替代
+            while (targetNode->rightChild() !=NULL){
+                targetNode = targetNode->rightChild();
+            }
+            delnode->key(targetNode->key());
+            delnode->elem(targetNode->elem());
+            ret=targetNode->deleteNodeByKey(targetNode->key());
+        }
+        else if(delnode ->rightChild() !=NULL){
+            targetNode = delnode ->rightChild();
+            //右子树不空,拿右子树的最深左子树替代
+            while (targetNode->leftChild() !=NULL){
+                targetNode = targetNode->leftChild();
+            }
+            delnode->key(targetNode->key());
+            delnode->elem(targetNode->elem());
+            ret=targetNode->deleteNodeByKey(targetNode->key());
+        }
+        else{
+            //叶子节点
+            if(delnode->parent() == NULL){
+                //如果删除唯一根节点
+                return  NULL;
+            }
+            KeyType parentKey= delnode->parent()->key();
+
+            int parentChildIndex=delnode->findIndexOnParent();
+            if (parentChildIndex == 0){
+                delnode->parent()->leftchild_=NULL;
+            }else if(parentChildIndex == 1){
+                delnode->parent()->rightchild_=NULL;
+            }
+            //**************************
+            return delnode->parent()->resetBalance(parentKey);
+            //*************************
+        }
+
+        return ret ;
+    }
 
 }
 #pragma clang diagnostic pop

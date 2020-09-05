@@ -45,6 +45,8 @@ namespace SmartDongLib {
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
 
     protected:
+        boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> deleteNodeptr(boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> delnode);
+
         boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType> > & leftChild(boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType> > & c){
 //            if (c ==NULL){
 //                this->setChild(0,NULL) ;
