@@ -175,8 +175,8 @@ namespace SmartDongLib{
     }
 //-------------------------------static-------------------------
     template<class KeyType, class ElemType>
-    void TreeNode<KeyType, ElemType>::printData( TreeNode & c) {
-        std::cout<<c.key() << "->" <<c.elem()<<"\n";
+    void TreeNode<KeyType, ElemType>::printData(boost::shared_ptr<TreeNode<KeyType, ElemType>>  c) {
+        std::cout<<c->key() << "->" <<c->elem()<<"\n";
     }
     /**
      * <p>后序遍历树,先遍历左右孩子再遍历自己.
@@ -185,13 +185,13 @@ namespace SmartDongLib{
      * @param Visit 为TreeNode引用的函数
      */
     template<class KeyType, class ElemType>
-    void TreeNode<KeyType, ElemType>::postOrderTraversal(void (*Visit)(TreeNode&)) {
+    void TreeNode<KeyType, ElemType>::postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>>) ) {
         for (int i = 0; i < childnum_; ++i) {
             if (children_[i]!= NULL){
                 children_[i] ->postOrderTraversal(Visit);
             }
         }
-        Visit(*this);
+        Visit(getThis());
 
     }
     /**
@@ -201,8 +201,8 @@ namespace SmartDongLib{
      * @param Visit 为TreeNode引用的函数
      */
     template<class KeyType, class ElemType>
-    void TreeNode<KeyType, ElemType>::preOrderTraversal(void (*Visit)(TreeNode &)) {
-        Visit(*this);
+    void TreeNode<KeyType, ElemType>::preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> )) {
+        Visit(getThis());
         for (int i = 0; i < childnum_; ++i) {
             if (children_[i]!= NULL){
                 children_[i] ->preOrderTraversal(Visit);

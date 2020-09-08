@@ -80,7 +80,8 @@ namespace SmartDongLib {
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByKey(KeyType key);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByElem(ElemType elem);
-        void inOrderTraversal(void (*Visit)(TreeNode<KeyType,ElemType>&) = TreeNode<KeyType,ElemType>::printData);
+        void inOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>>)
+                = TreeNode<KeyType,ElemType>::printData);
         BiTreeType getTreeType();
         std::vector<boost::shared_ptr<BinaryTree<KeyType, ElemType>>> getAllnode();
     protected:

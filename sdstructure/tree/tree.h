@@ -62,10 +62,21 @@ namespace SmartDongLib {
             parent_ =p;
             return parent_;
         }
-        static void printData(TreeNode & c);
+        boost::shared_ptr<TreeNode<KeyType, ElemType>> brother(){
+            boost::shared_ptr<TreeNode<KeyType, ElemType>> root= getThis();
+            int findIndexonParent=findIndexOnParent();
+            if (findIndexonParent == -1 )
+                return NULL;
+            for (int i = 0; i < root->parent()->childnum_; ++i) {
+                if (root->parent()->children_[i] !=root )
+                    return root->parent()->children_[i];
+            }
+            return NULL;
+        }
+        static void printData(boost::shared_ptr<TreeNode<KeyType, ElemType>> c);
 
-        void postOrderTraversal(void (*Visit)(TreeNode&) = TreeNode::printData);
-        void preOrderTraversal(void (*Visit)(TreeNode&) = TreeNode::printData);
+        void postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::printData);
+        void preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::printData);
 
         boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
         boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);

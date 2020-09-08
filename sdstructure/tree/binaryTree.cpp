@@ -63,7 +63,7 @@ namespace SmartDongLib{
      * @param Visit 关于TreeNode引用的函数
      */
     template<class KeyType, class ElemType>
-    void BinaryTree<KeyType, ElemType>::inOrderTraversal(void (*Visit)(TreeNode<KeyType, ElemType> &)) {
+    void BinaryTree<KeyType, ElemType>::inOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> )) {
         //用来存储待访问的栈
         std::stack<boost::shared_ptr<BinaryTree<KeyType,ElemType>>>  sta;
         boost::shared_ptr<BinaryTree<KeyType,ElemType>> root =boost::static_pointer_cast<BinaryTree<KeyType,ElemType>>(this->getThis());
@@ -77,7 +77,7 @@ namespace SmartDongLib{
                 //如果节点不存在,弹出栈，访问,遍历右子树
                 root = sta.top();
                 sta.pop();
-                Visit(*root);
+                Visit(root);
                 root=root->rightChild();
             }
 
