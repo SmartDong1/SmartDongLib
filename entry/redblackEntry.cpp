@@ -1,5 +1,5 @@
 //
-// Created by Administrator on 2020/9/8.
+// Created by Administrator on 2020/9/8.红黑树测试
 //
 
 
@@ -38,9 +38,13 @@ int main() {
     root=root->insertNode(node18);
     root=root->insertNode(node27);
 
-//    root=root->deleteNodeByElem('k');
+//    root=root->deleteNodeByElem('e');
 //    root=root->deleteNodeByKey(16);
-//    root=root->deleteNodeByKey(26);
+    root=root->deleteNodeByKey(3);
+    root=root->deleteNodeByKey(9);
+    root=root->deleteNodeByKey(7);
+    root=root->deleteNodeByKey(16);
+    root=root->deleteNodeByKey(11);
 
 //    root=root->insertNode(node4);
     cout << root->nodeCount() << endl;;

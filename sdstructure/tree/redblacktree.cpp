@@ -3,6 +3,8 @@
 //
 
 #include "redblacktree.h"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "HidingNonVirtualFunction"
 namespace SmartDongLib {
 
 
@@ -91,9 +93,121 @@ namespace SmartDongLib {
         root->colorTag_ = Black;
         return root;
     }
+    /**
+     * <p>删除节点调整规则
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param delnode 要删除的结点
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<RedBlackTree<KeyType, ElemType>>
+    RedBlackTree<KeyType, ElemType>::resetDelBalance(boost::shared_ptr<RedBlackTree<KeyType,ElemType>> delnode) {
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> root=getThis();
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> lossBalanceNode =delnode;
+        int indexOnParent= lossBalanceNode->findIndexOnParent();
+        if (indexOnParent == -1){
+            //根节点
+            colorTag_ = Black;
+            return getThis();
+        }
+
+        if (color(lossBalanceNode) == Red){
+            //如果删除的叶子是红色,直接删除,不需要调整
+            return getThis();
+        }
+        if (color(lossBalanceNode) == Black){
+            boost::shared_ptr<RedBlackTree<KeyType, ElemType>> lossNodeParent =lossBalanceNode->parent();
+            boost::shared_ptr<RedBlackTree<KeyType, ElemType>> lossNodeBrother =lossBalanceNode->brother();
+            //删除叶子节点是黑色，那么兄弟树的黑色节点就会比自身多一个黑节点
+            //兄弟节点必然存在,要不然不可能兄弟子树比原子树多一个黑节点
+            //如果兄弟节点是黑色的那么兄弟节点的孩子再无非NIL的黑色节点
+            //如果兄弟节点是红色的那么兄弟两个孩子是黑色节点
+            if (color(lossNodeBrother) == Black){
+                if (indexOnParent == 0){
+                    //被删节点在左子树
+                    if (color(lossNodeBrother->rightChild()) == Red){
+                        //兄弟是黑的,远侄子是红的
+                        // 把兄弟结点染为双黑结点的父亲结点的颜色，把兄弟结点的右孩子染为黑色，再把父结点染为黑色；然后针对父结点进行一次左旋转
+                        lossNodeBrother->colorTag_ = color(lossNodeParent);
+                        lossNodeBrother->rightChild()->colorTag_=Black;
+                        lossNodeParent->colorTag_ = Black;
+                        lossNodeParent->leftRotationTransform();
+                        return  getThis();
+                    } else if(color(lossNodeBrother->leftChild()) == Red){
+                        //兄弟是黑的,近侄子是红的
+                        //针对双黑结点的兄弟做一次右旋转，结果使双黑结点的近侄子成为双黑结点新的兄弟；
+                        //将新兄弟结点着为双黑结点的父结点的颜色，父结点着为黑色，再针对父做一次左旋转
+                        lossNodeBrother->rightRotationTransform();
+                        lossBalanceNode->brother()->colorTag_ = color(lossNodeParent);
+                        lossNodeParent->colorTag_ = Black;
+                        lossNodeParent->leftRotationTransform();
+                        return  getThis();
+                    } else{
+                        //兄弟没有孩子
+                        //直接给兄弟上红色
+                        lossNodeBrother->colorTag_ = Red;
+                        if (color(lossNodeParent) == Red){
+                            //如果父节点原来是红色的,设置成黑色保证父树的黑色节点数量不变
+                            lossNodeParent->colorTag_ = Black;
+                            return getThis();
+                        } else if(color(lossNodeParent) == Black){
+                            //如果父节点原来是黑色的,那么父树比叔叔树少一个黑色节点，父节点重新调整
+                           return resetDelBalance(lossNodeParent);
+                        }
+                    }
+                } else if(indexOnParent == 1){
+                    //被删节点在右子树
+                    if (color(lossNodeBrother->leftChild()) == Red){
+                        //兄弟是黑的,远侄子是红的
+                        // 把兄弟结点染为双黑结点的父亲结点的颜色，把兄弟结点的右孩子染为黑色，再把父结点染为黑色；然后针对父结点进行一次左旋转
+                        lossNodeBrother->colorTag_ = color(lossNodeParent);
+                        lossNodeBrother->leftChild()->colorTag_=Black;
+                        lossNodeParent->colorTag_ = Black;
+                        lossNodeParent->rightRotationTransform();
+                        return  getThis();
+                    } else if(color(lossNodeBrother->rightChild()) == Red){
+                        //兄弟是黑的,近侄子是红的
+                        //针对双黑结点的兄弟做一次右旋转，结果使双黑结点的近侄子成为双黑结点新的兄弟；
+                        //将新兄弟结点着为双黑结点的父结点的颜色，父结点着为黑色，再针对父做一次左旋转
+                        lossNodeBrother->leftRotationTransform();
+                        lossBalanceNode->brother()->colorTag_ = color(lossNodeParent);
+                        lossNodeParent->colorTag_ = Black;
+                        lossNodeParent->rightRotationTransform();
+                        return  getThis();
+                    } else{
+                        //兄弟没有孩子
+                        //直接给兄弟上红色
+                        lossNodeBrother->colorTag_ = Red;
+                        if (color(lossNodeParent) == Red){
+                            //如果父节点原来是红色的,设置成黑色保证父树的黑色节点数量不变
+                            lossNodeParent->colorTag_ = Black;
+                            return getThis();
+                        } else if(color(lossNodeParent) == Black){
+                            //如果父节点原来是黑色的,那么父树比叔叔树少一个黑色节点，父节点重新调整
+                          return  resetDelBalance(lossNodeParent);
+                        }
+                    }
+                }// if indexParent
 
 
+            }else if (color(lossNodeBrother) == Red){
+                lossNodeBrother->colorTag_=Black;
+                lossNodeParent ->colorTag_=Red;
+                if (indexOnParent == 0){
+                    //被删节点在左子树,兄弟在右子树
+                    //父节点旋转
+                    lossNodeParent->leftRotationTransform();
+                }else if  (indexOnParent == 1){
+                    //被删节点在右子树
+                    lossNodeParent->rightRotationTransform();
+                }
+                return resetDelBalance(lossBalanceNode);
+            }
 
+        }
+        return getThis();
+    }
 
 
 
@@ -223,6 +337,134 @@ namespace SmartDongLib {
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> ret =insertNode(aa);
         return ret;
     }
+    /**
+     * <p>删除节点,采用二叉搜索树删除原理,递归赋值前继节点,对叶子节点实行删除调整
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param delnode
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<RedBlackTree<KeyType, ElemType>>
+    RedBlackTree<KeyType, ElemType>::deleteNodeptr(boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delnode) {
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> ret = getThis();
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> targetNode = delnode;
+        int notnullChildIndex=-1; //最右孩子的位置
+        if (delnode ->leftChild()!=NULL){
+            targetNode = delnode ->leftChild();
+            //左子树不空,拿左子树的最深右子树替代
+            while (targetNode->rightChild() !=NULL){
+                targetNode = targetNode->rightChild();
+            }
+            delnode->key(targetNode->key());
+            delnode->elem(targetNode->elem());
+            ret=targetNode->deleteNodeByKey(targetNode->key());
+        }
+        else if(delnode ->rightChild() !=NULL){
+            targetNode = delnode ->rightChild();
+            //右子树不空,拿右子树的最深左子树替代
+            while (targetNode->leftChild() !=NULL){
+                targetNode = targetNode->leftChild();
+            }
+            delnode->key(targetNode->key());
+            delnode->elem(targetNode->elem());
+            ret=targetNode->deleteNodeByKey(targetNode->key());
+        }
+        else{
+            //叶子节点
+            if(delnode->parent() == NULL){
+                //如果删除唯一根节点
+                return  NULL;
+            }
+            boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delparent = delnode->parent();
+            boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delbrother = delnode->brother();
+            resetDelBalance(delnode);
+            while (ret->parent()){
+                ret= ret->parent();
+            }
+            int parentChildIndex=delnode->findIndexOnParent();
+            if (parentChildIndex == 0){
+                delnode->parent()->leftchild_=NULL;
+            }else if(parentChildIndex == 1){
+                delnode->parent()->rightchild_=NULL;
+            }
+            //**************************
+            {
+//                //如果删除的叶子是红色,直接删除,如果删除的叶子是黑色，要从兄弟树中通过旋转少一个黑节点,或者自身树多一个黑节点
+//                if (color(delnode) == Red) {
+//                    return ROOT;
+//                } else if (color(delnode) == Black) {
+//                    //删除叶子节点是黑色，那么兄弟子树的黑色节点就会比自身多一个黑节点
+//                    //兄弟节点必然存在,要不然不可能兄弟子树比原子树多一个黑节点
+//                    //如果兄弟节点是黑色的那么兄弟节点的孩子再无非NIL的黑色节点
+//                    //如果兄弟节点是红色的那么兄弟节点的孩子还有一个非NIL的黑色节点,且父亲比定是黑色的
+//                    if (color(delbrother) == Black){
+//                        //如果兄弟节点是黑色
+//                        if (color(delparent) == Red){
+//                            //如果父亲为红,兄弟必定是黑的,交换一下颜色就可以再不减少兄弟黑节点的情况下,给本身子树增加一个黑节点
+//                            delparent->colorTag_ = Black;
+//                            delbrother->colorTag_ = Red;
+//                            if (delbrother->isLeaf()){
+//                                return ROOT;
+//                            }
+//                            //处理红色兄弟和红色兄弟孩子
+//
+//                        } else if(color(delparent) == Black){
+//                            //父亲是黑的兄弟是黑的，那么兄弟节点的孩子再无非NIL的黑色节点
+//                            //再处理兄弟和兄弟孩子的红色冲突
+//                            delbrother->colorTag_ = Red;
+//                        }
+//                    } else if (color(delbrother) == Red){
+//                        //如果兄弟节点是红色的那么兄弟节点的孩子必定会有两个黑色的孩子,且父亲比定是黑色的
+//                        //如果把兄弟从红色变成黑色,那么兄弟树就会比自身的子树多出两个黑节点
+//                        delbrother->colorTag_ = Black;
+//                        //直接旋转即可
+//                    }
+
+
+                    //如果兄弟节点是红色,那么父节点必然是黑色,通过旋转让父节点变到原有子树,兄弟的其中一个黑孩子被贡献到了
+
+//                }
+            }
+            //*************************
+        }
+
+        return ret ;
+    }
+    /**
+        * <p>根据Key删除节点,最先匹配原理是先序遍历,二叉搜索树删除方法,利用左子树的最右叶子，或者右子树的最左叶子替代。
+        * @tparam KeyType
+        * @tparam ElemType
+        * @param key
+        * @return
+        */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<RedBlackTree<KeyType, ElemType>> RedBlackTree<KeyType, ElemType>::deleteNodeByKey(KeyType key) {
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delnode=getNodeByKey(key);
+        if (delnode == NULL){
+            //未找到对应的节点,直接返回
+            return  getThis();
+        }
+        return deleteNodeptr(delnode);
+    }
+    /**
+     * <p>根据Elem删除节点,最先匹配原理是先序遍历,二叉搜索树删除方法,利用左子树的最右叶子，或者右子树的最左叶子替代。
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param elem
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<RedBlackTree<KeyType, ElemType>>
+    RedBlackTree<KeyType, ElemType>::deleteNodeByElem(ElemType elem) {
+        boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delnode=getNodeByElem(elem);
+        if (delnode == NULL){
+            //未找到对应的节点,直接返回
+            return  getThis();
+        }
+        return  deleteNodeptr(delnode);
+    }
 
 
 }
+#pragma clang diagnostic pop

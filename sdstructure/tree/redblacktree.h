@@ -14,7 +14,7 @@
 #define SMARTDONGLIB_REDBLACKTREE_H
 #include "binarySearchTree.cpp"
 namespace SmartDongLib {
-    enum ColorTag{Red = 0, Black};
+    enum ColorTag{Red = 0, Black,DoubleBlack};
     template<class KeyType,class ElemType >
     class RedBlackTree: public BinarySearchTree<KeyType, ElemType>{
     public:
@@ -61,14 +61,11 @@ namespace SmartDongLib {
                 return Black;
             return  a->colorTag_;
         }
+
     protected:
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> deleteNodeptr(boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delnode);
 
         boost::shared_ptr<RedBlackTree<KeyType,ElemType> > & leftChild(boost::shared_ptr<RedBlackTree<KeyType,ElemType> > & c){
-//            if (c ==NULL){
-//                this->setChild(0,NULL) ;
-//                return NULL;
-//            }
             boost::shared_ptr<TreeNode<KeyType,ElemType>> cc=boost::static_pointer_cast<TreeNode<KeyType,ElemType>>(c);
             this->setChild(0,cc);
             return  c;
@@ -107,12 +104,13 @@ namespace SmartDongLib {
             return aa;
         }
         boost::shared_ptr<RedBlackTree<KeyType,ElemType>>  resetBalance(KeyType findKey);
-        boost::shared_ptr<RedBlackTree<KeyType,ElemType>> findLossBalanceChild(int & childBalanceFactor,
-                KeyType key);
+
+        boost::shared_ptr<RedBlackTree<KeyType,ElemType>>  resetDelBalance(boost::shared_ptr<RedBlackTree<KeyType,ElemType>> delnode);
     private:
         boost::shared_ptr<RedBlackTree<KeyType,ElemType>>  rightRotationTransform();
         boost::shared_ptr<RedBlackTree<KeyType,ElemType>>  leftRotationTransform();
         ColorTag colorTag_;
+
     };
 
 
