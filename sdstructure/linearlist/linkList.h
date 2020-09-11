@@ -44,9 +44,11 @@ namespace SmartDongLib {
         virtual  STATUS listAppend(boost::shared_ptr  < LinkList<ElemType>> L, ElemType e);
         virtual  int listLenth(boost::shared_ptr  < LinkList<ElemType>> L);
         virtual  STATUS listDelete(boost::shared_ptr  < LinkList<ElemType>> L, int i );
+        virtual  STATUS listDeleteByData(boost::shared_ptr  < LinkList<ElemType>> L, ElemType e );
         virtual STATUS listPop( boost::shared_ptr  < LinkList<ElemType>> L);
         virtual  ElemType listGet(boost::shared_ptr  < LinkList<ElemType>> L, int i );
         virtual  STATUS listMerge(boost::shared_ptr  < LinkList<ElemType>> L1, boost::shared_ptr  < LinkList<ElemType>>  L2, bool isMegerHead= true);
+        virtual int listGetIndex(boost::shared_ptr  < LinkList<ElemType>> L1, ElemType elem);
     };
 }
 

@@ -305,7 +305,38 @@ namespace SmartDongLib {
         p1->next=p2;
         return SD_CONST::SD_SUCCESS;
     }
+    /**
+     * <p>根据值返回在链表中的位置，循环链表可用
+     * @tparam ElemType
+     * @param L1
+     * @param elem
+     * @return
+     */
+    template<class ElemType>
+    int LinkListUtil<ElemType>::listGetIndex(boost::shared_ptr<LinkList<ElemType>> L1, ElemType elem) {
+        boost::shared_ptr  < LinkList<ElemType>> p1 =L1;
+        int ret=-1;
+        if (p1->data==elem){
+            ret++;
+            return ret;
+        }
+        ret++;
+        p1= p1->next;
+        while(p1 && p1 !=L1){
+            ret++;
+            if (p1->data == elem){
+                return ret;
+            }
+            p1= p1->next;
+        }
+        return -1;
+    }
 
+    template<class ElemType>
+    STATUS LinkListUtil<ElemType>::listDeleteByData(boost::shared_ptr<LinkList<ElemType>> L, ElemType e) {
+       int index =listGetIndex(L,e);
+       return listDelete(L,index);
+    }
 
 
 }

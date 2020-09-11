@@ -38,4 +38,9 @@ add_executable(SmartDongLib
         sdstructure/tree/balancedbinarytree.h
         sdstructure/tree/redblacktree.cpp
         sdstructure/tree/redblacktree.h
-        entry/redblackEntry.cpp)
+        sdstructure/node.h
+        sdstructure/graph/graphadjacencylist.cpp
+        sdstructure/graph/graphadjacencylist.h
+        sdstructure/graph/digraph.cpp
+        sdstructure/graph/digraph.h
+        entry/digraphEntry.cpp)
