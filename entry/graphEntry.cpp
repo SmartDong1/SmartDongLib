@@ -37,9 +37,9 @@ int main() {
     digraph.setEdge('M','L').setEdge('M','J').setEdge('M','B');
 //    digraph.deleteNodeByKey('B');
 //    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
-    vector<int> indexes =digraph.breadthFirstSearch(false,9);
-    for (int i = 0; i < indexes.size(); ++i) {
-        cout<<indexes[i]<<endl;
+    vector<int> indexes =digraph.breadthFirstSearch('J');
+    for (int indexe : indexes) {
+        cout<<indexe<<endl;
     }
     cout<<"<<<<<finish>>>>>>>"<<endl;
 

@@ -163,7 +163,10 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     std::vector<int> Graph<KeyType, ElemType>::depthFirstSearch(KeyType key, bool isSearchAllNode,
                                                                 int (*Visit)(Graph &, int)) {
-        return depthFirstSearch(isSearchAllNode,findKeyOnIndex(key),Visit);
+        int keyindex = findKeyOnIndex(key);
+        if (keyindex == -1)
+            return std::vector<int>();
+        return depthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
 
 
@@ -260,7 +263,10 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     std::vector<int> Graph<KeyType, ElemType>::breadthFirstSearch(KeyType key, bool isSearchAllNode,
                                                                 int (*Visit)(Graph &, int)) {
-        return breadthFirstSearch(isSearchAllNode,findKeyOnIndex(key),Visit);
+        int keyindex = findKeyOnIndex(key);
+        if (keyindex == -1)
+            return std::vector<int>();
+        return breadthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
 
 }
