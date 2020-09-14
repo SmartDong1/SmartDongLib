@@ -41,6 +41,6 @@ add_executable(SmartDongLib
         sdstructure/node.h
         sdstructure/graph/graphadjacencylist.cpp
         sdstructure/graph/graphadjacencylist.h
-        sdstructure/graph/digraph.cpp
-        sdstructure/graph/digraph.h
-        entry/digraphEntry.cpp)
+        sdstructure/graph/graph.cpp
+        sdstructure/graph/graph.h
+        entry/graphEntry.cpp)

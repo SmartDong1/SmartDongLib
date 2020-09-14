@@ -3,12 +3,12 @@
 //
 
 
-#include "graph/digraph.cpp"
+#include "graph/graph.cpp"
 #include <iostream>
 using namespace SmartDongLib;
 using namespace std;
 int main() {
-    Digraph<char,int> digraph;
+    Graph<char,int> digraph;
     digraph.addNode('A',1)
            .addNode('B',1)
            .addNode('C',1)
@@ -35,9 +35,12 @@ int main() {
     digraph.setEdge('K','H').setEdge('K','G');
     digraph.setEdge('L','M').setEdge('L','J').setEdge('L','A');
     digraph.setEdge('M','L').setEdge('M','J').setEdge('M','B');
-    digraph.deleteNodeByKey('B');
-    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
-
+//    digraph.deleteNodeByKey('B');
+//    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
+    vector<int> indexes =digraph.breadthFirstSearch(false,9);
+    for (int i = 0; i < indexes.size(); ++i) {
+        cout<<indexes[i]<<endl;
+    }
     cout<<"<<<<<finish>>>>>>>"<<endl;
 
 }
