@@ -18,7 +18,7 @@ namespace SmartDongLib {
         Graph& addNode(GraphAdjacencyList<KeyType,ElemType> n);
         Graph& addNode(KeyType, ElemType);
         Graph& deleteNodeByKey(KeyType key);
-        Graph& setEdge(KeyType src, KeyType target);
+        Graph& setEdge(KeyType src, KeyType target,double weight = 1.0);
         Graph& deleteEdge(KeyType src, KeyType target);
         std::vector<int> depthFirstSearch(KeyType visitIndex ,bool isSearchAllNode=false,int (*Visit)(Graph& g, int v)=printKey );
         std::vector<int> depthFirstSearch(bool isSearchAllNode=false,int visitIndex =0,int (*Visit)(Graph& g, int v)=printKey );

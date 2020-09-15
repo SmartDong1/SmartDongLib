@@ -6,18 +6,18 @@
 #define SMARTDONGLIB_GRAPHADJACENCYLIST_H
 
 #include <sdstructure/linearlist/linkList.cpp>
-
+#include "graphadjacencyedge.h"
 namespace SmartDongLib {
     template<class KeyType,class ElemType >
     class GraphAdjacencyList {
     public:
         GraphAdjacencyList(){
-            edge_=boost::shared_ptr<LinkList<int>>(new LinkList<int>());
+            edge_=boost::shared_ptr<LinkList<GraphAdjacencyEdge> >(new LinkList<GraphAdjacencyEdge> ());
         };
         GraphAdjacencyList(KeyType key, ElemType elem) : key_(key), elem_(elem) {
-            edge_=boost::shared_ptr<LinkList<int>>(new LinkList<int>());
+            edge_=boost::shared_ptr<LinkList<GraphAdjacencyEdge> >(new LinkList<GraphAdjacencyEdge> ());
         }
-        GraphAdjacencyList & insertEdge(int edgeIndex);
+        GraphAdjacencyList & insertEdge(int edgeIndex,double weight = 1.0);
         GraphAdjacencyList & deleteEdge(int edgeIndex);
         bool  isExistEdge(int edgeIndex);
         int outDegree();
@@ -26,14 +26,14 @@ namespace SmartDongLib {
         GraphAdjacencyList & key(KeyType key);
         ElemType elem() const;
         GraphAdjacencyList & elem(ElemType elem);
-        const boost::shared_ptr<LinkList<int>> &edge() const;
-        GraphAdjacencyList & edge(const boost::shared_ptr<LinkList<int>> &edge);
+        const boost::shared_ptr<LinkList<GraphAdjacencyEdge> > &edge() const;
+        GraphAdjacencyList & edge(const boost::shared_ptr<LinkList<GraphAdjacencyEdge> > &edge);
 
     private:
         KeyType key_;
         ElemType elem_;
-        boost::shared_ptr <LinkList<int>> edge_;
-        LinkListUtil<int> linkListUtil_;
+        boost::shared_ptr <LinkList<GraphAdjacencyEdge> > edge_;
+        LinkListUtil<GraphAdjacencyEdge> linkListUtil_;
     };
 
 

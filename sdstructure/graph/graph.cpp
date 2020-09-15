@@ -67,11 +67,11 @@ namespace SmartDongLib {
         for (int i = 0; i < nodes_.size(); ++i) {
             //每个结点删除对应的边
             nodes_.at(i).deleteEdge(keyIndex);
-            boost::shared_ptr<LinkList<int>> edge=nodes_[i].edge();
+            boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[i].edge();
             while (edge){
                 //大于keyIndex 的结点下标都要减1
-                if (edge->data > keyIndex){
-                    edge->data = edge->data -1;
+                if (edge->data.nodeIndex_ > keyIndex){
+                    edge->data.nodeIndex_ = edge->data.nodeIndex_ -1;
                 }
                 edge=edge->next;
             }
@@ -90,16 +90,16 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target) {
+    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target,double weight ) {
         int srcIndex = findKeyOnIndex(src);
         int targetIndex = findKeyOnIndex(target);
         if (srcIndex == -1 || targetIndex == -1){
             //不存在所谓的结点
             return *this;
         }
-        nodes_.at(srcIndex).insertEdge(targetIndex);
+        nodes_.at(srcIndex).insertEdge(targetIndex,weight);
         if (isUndirectedgraph_){
-            nodes_.at(targetIndex).insertEdge(srcIndex);
+            nodes_.at(targetIndex).insertEdge(srcIndex,weight);
         }
         return *this;
     }
@@ -176,11 +176,11 @@ namespace SmartDongLib {
         visited[visitIndex] = true;
         output.push_back(visitIndex);
 
-        boost::shared_ptr<LinkList<int>> edge=nodes_[visitIndex].edge();
+        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[visitIndex].edge();
         while (edge->next) {
             edge = edge->next;
-            if (!visited[edge->data]){
-                DFS(edge->data,visited,output,Visit);
+            if (!visited[edge->data.nodeIndex_]){
+                DFS(edge->data.nodeIndex_,visited,output,Visit);
             }
         }
     }
@@ -212,14 +212,14 @@ namespace SmartDongLib {
         while (!indexQueue.empty()){
             int nextindex = indexQueue.front();
             indexQueue.pop();
-            boost::shared_ptr<LinkList<int>> edge=nodes_[nextindex].edge();
+            boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();
             while (edge->next) {
                 edge = edge->next;
-                if (!visited[edge->data]){
-                    visited[edge->data] = true;
-                    Visit(*this,edge->data);
-                    visitNode.push_back(edge->data);
-                    indexQueue.push(edge->data);
+                if (!visited[edge->data.nodeIndex_]){
+                    visited[edge->data.nodeIndex_] = true;
+                    Visit(*this,edge->data.nodeIndex_);
+                    visitNode.push_back(edge->data.nodeIndex_);
+                    indexQueue.push(edge->data.nodeIndex_);
                 } //if
             } // while (edge->next) {
         }   //while (!indexQueue.empty()){
@@ -234,14 +234,14 @@ namespace SmartDongLib {
                     while (!indexQueue.empty()){
                         int nextindex = indexQueue.front();
                         indexQueue.pop();
-                        boost::shared_ptr<LinkList<int>> edge=nodes_[nextindex].edge();
+                        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();
                         while (edge->next) {
                             edge = edge->next;
-                            if (!visited[edge->data]){
-                                visited[edge->data] = true;
-                                Visit(*this,edge->data);
-                                visitNode.push_back(edge->data);
-                                indexQueue.push(edge->data);
+                            if (!visited[edge->data.nodeIndex_]){
+                                visited[edge->data.nodeIndex_] = true;
+                                Visit(*this,edge->data.nodeIndex_);
+                                visitNode.push_back(edge->data.nodeIndex_);
+                                indexQueue.push(edge->data.nodeIndex_);
                             } //if
                         } // while (edge->next) {
                     }//while (!indexQueue.empty()){

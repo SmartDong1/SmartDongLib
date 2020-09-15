@@ -33,8 +33,9 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    GraphAdjacencyList<KeyType, ElemType>  &GraphAdjacencyList<KeyType, ElemType>::insertEdge(int edgeIndex) {
-        linkListUtil_.listAppend(edge_, edgeIndex);
+    GraphAdjacencyList<KeyType, ElemType>  &GraphAdjacencyList<KeyType, ElemType>::insertEdge(int edgeIndex,double weight ) {
+        GraphAdjacencyEdge newedge(edgeIndex,weight);
+        linkListUtil_.listAppend(edge_, newedge);
         return  *this;
     }
     /**
@@ -46,7 +47,7 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     bool GraphAdjacencyList<KeyType, ElemType>::isExistEdge(int edgeIndex) {
-        int index=linkListUtil_.listGet(edge_,edgeIndex);
+        int index=linkListUtil_.listGet(edge_,edgeIndex).nodeIndex_;
         return index != -1;
     }
 
@@ -73,12 +74,12 @@ namespace SmartDongLib {
     }
 
     template<class KeyType, class ElemType>
-    const boost::shared_ptr<LinkList<int>> &GraphAdjacencyList<KeyType, ElemType>::edge() const {
+    const boost::shared_ptr<LinkList<GraphAdjacencyEdge> > &GraphAdjacencyList<KeyType, ElemType>::edge() const {
         return edge_;
     }
 
     template<class KeyType, class ElemType>
-    GraphAdjacencyList<KeyType, ElemType>  & GraphAdjacencyList<KeyType, ElemType>::edge(const boost::shared_ptr<LinkList<int>> &edge) {
+    GraphAdjacencyList<KeyType, ElemType>  & GraphAdjacencyList<KeyType, ElemType>::edge(const boost::shared_ptr<LinkList<GraphAdjacencyEdge> > &edge) {
         edge_ = edge;
         return *this;
     }
