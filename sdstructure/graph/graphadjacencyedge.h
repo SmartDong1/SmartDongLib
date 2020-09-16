@@ -13,7 +13,10 @@ namespace SmartDongLib {
         GraphAdjacencyEdge(int nodeIndex, double weight=1.0) : nodeIndex_(nodeIndex),
                                                            weight_(weight) {}
         bool operator ==(GraphAdjacencyEdge & ge){
-            return nodeIndex_ == ge.nodeIndex_ && weight_==ge.weight_;
+            return nodeIndex_ == ge.nodeIndex_ ;
+        }
+        bool operator ==(int index){
+            return nodeIndex_ == index;
         }
         int nodeIndex_;
         double  weight_;

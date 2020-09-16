@@ -35,12 +35,14 @@ int main() {
     digraph.setEdge('K','H',2.0).setEdge('K','G',2.0);
     digraph.setEdge('L','M',2.0).setEdge('L','J',2.0).setEdge('L','A',2.0);
     digraph.setEdge('M','L',2.0).setEdge('M','J',2.0).setEdge('M','B',2.0);
-    digraph.deleteNodeByKey('B');
-    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
-    vector<int> indexes =digraph.depthFirstSearch('J');
+//    digraph.deleteNodeByKey('B');
+//    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
+    vector<int> indexes =digraph.simpleCircuit('B');
+    cout<<"\n";
     for (int indexe : indexes) {
         cout<<indexe<<endl;
     }
+
     cout<<"<<<<<finish>>>>>>>"<<endl;
 
 }

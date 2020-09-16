@@ -268,5 +268,102 @@ namespace SmartDongLib {
             return std::vector<int>();
         return breadthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
+    /**
+     * <p> 根据深度优先遍历返回有向图和无向图的连通分量
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param visitIndex  要查询的起点
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    std::vector<int> Graph<KeyType, ElemType>::connectedComponent(KeyType visitIndex) {
+        return  depthFirstSearch(visitIndex);
+    }
+    /**
+     * <p> 私有成员函数,用深度优先原理迭代出第一个回路
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param visitIndex 正在遍历的点
+     * @param visited    已经遍历的点标识
+     * @param output     已走的结点路径
+     * @param Visit      结点函数
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    bool Graph<KeyType, ElemType>::circuitJudge(int visitIndex, bool visited[], std::vector<int> &output,
+                                                   int (*Visit)(Graph &, int)) {
+        Visit(*this,visitIndex);
+        visited[visitIndex] = true;
+        int outputsize=output.size();
+        output.push_back(visitIndex);
+        bool flag= false;
+        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[visitIndex].edge();
+        while (edge->next) {
+            edge = edge->next;
+            if (!visited[edge->data.nodeIndex_]){
+                flag = circuitJudge(edge->data.nodeIndex_,visited,output,Visit);
+                if (!flag){
+                    //深度优先回退
+                    output.pop_back();
+                } else{
+                    return flag;
+                }
+            } else{
+                if (!isUndirectedgraph_){
+                    //有向图,如果访问访问过的点 那就是有回路
+                    output.push_back(edge->data.nodeIndex_);
+                    return true;
+                } else{
+                    //无向图 如果访问的点是已访问的祖先结点 那就是回路
+                    for (int i = 0; i < outputsize -1 ; ++i) {
+                        if (edge->data.nodeIndex_ == output[i]){
+                            output.push_back(edge->data.nodeIndex_);
+                            return true;
+                        }
+                    }
+                }//isUndirectedgraph_
+            }
+        }
+        return flag;
+    }
+    /**
+     * <p> 根据深度优先搜索来返回 结点下标回路,空集表示无回路
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param visitIndex 开始的结点下标
+     * @param Visit     函数...
+     * @return 结点下标回路集
+     */
+    template<class KeyType, class ElemType>
+    std::vector<int>
+    Graph<KeyType, ElemType>::simpleCircuit(int visitIndex, int (*Visit)(Graph &, int)) {
+        std::vector<int> visitNode;
+        if (vexnum()<=0)
+            return std::vector<int>();
+        bool visited[vexnum()];
+        for (int i = 0; i < vexnum(); ++i) {
+            visited[i]= false;
+        };
+        bool flag=circuitJudge(visitIndex, visited, visitNode, Visit);
+        if (!flag){
+            visitNode.clear();
+        }
+        return visitNode;
+    }
+    /**
+     * <p>  根据深度优先搜索来返回 结点下标回路,空集表示无回路
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key    要开始的结点key
+     * @param Visit   函数
+     * @return 结点下标回路集
+     */
+    template<class KeyType, class ElemType>
+    std::vector<int> Graph<KeyType, ElemType>::simpleCircuit(KeyType key, int (*Visit)(Graph &, int)) {
+        int keyindex = findKeyOnIndex(key);
+        if (keyindex == -1)
+            return std::vector<int>();
+        return simpleCircuit(keyindex,Visit);
+    }
 
 }

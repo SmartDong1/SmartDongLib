@@ -26,9 +26,14 @@ namespace SmartDongLib {
         int findKeyOnIndex(KeyType k);
         std::vector<int> breadthFirstSearch(bool isSearchAllNode=false,int visitIndex =0,int (*Visit)(Graph& g, int v)=printKey );
         std::vector<int> breadthFirstSearch(KeyType visitIndex ,bool isSearchAllNode=false,int (*Visit)(Graph& g, int v)=printKey );
+        std::vector<int> connectedComponent(KeyType visitIndex);
+        std::vector<int> simpleCircuit(int visitIndex =0,int (*Visit)(Graph& g, int v)=printKey );
+        std::vector<int> simpleCircuit(KeyType visitIndex,int (*Visit)(Graph& g, int v)=printKey );
 
+        //图的最小路径,图的最小生成树
     protected:
     private:
+        bool circuitJudge(int visitIndex,bool visit[],std::vector<int> & output, int (*Visit)(Graph& , int v));
         static int printKey(Graph& g, int i){
             std::cout<<g.nodes_[i].key();
             return 0;
