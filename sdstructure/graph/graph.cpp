@@ -6,8 +6,8 @@
 namespace SmartDongLib {
     /**
      * <p>通过Key找到对应的结点在邻接表的下标
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param k
      * @return
      */
@@ -22,8 +22,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 给图插入新的结点
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param n
      * @return
      */
@@ -36,8 +36,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 给图插入新的结点
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param k 结点键值
      * @param e 结点数据
      * @return
@@ -52,8 +52,8 @@ namespace SmartDongLib {
     }
     /**
      * <p>根据Key值删除图的结点
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param key
      * @return
      */
@@ -83,8 +83,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 建立 源节点到目标结点的单向边
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param src 源节点
      * @param target 目标结点
      * @return
@@ -105,8 +105,8 @@ namespace SmartDongLib {
     }
     /**
      * <p>删除 src结点到target结点的单向边
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param src   出度结点
      * @param target  入度结点
      * @return
@@ -126,8 +126,8 @@ namespace SmartDongLib {
     }
     /**
      * <p>深度优先搜索调用函数
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点
      * @param visitIndex    开始遍历的起始点位置
      * @param Visit         对点的操作函数
@@ -153,8 +153,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 深度优先搜索重载函数
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param key             开始遍历的键值
      * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点
      * @param Visit         对点的操作函数
@@ -169,7 +169,15 @@ namespace SmartDongLib {
         return depthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
 
-
+    /**
+     * <p>深度优先搜索
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
+     * @param visitIndex 正在遍历的点
+     * @param visited    已经遍历的点标识
+     * @param output     已走的结点路径
+     * @param Visit      结点函数
+     */
     template<class KeyType, class ElemType>
     void Graph<KeyType, ElemType>::DFS(int visitIndex, bool visited[], std::vector<int> & output, int (*Visit)(Graph& , int)) {
         Visit(*this,visitIndex);
@@ -186,8 +194,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 广度优先遍历
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param isSearchAllNode  是否查询全部结点
      * @param visitIndex        首先开始查询的结点
      * @param Visit             对结点的操作函数
@@ -253,8 +261,8 @@ namespace SmartDongLib {
 
     /**
      * <p> 广度优先遍历重载函数
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param key             开始遍历的键值
      * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点
      * @param Visit         对点的操作函数
@@ -270,8 +278,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 根据深度优先遍历返回有向图和无向图的连通分量
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param visitIndex  要查询的起点
      * @return
      */
@@ -281,8 +289,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 私有成员函数,用深度优先原理迭代出第一个回路
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param visitIndex 正在遍历的点
      * @param visited    已经遍历的点标识
      * @param output     已走的结点路径
@@ -328,8 +336,8 @@ namespace SmartDongLib {
     }
     /**
      * <p> 根据深度优先搜索来返回 结点下标回路,空集表示无回路
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param visitIndex 开始的结点下标
      * @param Visit     函数...
      * @return 结点下标回路集
@@ -352,8 +360,8 @@ namespace SmartDongLib {
     }
     /**
      * <p>  根据深度优先搜索来返回 结点下标回路,空集表示无回路
-     * @tparam KeyType
-     * @tparam ElemType
+     * @tparam KeyType    结点的key类型
+     * @tparam ElemType   和结点所带的数据
      * @param key    要开始的结点key
      * @param Visit   函数
      * @return 结点下标回路集
