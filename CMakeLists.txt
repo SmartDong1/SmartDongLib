@@ -43,4 +43,5 @@ add_executable(SmartDongLib
         sdstructure/graph/graphadjacencylist.h
         sdstructure/graph/graph.cpp
         sdstructure/graph/graph.h
-        entry/graphEntry.cpp sdstructure/graph/graphadjacencyedge.h)
+        sdstructure/graph/graphadjacencyedge.h
+        entry/graphMiniSpanTreeEntry.cpp)

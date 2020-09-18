@@ -2,7 +2,6 @@
 // Created by Administrator on 2020/9/11.
 //
 #include "graph.h"
-
 namespace SmartDongLib {
     /**
      * <p>通过Key找到对应的结点在邻接表的下标
@@ -93,13 +92,26 @@ namespace SmartDongLib {
     Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target,double weight ) {
         int srcIndex = findKeyOnIndex(src);
         int targetIndex = findKeyOnIndex(target);
-        if (srcIndex == -1 || targetIndex == -1){
-            //不存在所谓的结点
-            return *this;
-        }
-        nodes_.at(srcIndex).insertEdge(targetIndex,weight);
-        if (isUndirectedgraph_){
-            nodes_.at(targetIndex).insertEdge(srcIndex,weight);
+        setEdgeByIndex(srcIndex,targetIndex,weight);
+//        if (srcIndex == -1 || targetIndex == -1){
+//            //不存在所谓的结点
+//            return *this;
+//        }
+//        nodes_.at(srcIndex).insertEdge(targetIndex,weight);
+//        if (isUndirectedgraph_){
+//            nodes_.at(targetIndex).insertEdge(srcIndex,weight);
+//        }
+        return *this;
+    }
+
+
+    template<class KeyType, class ElemType>
+    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdgeByIndex(int src, int target, double weight) {
+        if (src >= 0 && target>=0) {
+            nodes_.at(src).insertEdge(target, weight);
+            if (isUndirectedgraph_) {
+                nodes_.at(target).insertEdge(src, weight);
+            }
         }
         return *this;
     }
@@ -358,6 +370,8 @@ namespace SmartDongLib {
         }
         return visitNode;
     }
+
+
     /**
      * <p>  根据深度优先搜索来返回 结点下标回路,空集表示无回路
      * @tparam KeyType    结点的key类型
@@ -373,5 +387,101 @@ namespace SmartDongLib {
             return std::vector<int>();
         return simpleCircuit(keyindex,Visit);
     }
+    template<class KeyType, class ElemType>
+    const std::vector<GraphAdjacencyList<KeyType, ElemType>> &Graph<KeyType, ElemType>::getNodes() const {
+        return nodes_;
+    }
+
+    template<class KeyType, class ElemType>
+    const std::vector<std::vector<double>> &Graph<KeyType, ElemType>::getAdjacencyMatrix() const {
+        return adjacencyMatrix_;
+    }
+
+    template<class KeyType, class ElemType>
+    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrim(int nodeIndex) {
+
+        std::vector<int> usedIndex; //已经加入最小树的顶点集
+        std::vector<LowestCost> closedge; //已加入的顶点集到各其他顶点的最短路径
+        Graph retGraph(this->isUndirectedgraph_);
+        if (nodeIndex<0 || nodeIndex>=nodes_.size())
+            return retGraph;
+        for (int j = 0; j < nodes_.size(); ++j) {
+            retGraph.addNode(nodes_[j].key(),nodes_[j].elem());
+        }
+        usedIndex.push_back(nodeIndex);
+        closedge.resize(nodes_.size());
+        closedge[nodeIndex] = LowestCost(nodeIndex,0.0);
+        //初始化 closedge
+        boost::shared_ptr<LinkList<GraphAdjacencyEdge> >edge =  nodes_[nodeIndex].edge();
+        while (edge->next){
+            edge =edge->next;
+            closedge[edge->data.nodeIndex_] =LowestCost(nodeIndex,edge->data.weight_);
+        }
+//        std::cout<<nodes_[nodeIndex].key()<<":";
+//        for (int i = 0; i < closedge.size(); ++i) {
+//            std::cout<<i<<"-"<<nodes_[closedge[i].nodeIndex_].key()<<"-"<<closedge[i].lowcost_<<"\t";
+//        }
+//        std::cout<<"\n";
+        for (int meaninglessVar = 0; meaninglessVar < nodes_.size(); ++meaninglessVar) {
+            //获取closedge 中最小的下标
+            int newNodeIndex = getMinCostnodeIndex(closedge);
+            if (newNodeIndex < 0 )
+                break;
+            retGraph.setEdgeByIndex(closedge[newNodeIndex].nodeIndex_,newNodeIndex,closedge[newNodeIndex].lowcost_);
+            usedIndex.push_back(newNodeIndex);
+            closedge[newNodeIndex] =LowestCost(closedge[newNodeIndex].nodeIndex_,0.0);
+            boost::shared_ptr<LinkList<GraphAdjacencyEdge> >newNodeEdge =  nodes_[newNodeIndex].edge();
+            while (newNodeEdge->next){
+                newNodeEdge =newNodeEdge->next;
+                if (newNodeEdge->data.weight_ < closedge[newNodeEdge->data.nodeIndex_].lowcost_) {
+                    closedge[newNodeEdge->data.nodeIndex_] = LowestCost(newNodeIndex, newNodeEdge->data.weight_);
+                }
+            }
+//            std::cout<<nodes_[newNodeIndex].key()<<":";
+//            for (int i = 0; i < closedge.size(); ++i) {
+//                std::cout<<i<<"-"<<nodes_[closedge[i].nodeIndex_].key()<<"-"<<closedge[i].lowcost_<<"\t";
+//            }
+//            std::cout<<"\n";
+
+        }
+
+        return retGraph;
+    }
+
+    template<class KeyType, class ElemType>
+    void Graph<KeyType, ElemType>::initialAdjacencyMatrix(){
+        adjacencyMatrix_.clear();
+        adjacencyMatrix_.resize(nodes_.size());
+        for (auto & i : adjacencyMatrix_) {
+            double maxdouble=SD_CONST::SD_MAXDOUBLE;
+            i.resize(nodes_.size(),maxdouble);
+        }
+        for (int j = 0; j < nodes_.size(); ++j) {
+            boost::shared_ptr<LinkList<GraphAdjacencyEdge> >edge =  nodes_[j].edge();
+            while (edge->next){
+                edge =edge->next;
+                adjacencyMatrix_[j][edge->data.nodeIndex_] = edge->data.weight_;
+            }
+        }
+    }
+
+    template<class KeyType, class ElemType>
+    int Graph<KeyType, ElemType>::getMinCostnodeIndex(std::vector<LowestCost> &closedge) {
+        int ret = -1;
+        double minValue=SD_CONST::SD_MAXDOUBLE;
+        for (int i = 0; i < closedge.size(); ++i) {
+            if (closedge[i].lowcost_<minValue && closedge[i].lowcost_>0.0){
+                minValue =closedge[i].lowcost_;
+                ret = i;
+            }
+        }
+        return  ret;
+    }
+
+    template<class KeyType, class ElemType>
+    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrim(KeyType nodekey) {
+        return miniSpanTreePrim(findKeyOnIndex(nodekey));
+    }
+
 
 }
