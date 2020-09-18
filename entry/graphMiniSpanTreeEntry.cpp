@@ -24,10 +24,10 @@ int main() {
             .setEdge('C','F',4.0);
     digraph.setEdge('F','D',2.0)
             .setEdge('F','E',6.0);
-//    digraph.simpleCircuit('A');
+    digraph.simpleCircuitOnKey('A');
 
     cout<<sizeof(int) <<" "<<sizeof(char);
 
-    Graph<char,int> miniTree=digraph.miniSpanTreePrim(0);
-//    miniTree.connectedComponent('A');
+    Graph<char,int> miniTree= digraph.miniSpanTreePrimOnIndex(0);
+    miniTree.connectedComponent('A');
 }

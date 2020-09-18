@@ -30,14 +30,14 @@ namespace SmartDongLib {
         std::vector<int> breadthFirstSearch(bool isSearchAllNode=false,int visitIndex =0,int (*Visit)(Graph& g, int v)=printKey );
         std::vector<int> breadthFirstSearch(KeyType visitIndex ,bool isSearchAllNode=false,int (*Visit)(Graph& g, int v)=printKey );
         std::vector<int> connectedComponent(KeyType visitIndex);
-        std::vector<int> simpleCircuit(int visitIndex =0,int (*Visit)(Graph& g, int v)=printKey );
+        std::vector<int> simpleCircuitOnIndex(int visitIndex = 0, int (*Visit)(Graph& g, int v)= printKey);
 
-        std::vector<int> simpleCircuit(KeyType visitIndex,int (*Visit)(Graph& g, int v)=printKey );
+        std::vector<int> simpleCircuitOnKey(KeyType visitIndex, int (*Visit)(Graph& g, int v)= printKey);
         void initialAdjacencyMatrix();
 
         //图的最小路径,图的最小生成树
-        Graph miniSpanTreePrim(int nodeIndex);
-        Graph miniSpanTreePrim(KeyType nodeIndex);
+        Graph miniSpanTreePrimOnIndex(int nodeIndex);
+        Graph miniSpanTreePrimOnKey(KeyType nodeIndex);
 
 
 

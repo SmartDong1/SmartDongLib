@@ -38,7 +38,7 @@ int main() {
     digraph.initialAdjacencyMatrix();
 //    digraph.deleteNodeByKey('B');
 //    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
-    vector<int> indexes =digraph.simpleCircuit('B');
+    vector<int> indexes = digraph.simpleCircuitOnKey('B');
     cout<<"\n";
     for (int indexe : indexes) {
         cout<<indexe<<endl;

@@ -356,7 +356,7 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     std::vector<int>
-    Graph<KeyType, ElemType>::simpleCircuit(int visitIndex, int (*Visit)(Graph &, int)) {
+    Graph<KeyType, ElemType>::simpleCircuitOnIndex(int visitIndex, int (*Visit)(Graph &, int)) {
         std::vector<int> visitNode;
         if (vexnum()<=0)
             return std::vector<int>();
@@ -381,11 +381,11 @@ namespace SmartDongLib {
      * @return 结点下标回路集
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::simpleCircuit(KeyType key, int (*Visit)(Graph &, int)) {
+    std::vector<int> Graph<KeyType, ElemType>::simpleCircuitOnKey(KeyType key, int (*Visit)(Graph &, int)) {
         int keyindex = findKeyOnIndex(key);
         if (keyindex == -1)
             return std::vector<int>();
-        return simpleCircuit(keyindex,Visit);
+        return simpleCircuitOnIndex(keyindex, Visit);
     }
     template<class KeyType, class ElemType>
     const std::vector<GraphAdjacencyList<KeyType, ElemType>> &Graph<KeyType, ElemType>::getNodes() const {
@@ -398,7 +398,7 @@ namespace SmartDongLib {
     }
 
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrim(int nodeIndex) {
+    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnIndex(int nodeIndex) {
 
         std::vector<int> usedIndex; //已经加入最小树的顶点集
         std::vector<LowestCost> closedge; //已加入的顶点集到各其他顶点的最短路径
@@ -479,8 +479,8 @@ namespace SmartDongLib {
     }
 
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrim(KeyType nodekey) {
-        return miniSpanTreePrim(findKeyOnIndex(nodekey));
+    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnKey(KeyType nodekey) {
+        return miniSpanTreePrimOnIndex(findKeyOnIndex(nodekey));
     }
 
 
