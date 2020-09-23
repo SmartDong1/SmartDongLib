@@ -2,6 +2,8 @@
 // Created by Administrator on 2020/9/11.
 //
 #include "graph.h"
+
+#include <utility>
 namespace SmartDongLib {
     /**
      * <p>通过Key找到对应的结点在邻接表的下标
@@ -537,5 +539,86 @@ namespace SmartDongLib {
         return shortPathOnIndex(findKeyOnIndex(srcKey),isInitAdjacencyMatrix);
     }
 
+    template<class KeyType, class ElemType>
+    double Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex,int target,std::vector<int>& hasVisitIndex, bool isInitAdjacencyMatrix) {
+        if (isInitAdjacencyMatrix){
+            initialAdjacencyMatrix();
+        }
 
+        if (srcIndex == target){
+            return 0;
+        }
+
+        hasVisitIndex.insert(hasVisitIndex.begin(), target);
+        std::vector<int> hasVisitIndex_temp=hasVisitIndex;  //保留递归入栈时的状态
+
+        std::vector<int> preNode;//入栈时,未访问的前驱节点集合
+        for (int i = 0; i <  adjacencyMatrix_.size();++i) {
+            if (adjacencyMatrix_[i][target] != SD_CONST::SD_MAXDOUBLE){
+                //判断是否已经访问,把入栈时未访问的前驱节点加进去
+                bool isVisit=isContain(hasVisitIndex,i);
+                if (!isVisit) {
+                    preNode.push_back(i);
+                }
+            }
+        }
+        double maxvalue=SD_CONST::SD_MINDOUBLE;
+        if (adjacencyMatrix_[srcIndex][target] !=SD_CONST::SD_MAXDOUBLE){
+            //如果再邻接矩阵有直接值，先初始化
+            maxvalue = adjacencyMatrix_[srcIndex][target];
+        }
+        for (int & pnode : preNode) {
+            //取 源节点到前驱节点,前驱节点到目标节点的最大值,并最大值且返回递归的路经
+           if (adjacencyMatrix_[pnode][target] != SD_CONST::SD_MAXDOUBLE ){
+               //使用复制后继节点入栈时的已访问状态
+               //count  hasVisitIndex&     target      hasVisitIndex_temp      hasVisitIndextemp
+               //1       null               9           9                       9
+               //2       9                  7           7,9                     7,9
+               //3       7,9                5           5,7,9                   5,7,9
+               //4       5,7,9              2           2,5,7,9                 2,5,7,9
+               //5       2,5,7,9            1           1,2,5,7,9               2,5,7,9          cost::18
+               //3->6                       3                                   3,5,7,9
+               //7       3,5,7,9            1           1,3,5,7,9
+               std::vector<int> hasVisitIndextemp=hasVisitIndex_temp;
+               double value = longPathOnIndex(srcIndex, pnode, hasVisitIndextemp, false)
+                              + adjacencyMatrix_[pnode][target];
+               if (maxvalue<value){
+                   maxvalue=value;
+                   hasVisitIndex=hasVisitIndextemp;
+               }
+           }
+
+        }
+        return maxvalue;
+    }
+
+    template<class KeyType, class ElemType>
+    LongestPath Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex, int target, bool isInitAdjacencyMatrix) {
+
+        std::vector<int> retPath;
+        double maxPath=longPathOnIndex(srcIndex,target,retPath, isInitAdjacencyMatrix);
+        retPath.insert(retPath.begin(),srcIndex);
+        return LowestPath(retPath,maxPath);
+    }
+
+
+    inline int LowestPath::getMincost(std::vector<LowestPath> vec) {
+        int minIndex=-1;
+        for (int i = 0; i <vec.size() ; ++i) {
+            if (!(vec[i].hasVisit_)){
+                minIndex = i;
+                break;
+            }
+        }
+        for (int i = 0; i <vec.size() ; ++i) {
+            if (vec[i] < vec[minIndex] && !(vec[i].hasVisit_)){
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+
+    inline LowestPath::LowestPath(std::vector<int> pathIndex, double lowcost, bool hasVisit ) : pathIndex_(std::move(pathIndex)),
+                                                                                               lowcost_(lowcost),
+                                                                                               hasVisit_(hasVisit) {}
 }

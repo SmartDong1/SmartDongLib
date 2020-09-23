@@ -56,4 +56,33 @@ int main() {
         cout<<i.lowcost_<<endl;
 
     }
+
+    Graph<char,int> digraph3(false);
+    digraph3.addNode('1',1)
+            .addNode('2',1)
+            .addNode('3',1)
+            .addNode('4',1)
+            .addNode('5',1)
+            .addNode('6',1)
+            .addNode('7',1)
+            .addNode('8',1)
+            .addNode('9',1);
+    digraph3.setEdge('1','4',5)
+            .setEdge('1','2',6)
+            .setEdge('1','3',4);
+    digraph3.setEdge('2','5',1);
+    digraph3.setEdge('3','5',1);
+    digraph3.setEdge('4','6',2);
+    digraph3.setEdge('5','7',9)
+            .setEdge('5','8',7);
+    digraph3.setEdge('6','8',4);
+    digraph3.setEdge('7','9',2);
+    digraph3.setEdge('8','9',4);
+
+    cout<<"\n\n\n";
+    LongestPath  maxValue = digraph2.longPathOnIndex(0,3, true);
+    cout<<maxValue.lowcost_<<endl;
+    for (int k : maxValue.pathIndex_) {
+        cout<<"V"<<k+1<<",";
+    }
 }
