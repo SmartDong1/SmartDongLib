@@ -483,5 +483,59 @@ namespace SmartDongLib {
         return miniSpanTreePrimOnIndex(findKeyOnIndex(nodekey));
     }
 
+    template<class KeyType, class ElemType>
+    std::vector<LowestPath>
+    Graph<KeyType, ElemType>::shortPathOnIndex(int srcIndex, bool isInitAdjacencyMatrix) {
+        if (isInitAdjacencyMatrix){
+            initialAdjacencyMatrix();
+        }
+        if (srcIndex<0 || srcIndex>=nodes_.size())
+            return std::vector<LowestPath>();
+        //邻接矩阵从第 srcIndex行开始选择最小值
+        std::vector<LowestPath> retLowestPaths ;
+        std::vector<LowestPath> lowestPaths ;
+        retLowestPaths.resize(this->vexnum());
+        lowestPaths.resize(this->vexnum());
+        for (int first = 0; first < lowestPaths.size(); ++first) {
+            lowestPaths.at(first).pathIndex_.push_back(srcIndex);
+            lowestPaths.at(first).lowcost_=adjacencyMatrix_[srcIndex][first];
+        }
+        //0      1      2       3       4       5           currentPathIndex    currentPath   lowestcost
+        //∞(0,)  ∞(0,)  10(0,)  ∞(0,)   30(0,)  100(0,)     2                   0,2           10
+        //∞(0,)  ∞(0,)          60(0,2) 30(0,)  100(0,)     4                   0,4           30
+        //∞(0,)  ∞(0,)          50(0,4)         90(0,4,)    3                   0,4,3         50
+        //∞(0,)  ∞(0,)                          60(0,4,3,)  5                   0,4,3,5       60
+        //∞(0,)  ∞(0,)                                      0                   0,0           ∞
+        //       ∞(0,)                                      1                   0,1           ∞
+        std::vector<int> currentPath;
+        double lowestCost;
+        for (int i = 0; i < lowestPaths.size(); ++i) {
+            //获取最小lostCost的下标 并且返回结果
+            int currentPathIndex = LowestPath::getMincost(lowestPaths);
+            currentPath= lowestPaths[currentPathIndex].pathIndex_;
+            currentPath.push_back(currentPathIndex);
+            lowestCost=lowestPaths[currentPathIndex].lowcost_;
+            retLowestPaths[currentPathIndex].lowcost_=lowestCost;
+            retLowestPaths[currentPathIndex].pathIndex_=currentPath;
+            lowestPaths[currentPathIndex].hasVisit_= true;
+            //----------------------
+            for (int j = 0; j < lowestPaths.size(); ++j) {
+                //如果当前路径是更短的路径，从新设置路径和该路径的最小值
+                if (lowestCost+ adjacencyMatrix_[currentPathIndex][j] <lowestPaths[j].lowcost_) {
+                    lowestPaths[j].lowcost_= lowestCost+ adjacencyMatrix_[currentPathIndex][j] ;
+                    lowestPaths[j].pathIndex_=currentPath;
+                }
+            }
+
+        }
+
+        return retLowestPaths;
+    }
+
+    template<class KeyType, class ElemType>
+    std::vector<LowestPath> Graph<KeyType, ElemType>::shortPathOnKey(KeyType srcKey, bool isInitAdjacencyMatrix) {
+        return shortPathOnIndex(findKeyOnIndex(srcKey),isInitAdjacencyMatrix);
+    }
+
 
 }

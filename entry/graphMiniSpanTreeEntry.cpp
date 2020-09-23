@@ -30,4 +30,30 @@ int main() {
 
     Graph<char,int> miniTree= digraph.miniSpanTreePrimOnIndex(0);
     miniTree.connectedComponent('A');
+    Graph<char,int> digraph2;
+    digraph2.addNode('A',1)
+            .addNode('B',1)
+            .addNode('C',1)
+            .addNode('D',1)
+            .addNode('E',1)
+            .addNode('F',1);
+    digraph2.setEdge('A','C',10)
+            .setEdge('A','E',30)
+            .setEdge('A','F',100);
+    digraph2.setEdge('B','C',5);
+    digraph2.setEdge('C','D',50);
+    digraph2.setEdge('D','F',10);
+    digraph2.setEdge('E','D',20)
+             .setEdge('E','F',60);
+    digraph2.initialAdjacencyMatrix();
+    std::vector<LowestPath> loestpath=digraph2.shortPathOnKey('A', false);
+    cout<<"\n\n\n";
+    for (auto & i : loestpath) {
+        for (int j : i.pathIndex_) {
+            cout << j <<",";
+        }
+        cout <<"\t";
+        cout<<i.lowcost_<<endl;
+
+    }
 }

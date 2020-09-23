@@ -12,6 +12,42 @@
 #include <queue>
 #include <const.h>
 namespace SmartDongLib {
+    class LowestCost{
+    public:
+        LowestCost(){lowcost_=SD_CONST::SD_MAXDOUBLE;}
+        LowestCost(int nodeIndex, double lowcost) : nodeIndex_(nodeIndex), lowcost_(lowcost) {}
+        int nodeIndex_;
+        double lowcost_;
+        bool  operator <(LowestCost& l1){ return  lowcost_>l1.lowcost_;}
+    };
+    class LowestPath{
+    public:
+        LowestPath(){lowcost_=SD_CONST::SD_MAXDOUBLE;hasVisit_= false;}
+        LowestPath(double lowcost): lowcost_(lowcost), hasVisit_(false){}
+
+        std::vector<int> pathIndex_;
+        double lowcost_;
+        bool hasVisit_;
+        static int getMincost(std::vector<LowestPath> vec){
+            int minIndex=-1;
+            for (int i = 0; i <vec.size() ; ++i) {
+                if (!(vec[i].hasVisit_)){
+                    minIndex = i;
+                    break;
+                }
+            }
+            for (int i = 0; i <vec.size() ; ++i) {
+                if (vec[i] < vec[minIndex] && !(vec[i].hasVisit_)){
+                    minIndex = i;
+                }
+            }
+            return minIndex;
+        }
+        bool  operator <(LowestPath& l1) const{ return  this->lowcost_<l1.lowcost_;}
+        double operator +(double lowcosttemp) const{
+            return lowcost_+lowcosttemp;
+        }
+    };
     template<class KeyType,class ElemType >
     class Graph {
     public:
@@ -38,21 +74,16 @@ namespace SmartDongLib {
         //图的最小路径,图的最小生成树
         Graph miniSpanTreePrimOnIndex(int nodeIndex);
         Graph miniSpanTreePrimOnKey(KeyType nodeIndex);
-
-
-
+        //最短路径和最长路径
+        std::vector<LowestPath> shortPathOnIndex(int srcIndex,bool isInitAdjacencyMatrix= true);
+        std::vector<LowestPath> shortPathOnKey(KeyType srcKey,bool isInitAdjacencyMatrix= true);
         const std::vector<GraphAdjacencyList<KeyType, ElemType>> &getNodes() const;
 
         const std::vector<std::vector<double>> &getAdjacencyMatrix() const;
-        class LowestCost{
-        public:
-            LowestCost(){lowcost_=SD_CONST::SD_MAXDOUBLE;}
-            LowestCost(int nodeIndex, double lowcost) : nodeIndex_(nodeIndex), lowcost_(lowcost) {}
-            int nodeIndex_;
-            double lowcost_;
-            bool  operator <(LowestCost& l1){ return  lowcost_>l1.lowcost_;}
-        };
+
+
     protected:
+
     private:
         static int getMinCostnodeIndex(std::vector<LowestCost> &closedge);
         bool circuitJudge(int visitIndex,bool visit[],std::vector<int> & output, int (*Visit)(Graph& , int v));
