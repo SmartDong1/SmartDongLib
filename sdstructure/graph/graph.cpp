@@ -95,14 +95,6 @@ namespace SmartDongLib {
         int srcIndex = findKeyOnIndex(src);
         int targetIndex = findKeyOnIndex(target);
         setEdgeByIndex(srcIndex,targetIndex,weight);
-//        if (srcIndex == -1 || targetIndex == -1){
-//            //不存在所谓的结点
-//            return *this;
-//        }
-//        nodes_.at(srcIndex).insertEdge(targetIndex,weight);
-//        if (isUndirectedgraph_){
-//            nodes_.at(targetIndex).insertEdge(srcIndex,weight);
-//        }
         return *this;
     }
 
@@ -158,7 +150,7 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     std::vector<int> Graph<KeyType, ElemType>::depthFirstSearch(bool isSearchAllNode , int visitIndex, int (*Visit)(Graph& , int)) {
         std::vector<int> visitNode;
-        if (vexnum()<=0)
+        if (vexnum()<=0 || visitIndex<0 || visitIndex>=nodes_.size())
             return std::vector<int>();
         bool visited[vexnum()];
         for (int i = 0; i < vexnum(); ++i) {
@@ -306,8 +298,8 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::connectedComponent(KeyType visitIndex) {
-        return  depthFirstSearch(visitIndex);
+    std::vector<int> Graph<KeyType, ElemType>::connectedComponent(KeyType visitKey) {
+        return  depthFirstSearch(visitKey);
     }
     /**
      * <p> 私有成员函数,用深度优先原理迭代出第一个回路
@@ -367,6 +359,8 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     std::vector<int>
     Graph<KeyType, ElemType>::simpleCircuitOnIndex(int visitIndex, int (*Visit)(Graph &, int)) {
+        if (visitIndex<0 || visitIndex>=nodes_.size())
+            return std::vector<int>();
         std::vector<int> visitNode;
         if (vexnum()<=0)
             return std::vector<int>();
@@ -383,7 +377,7 @@ namespace SmartDongLib {
 
 
     /**
-     * <p>  根据深度优先搜索来返回 结点下标回路,空集表示无回路
+     * <p>  根据深度优先搜索来返回回路 结点下标,空集表示无回路
      * @tparam KeyType    结点的key类型
      * @tparam ElemType   和结点所带的数据
      * @param key    要开始的结点key
@@ -656,11 +650,13 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     LongestPath Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex, int target, bool isInitAdjacencyMatrix) {
-
-        std::vector<int> retPath;
-        double maxPath=longPathOnIndex(srcIndex,target,retPath, isInitAdjacencyMatrix);
-        retPath.insert(retPath.begin(),srcIndex);
-        return LowestPath(retPath,maxPath);
+        if (srcIndex >= 0 && target>=0 && srcIndex<nodes_.size() && target < nodes_.size()) {
+            std::vector<int> retPath;
+            double maxPath = longPathOnIndex(srcIndex, target, retPath, isInitAdjacencyMatrix);
+            retPath.insert(retPath.begin(), srcIndex);
+            return LowestPath(retPath, maxPath);
+        }
+        return LongestPath();
     }
 
     /**
