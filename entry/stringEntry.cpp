@@ -17,10 +17,15 @@ int main(){
     }
 
 
-    int index=mainstr.index_KMP(substr);
+    int index= mainstr.indexKMP(substr);
     int index2=mainstr.index(substr);
     cout<<endl<<index;
     cout<<endl<<index2;
     mainstr.replace(substr,target);
     cout<<endl<<mainstr.get();
+
+    SString asbbefg("asbbbefg");
+    SString aubeg("aubbeg");
+    SString ret=asbbefg.maxCommonSubstr(asbbefg);
+    cout<<"\n"<<ret;
 }
