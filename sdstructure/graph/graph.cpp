@@ -106,10 +106,18 @@ namespace SmartDongLib {
         return *this;
     }
 
-
+    /**
+     * <p> 添加边src对target方向的边
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param src       源节点下标
+     * @param target    目标节点下标
+     * @param weight    边的权重
+     * @return
+     */
     template<class KeyType, class ElemType>
     Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdgeByIndex(int src, int target, double weight) {
-        if (src >= 0 && target>=0) {
+        if (src >= 0 && target>=0 && src<nodes_.size() && target < nodes_.size()) {
             nodes_.at(src).insertEdge(target, weight);
             if (isUndirectedgraph_) {
                 nodes_.at(target).insertEdge(src, weight);
@@ -389,6 +397,7 @@ namespace SmartDongLib {
             return std::vector<int>();
         return simpleCircuitOnIndex(keyindex, Visit);
     }
+
     template<class KeyType, class ElemType>
     const std::vector<GraphAdjacencyList<KeyType, ElemType>> &Graph<KeyType, ElemType>::getNodes() const {
         return nodes_;
@@ -398,7 +407,13 @@ namespace SmartDongLib {
     const std::vector<std::vector<double>> &Graph<KeyType, ElemType>::getAdjacencyMatrix() const {
         return adjacencyMatrix_;
     }
-
+    /**
+     * <p> 普利姆算法-最小生成树
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param nodeIndex  开始节点下标
+     * @return
+     */
     template<class KeyType, class ElemType>
     Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnIndex(int nodeIndex) {
 
@@ -449,7 +464,11 @@ namespace SmartDongLib {
 
         return retGraph;
     }
-
+    /**
+     * <p> 初始化邻接矩阵
+     * @tparam KeyType
+     * @tparam ElemType
+     */
     template<class KeyType, class ElemType>
     void Graph<KeyType, ElemType>::initialAdjacencyMatrix(){
         adjacencyMatrix_.clear();
@@ -466,7 +485,13 @@ namespace SmartDongLib {
             }
         }
     }
-
+    /**
+     * <p> 获取路径最小权重的点的下标
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param closedge  路径集
+     * @return
+     */
     template<class KeyType, class ElemType>
     int Graph<KeyType, ElemType>::getMinCostnodeIndex(std::vector<LowestCost> &closedge) {
         int ret = -1;
@@ -479,12 +504,25 @@ namespace SmartDongLib {
         }
         return  ret;
     }
-
+    /**
+     * <p>普利姆算法 - 最小生成树
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param nodekey 开始节点Key
+     * @return
+     */
     template<class KeyType, class ElemType>
     Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnKey(KeyType nodekey) {
         return miniSpanTreePrimOnIndex(findKeyOnIndex(nodekey));
     }
-
+    /**
+     * <p> 迪杰斯特拉-最短路径
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param srcIndex               源节点下标
+     * @param isInitAdjacencyMatrix  是否初始化邻接矩阵
+     * @return 返回源节点到其他节点的最短路径和损耗
+     */
     template<class KeyType, class ElemType>
     std::vector<LowestPath>
     Graph<KeyType, ElemType>::shortPathOnIndex(int srcIndex, bool isInitAdjacencyMatrix) {
@@ -533,12 +571,28 @@ namespace SmartDongLib {
 
         return retLowestPaths;
     }
-
+    /**
+     * <p> 迪杰斯特拉-最短路径
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param srcKey                源节点Key
+     * @param isInitAdjacencyMatrix 是否初始化邻接矩阵
+     * @return 返回源节点到其他节点的最短路径和损耗
+     */
     template<class KeyType, class ElemType>
     std::vector<LowestPath> Graph<KeyType, ElemType>::shortPathOnKey(KeyType srcKey, bool isInitAdjacencyMatrix) {
         return shortPathOnIndex(findKeyOnIndex(srcKey),isInitAdjacencyMatrix);
     }
-
+    /**
+     * <p>最长路径(不走重复路)
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param srcIndex  源节点下标
+     * @param target    目标节点下标
+     * @param hasVisitIndex 已经访问过的点集，路径
+     * @param isInitAdjacencyMatrix     是否初始化邻接矩阵
+     * @return  返回最长路径的消耗
+     */
     template<class KeyType, class ElemType>
     double Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex,int target,std::vector<int>& hasVisitIndex, bool isInitAdjacencyMatrix) {
         if (isInitAdjacencyMatrix){
@@ -591,7 +645,15 @@ namespace SmartDongLib {
         }
         return maxvalue;
     }
-
+    /**
+     * <p>最长路径(不走重复路)
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param srcIndex 源节点下标
+     * @param target    目标节点下标
+     * @param isInitAdjacencyMatrix  是否初始化邻接矩阵
+     * @return 已经访问过的点集和最长路径的消耗
+     */
     template<class KeyType, class ElemType>
     LongestPath Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex, int target, bool isInitAdjacencyMatrix) {
 
@@ -601,7 +663,11 @@ namespace SmartDongLib {
         return LowestPath(retPath,maxPath);
     }
 
-
+    /**
+     * <p> 获取未访问过的最小消耗路径
+     * @param vec 路径集
+     * @return  最小消耗路径下标
+     */
     inline int LowestPath::getMincost(std::vector<LowestPath> vec) {
         int minIndex=-1;
         for (int i = 0; i <vec.size() ; ++i) {

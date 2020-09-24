@@ -65,10 +65,8 @@ namespace SmartDongLib {
         std::vector<int> simpleCircuitOnKey(KeyType visitIndex, int (*Visit)(Graph& g, int v)= printKey);
         void initialAdjacencyMatrix();
 
-        //图的最小路径,图的最小生成树
         Graph miniSpanTreePrimOnIndex(int nodeIndex);
         Graph miniSpanTreePrimOnKey(KeyType nodeIndex);
-        //最短路径和最长路径
         std::vector<LowestPath> shortPathOnIndex(int srcIndex,bool isInitAdjacencyMatrix= true);
         std::vector<LowestPath> shortPathOnKey(KeyType srcKey,bool isInitAdjacencyMatrix= true);
         const std::vector<GraphAdjacencyList<KeyType, ElemType>> &getNodes() const;
@@ -85,7 +83,7 @@ namespace SmartDongLib {
             std::cout<<g.nodes_[i].key();
             return 0;
         }
-        static  bool isContain(std::vector<int > vec ,int i){
+        static  bool isContain(const std::vector<int >& vec ,int i){
             bool isVisit= false;
             for (int j : vec) {
                 if (j==i){
