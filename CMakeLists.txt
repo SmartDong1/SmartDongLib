@@ -44,4 +44,4 @@ add_executable(SmartDongLib
         sdstructure/graph/graph.cpp
         sdstructure/graph/graph.h
         sdstructure/graph/graphadjacencyedge.h
-        entry/redblackEntry.cpp)
+        entry/arrayEntry.cpp)

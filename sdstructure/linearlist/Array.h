@@ -37,6 +37,7 @@ namespace SmartDongLib {
         STATUS locate(va_list ap,Size &off);
         STATUS value(ElemType & e,...);
         STATUS assign(ElemType e,...);
+        STATUS copy(Size start,Size end, Size strIndex);
         Size elemtotal(){return  elemtotal_;}
         ElemType &  operator [](Size i);
 //        void operator ()( Array<ElemType> & a);

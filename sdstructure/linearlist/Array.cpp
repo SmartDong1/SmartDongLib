@@ -194,5 +194,15 @@ namespace SmartDongLib {
         return *this;
     }
 
+    template<class ElemType>
+    STATUS Array<ElemType>::copy(Size start, Size end,Size strIndex) {
+        for (int i = end-1; i >=start ; --i) {
+            ElemType e ;
+            value(e,i);
+            this->assign(e,strIndex + i -start);
+        }
+        return SD_CONST::SD_SUCCESS;
+    }
+
 
 }
