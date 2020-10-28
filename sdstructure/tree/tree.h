@@ -8,6 +8,7 @@
 #include <cstdarg>
 #include <boost/enable_shared_from_this.hpp>
 #include <iostream>
+#include "const.h"
 namespace SmartDongLib {
     class TreeRunTimeException: public std::runtime_error{
     public:
@@ -18,7 +19,7 @@ namespace SmartDongLib {
     template<class KeyType,class ElemType >
     class TreeNode: public boost::enable_shared_from_this<TreeNode <KeyType,ElemType>> {
     public:
-        TreeNode(int cnum=0) {
+        TreeNode(Size cnum=0) {
             initTree(cnum);
 
         };
@@ -26,17 +27,17 @@ namespace SmartDongLib {
         TreeNode& operator =(const TreeNode  & t);
         TreeNode& operator =( TreeNode && t)noexcept;
         TreeNode (TreeNode && t) noexcept;
-        TreeNode(KeyType key,ElemType e ,int cnum=0);
+        TreeNode(KeyType key,ElemType e ,Size cnum=0);
         bool isLeaf();
 
          boost::shared_ptr<TreeNode> getThis()
         {
             return this->shared_from_this();
         }
-        int nodeCount();
-        int treeDeep();
-        int nodeHeight(){return treeDeep();}
-        int nodeDeep();
+        Size nodeCount();
+        Size treeDeep();
+        Size nodeHeight(){return treeDeep();}
+        Size nodeDeep();
         KeyType key() const {
             return key_;
         }
@@ -52,7 +53,7 @@ namespace SmartDongLib {
             return elem_;
         }
 
-        int  getChildnum() const {
+        Size  getChildnum() const {
             return childnum_;
         }
         const boost::shared_ptr<TreeNode> &parent() const {
@@ -64,41 +65,41 @@ namespace SmartDongLib {
         }
         boost::shared_ptr<TreeNode<KeyType, ElemType>> brother(){
             boost::shared_ptr<TreeNode<KeyType, ElemType>> root= getThis();
-            int findIndexonParent=findIndexOnParent();
+            Size findIndexonParent=findIndexOnParent();
             if (findIndexonParent == -1 )
                 return NULL;
-            for (int i = 0; i < root->parent()->childnum_; ++i) {
+            for (Size i = 0; i < root->parent()->childnum_; ++i) {
                 if (root->parent()->children_[i] !=root )
                     return root->parent()->children_[i];
             }
             return NULL;
         }
-        static void printData(boost::shared_ptr<TreeNode<KeyType, ElemType>> c);
+        static void prSizeData(boost::shared_ptr<TreeNode<KeyType, ElemType>> c);
 
-        void postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::printData);
-        void preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::printData);
+        void postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::prSizeData);
+        void preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::prSizeData);
 
         boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);
         boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);
 
         boost::shared_ptr<TreeNode<KeyType, ElemType>> deleteNodeByKey(KeyType key);
         boost::shared_ptr<TreeNode<KeyType, ElemType>> deleteNodeByElem(ElemType elem);
-        int findIndexOnParent();
+        Size findIndexOnParent();
         void getAllTreeNode(std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> & retVec);
 
     protected:
-        boost::shared_ptr<TreeNode<KeyType, ElemType> >& setChild(int i , boost::shared_ptr<TreeNode > & c);
-        boost::shared_ptr<TreeNode<KeyType, ElemType>> setChild(int i , TreeNode  c);
-        virtual boost::shared_ptr<TreeNode>& getChild(int i);
-        virtual boost::shared_ptr<TreeNode>& getChildEx(int i);
+        boost::shared_ptr<TreeNode<KeyType, ElemType> >& setChild(Size i , boost::shared_ptr<TreeNode > & c);
+        boost::shared_ptr<TreeNode<KeyType, ElemType>> setChild(Size i , TreeNode  c);
+        virtual boost::shared_ptr<TreeNode>& getChild(Size i);
+        virtual boost::shared_ptr<TreeNode>& getChildEx(Size i);
 
     private:
         KeyType key_;
         ElemType elem_;
-        int childnum_;
+        Size childnum_;
         boost::shared_ptr<TreeNode> parent_;
         boost::shared_ptr< boost::shared_ptr<TreeNode>[] > children_;
-        void initTree(int childnum);
+        void initTree(Size childnum);
     };
 
 

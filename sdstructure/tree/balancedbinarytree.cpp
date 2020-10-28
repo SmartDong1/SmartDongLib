@@ -115,7 +115,7 @@ namespace SmartDongLib {
         vector<boost::shared_ptr<TreeNode<KeyType, ElemType>> >temp;
         TreeNode<KeyType, ElemType>::getAllTreeNode(temp);
         vector<boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>> ret;
-        for (int i = 0; i < temp.size(); ++i) {
+        for (Size i = 0; i < temp.size(); ++i) {
             boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> a = boost::static_pointer_cast<BalancedBinaryTree<KeyType, ElemType>>(temp.at(i));
             ret.push_back(a);
         }
@@ -136,7 +136,7 @@ namespace SmartDongLib {
         if (newRoot == NULL)
             return orginRoot;
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> parenttemp=orginRoot->parent();
-        int findIndexOnParent = orginRoot->findIndexOnParent();
+        Size findIndexOnParent = orginRoot->findIndexOnParent();
         if (findIndexOnParent ==0){
             orginRoot->parent()->leftChild(newRoot);
         } else if(findIndexOnParent ==1){
@@ -164,7 +164,7 @@ namespace SmartDongLib {
         if (newRoot == NULL)
             return orginRoot;
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> parenttemp=orginRoot->parent();
-        int findIndexOnParent = orginRoot->findIndexOnParent();
+        Size findIndexOnParent = orginRoot->findIndexOnParent();
         if (findIndexOnParent ==0){
             orginRoot->parent()->leftChild(newRoot);
         } else if(findIndexOnParent ==1){
@@ -190,14 +190,14 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> BalancedBinaryTree<KeyType, ElemType>::resetBalance(KeyType findKey) {
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> root=getThis();
-        int childBalanceFactor;
+        Size childBalanceFactor;
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> lossBalanceChild =
                 findLossBalanceChild(childBalanceFactor,findKey);
         if (lossBalanceChild ==NULL){
             //没有失配的节点
             return root;
         }
-        int findIndexOnParent =lossBalanceChild->findIndexOnParent();
+        Size findIndexOnParent =lossBalanceChild->findIndexOnParent();
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> lossBalanceNode=lossBalanceChild->parent();
         if (findIndexOnParent ==0 && childBalanceFactor >=1){
             //左孩子的左孩子高了 ,用LL 转化
@@ -236,10 +236,10 @@ namespace SmartDongLib {
    */
     template<class KeyType, class ElemType>
     boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>>
-    BalancedBinaryTree<KeyType, ElemType>::findLossBalanceChild(int & childBalanceFactor, KeyType key) {
+    BalancedBinaryTree<KeyType, ElemType>::findLossBalanceChild(Size & childBalanceFactor, KeyType key) {
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> root=
                 getNodeByKey(key);
-        int leftDeep=0,rightDeep=0;
+        Size leftDeep=0,rightDeep=0;
         childBalanceFactor=0;
         //往父节点的方向开始找为平衡的节点和他的孩子节点和失衡位置
         while (root){
@@ -250,7 +250,7 @@ namespace SmartDongLib {
             if (root->rightChild()){
                 rightDeep=root->rightChild()->treeDeep();
             }
-            int rootbalanceFactor = leftDeep - rightDeep;
+            Size rootbalanceFactor = leftDeep - rightDeep;
             if(rootbalanceFactor >= 2){
                 return root->leftChild();
             }else if (rootbalanceFactor <= -2){
@@ -277,7 +277,7 @@ namespace SmartDongLib {
             boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> delnode) {
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> ret;
         boost::shared_ptr<BalancedBinaryTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -306,7 +306,7 @@ namespace SmartDongLib {
             }
             KeyType parentKey= delnode->parent()->key();
 
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){

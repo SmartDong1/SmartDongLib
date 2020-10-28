@@ -7,20 +7,20 @@
 #include <iostream>
 using namespace SmartDongLib;
 using namespace std;
-int main() {
+Size main() {
     // 5 3 6 2 4 1
-    boost::shared_ptr<BalancedBinaryTree<int,char>> root(new BalancedBinaryTree<int,char>(16,'-'));
-    BalancedBinaryTree<int,char> node2(2,'+');
-    BalancedBinaryTree<int,char> node3(3,'/');
-    BalancedBinaryTree<int,char> node4(4,'a');
-    BalancedBinaryTree<int,char> node1(1,'*');
-    BalancedBinaryTree<int,char> node6(6,'e');
-    BalancedBinaryTree<int,char> node16(16,'e');
-    BalancedBinaryTree<int,char> node7(7,'e');
-    BalancedBinaryTree<int,char> node11(11,'e');
-    BalancedBinaryTree<int,char> node9(9,'e');
-    BalancedBinaryTree<int,char> node26(26,'e');
-    BalancedBinaryTree<int,char> node18(18,'k');
+    boost::shared_ptr<BalancedBinaryTree<Size,char>> root(new BalancedBinaryTree<Size,char>(16,'-'));
+    BalancedBinaryTree<Size,char> node2(2,'+');
+    BalancedBinaryTree<Size,char> node3(3,'/');
+    BalancedBinaryTree<Size,char> node4(4,'a');
+    BalancedBinaryTree<Size,char> node1(1,'*');
+    BalancedBinaryTree<Size,char> node6(6,'e');
+    BalancedBinaryTree<Size,char> node16(16,'e');
+    BalancedBinaryTree<Size,char> node7(7,'e');
+    BalancedBinaryTree<Size,char> node11(11,'e');
+    BalancedBinaryTree<Size,char> node9(9,'e');
+    BalancedBinaryTree<Size,char> node26(26,'e');
+    BalancedBinaryTree<Size,char> node18(18,'k');
 //    root->insertNode(node3)->insertNode(node6)->insertNode(node2)->insertNode(node4);
 //    root=root->insertNode(node1);
     root=root->insertNode(node3)->insertNode(node7);

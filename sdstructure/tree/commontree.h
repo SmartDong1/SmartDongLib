@@ -17,7 +17,7 @@ namespace SmartDongLib {
                 );
 
     private:
-        static void findLeast( std::vector <boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vec,int& nidx1,int& nidx2);
+        static void findLeast( std::vector <boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vec,Size& nidx1,Size& nidx2);
     };
 
 

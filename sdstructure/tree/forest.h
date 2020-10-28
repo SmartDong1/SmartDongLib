@@ -42,12 +42,12 @@ namespace SmartDongLib {
             }
             return getThis();
         }
-        boost::shared_ptr<TreeNode<KeyType,ElemType>> getTree(int i ){
+        boost::shared_ptr<TreeNode<KeyType,ElemType>> getTree(Size i ){
             if (i >=trees_.size())
                 throw TreeRunTimeException("out of range exception");
             return trees_[i];
         }
-        int getTreenum(){
+        Size getTreenum(){
             return  trees_.size();
         }
         boost::shared_ptr<Forest> getThis()
@@ -56,7 +56,7 @@ namespace SmartDongLib {
         }
     private:
         bool checkTreeNode(){
-            for (int i = 0; i < trees_.size(); ++i) {
+            for (Size i = 0; i < trees_.size(); ++i) {
                 if (trees_[i] == NULL || trees_[i] ->parent()){
                     return false;
                 }

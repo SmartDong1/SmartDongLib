@@ -15,8 +15,8 @@ namespace SmartDongLib{
      */
     template<class KeyType, class ElemType>
     BiTreeType BinaryTree<KeyType, ElemType>::getTreeType() {
-        int nodecount=this->nodeCount();
-        int treedeep =this->treeDeep();
+        Size nodecount=this->nodeCount();
+        Size treedeep =this->treeDeep();
         if (nodecount == pow(2.0,treedeep) -1 ) {
             return FullBiTree;
         }
@@ -94,7 +94,7 @@ namespace SmartDongLib{
         vector<boost::shared_ptr<TreeNode<KeyType, ElemType>> >temp;
         TreeNode<KeyType, ElemType>::getAllTreeNode(temp);
         vector<boost::shared_ptr<BinaryTree<KeyType, ElemType>>> ret;
-        for (int i = 0; i < temp.size(); ++i) {
+        for (Size i = 0; i < temp.size(); ++i) {
             boost::shared_ptr<BinaryTree<KeyType, ElemType>> a = boost::static_pointer_cast<BinaryTree<KeyType, ElemType>>(temp.at(i));
             ret.push_back(a);
         }
@@ -131,7 +131,7 @@ namespace SmartDongLib{
             return  getThis();
         }
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -158,7 +158,7 @@ namespace SmartDongLib{
                 //如果删除唯一根节点
                 return  NULL;
             }
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){
@@ -184,7 +184,7 @@ namespace SmartDongLib{
             return  getThis();
         }
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -211,7 +211,7 @@ namespace SmartDongLib{
                 //如果删除唯一根节点
                 return  NULL;
             }
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){

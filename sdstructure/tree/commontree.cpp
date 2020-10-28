@@ -32,7 +32,7 @@ namespace SmartDongLib {
                 binode = binode->parent();
             }
             //遍历节点的所有孩子,重新建立关联关系，孩子依次入栈
-            for (int i = 0; i < treeRoot->getChildnum(); ++i) {
+            for (Size i = 0; i < treeRoot->getChildnum(); ++i) {
                 if(treeRoot->getChildEx(i) == NULL){
                     break;
                 }
@@ -62,17 +62,17 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     boost::shared_ptr<BinaryTree<KeyType, ElemType>>
     CommonTree<KeyType, ElemType>::forest2BinartTree(boost::shared_ptr<Forest<KeyType, ElemType>> forestRoot) {
-        int size = forestRoot-> getTreenum();
+        Size size = forestRoot-> getTreenum();
         if(size==0)
             return  NULL;
         std::vector<boost::shared_ptr<BinaryTree<KeyType, ElemType>>> roots;
-        for (int i = 0; i < size; ++i) {
+        for (Size i = 0; i < size; ++i) {
             boost::shared_ptr<BinaryTree<KeyType, ElemType>> tempBiroot = treeNode2BinartTree(forestRoot->getTree(i));
             roots.push_back(tempBiroot);
         }
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> ret=roots.at(0);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> retTemp=ret;
-        for (int j = 1; j < roots.size(); ++j) {
+        for (Size j = 1; j < roots.size(); ++j) {
             retTemp->rightChild(roots.at(j));
             retTemp=retTemp->rightChild();
         }
@@ -95,7 +95,7 @@ namespace SmartDongLib {
         boost::shared_ptr <HuffmanTree<KeyType, ElemType>> minElem = vecElem.at(0);
         boost::shared_ptr <HuffmanTree<KeyType, ElemType>> secElem = minElem;
         while (vecElem.size() > 1) {
-            int minindex,secindex;
+            Size minindex,secindex;
             findLeast(vecElem,minindex,secindex);
             minElem=vecElem.at(minindex);
             secElem=vecElem.at(secindex);
@@ -126,12 +126,12 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     void
-    CommonTree<KeyType, ElemType>::findLeast(vector<boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vec, int &nIdx1,
-                                             int &nIdx2) {
-        int nSize = (int)vec.size();
+    CommonTree<KeyType, ElemType>::findLeast(vector<boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vec, Size &nIdx1,
+                                             Size &nIdx2) {
+        Size nSize = (Size)vec.size();
         boost::shared_ptr<HuffmanTree<KeyType, ElemType>> d1;
         boost::shared_ptr<HuffmanTree<KeyType, ElemType>> d2;
-        for (int i = 0; i < nSize; i++)
+        for (Size i = 0; i < nSize; i++)
         {
             if ( d1 ==NULL ||vec[i]->key() < d1->key() )
             {

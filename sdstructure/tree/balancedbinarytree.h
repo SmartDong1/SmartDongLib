@@ -90,7 +90,7 @@ namespace SmartDongLib {
             return aa;
         }
         boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType>>  resetBalance(KeyType findKey);
-        boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType>> findLossBalanceChild(int & childBalanceFactor,
+        boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType>> findLossBalanceChild(Size & childBalanceFactor,
                 KeyType key);
     private:
         boost::shared_ptr<BalancedBinaryTree<KeyType,ElemType>>  rightRotationTransform();

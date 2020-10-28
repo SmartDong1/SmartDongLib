@@ -5,8 +5,8 @@
 #include "sdstructure/linearlist/SString.h"
 namespace SmartDongLib {
 
-   inline int SString::index(const SString& str2,  int pos ) {
-        int iptr = pos , jptr = 0;
+   inline Size SString::index(const SString& str2,  Size pos ) {
+        Size iptr = pos , jptr = 0;
         while (iptr < str_.length() && jptr<str2.str_.length()){
             if (str_[iptr] == str2.str_[jptr]){
                 //相等则比较下一位
@@ -28,11 +28,11 @@ namespace SmartDongLib {
      * @param pos
      * @return
      */
-    inline int SString::indexKMP(SString& str2, int pos) {
-        int i=pos, j=0;
-        int next[str2.str_.length()];
+    inline Size SString::indexKMP(SString& str2, Size pos) {
+        Size i=pos, j=0;
+        Size next[str2.str_.length()];
         str2.getnext(next);
-        int thisLen=length(),sublen=str2.length();
+        Size thisLen=length(),sublen=str2.length();
         while ( i < thisLen && j < sublen){
             if (j==-1 || str_[i] == str2.str_[j]){
                 i++;
@@ -42,7 +42,7 @@ namespace SmartDongLib {
             }
         }
         if (j >= sublen){
-            int ret =i-sublen;
+            Size ret =i-sublen;
             return ret;
         }
         return -1;
@@ -52,7 +52,7 @@ namespace SmartDongLib {
         if (src.str_.empty()){
             return *this;
         }
-        int index=0;
+        Size index=0;
         while ( index != -1) {
             index = indexKMP(src);
             if(index != -1) {
@@ -71,11 +71,11 @@ namespace SmartDongLib {
      * @param substr
      * @return
      */
-    inline void SString::getnext(int next[]) {
+    inline void SString::getnext(Size next[]) {
 
-        const int len =str_.length();
+        const Size len =str_.length();
 //        next.resize(len,-1);
-        int i = 0,j=-1;next[0]=-1;
+        Size i = 0,j=-1;next[0]=-1;
         while (i<len){
             if (j==-1 ||str_[i] == str_[j]){
                 ++i;++j;
@@ -107,17 +107,17 @@ namespace SmartDongLib {
         e	0	0	0	0	2	0	0
         g	0	0	0	0	0	0	1
         */
-        int len1 = this->length();
-        int len2 = str2.length();
+        Size len1 = this->length();
+        Size len2 = str2.length();
         if (len1 ==0 || len2 == 0 ){
             return SString();
         }
-        int maxlen=-1;      //最大长度
-        int lastIndex =-1;  //最大值在主串的位置
-        int comparetbl[len2][len1];
-        for (int i = 0; i <len2 ; ++i) {
+        Size maxlen=-1;      //最大长度
+        Size lastIndex =-1;  //最大值在主串的位置
+        Size comparetbl[len2][len1];
+        for (Size i = 0; i <len2 ; ++i) {
             char modelchar=str2[i];
-            for (int j = 0; j < len1; ++j) {
+            for (Size j = 0; j < len1; ++j) {
                 if (str_[j]==modelchar){
                     if (i<1 || j<1 ){
                         comparetbl[i][j]=1;

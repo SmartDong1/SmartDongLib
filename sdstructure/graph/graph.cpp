@@ -13,8 +13,8 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    int Graph<KeyType, ElemType>::findKeyOnIndex(KeyType k) {
-       for (int i=0;i< nodes_.size();i++){
+    Size Graph<KeyType, ElemType>::findKeyOnIndex(KeyType k) {
+       for (Size i=0;i< nodes_.size();i++){
            if (nodes_[i].key() == k){
                return  i ;
            }
@@ -60,12 +60,12 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::deleteNodeByKey(KeyType key) {
-        int keyIndex = findKeyOnIndex(key);
+        Size keyIndex = findKeyOnIndex(key);
         if (keyIndex ==-1){
             return *this;
         }
         // 大于keyIndex 的结点下标都要减1
-        for (int i = 0; i < nodes_.size(); ++i) {
+        for (Size i = 0; i < nodes_.size(); ++i) {
             //每个结点删除对应的边
             nodes_.at(i).deleteEdge(keyIndex);
             boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[i].edge();
@@ -91,9 +91,9 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target,double weight ) {
-        int srcIndex = findKeyOnIndex(src);
-        int targetIndex = findKeyOnIndex(target);
+    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target,Real weight ) {
+        Size srcIndex = findKeyOnIndex(src);
+        Size targetIndex = findKeyOnIndex(target);
         setEdgeByIndex(srcIndex,targetIndex,weight);
 //        if (srcIndex == -1 || targetIndex == -1){
 //            //不存在所谓的结点
@@ -116,7 +116,7 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdgeByIndex(int src, int target, double weight) {
+    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdgeByIndex(Size src, Size target, Real weight) {
         if (src >= 0 && target>=0 && src<nodes_.size() && target < nodes_.size()) {
             nodes_.at(src).insertEdge(target, weight);
             if (isUndirectedgraph_) {
@@ -135,8 +135,8 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::deleteEdge(KeyType src, KeyType target) {
-        int srcIndex = findKeyOnIndex(src);
-        int targetIndex = findKeyOnIndex(target);
+        Size srcIndex = findKeyOnIndex(src);
+        Size targetIndex = findKeyOnIndex(target);
         if (srcIndex == -1 || targetIndex == -1){
             return *this;
         }
@@ -156,17 +156,17 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::depthFirstSearch(bool isSearchAllNode , int visitIndex, int (*Visit)(Graph& , int)) {
-        std::vector<int> visitNode;
+    std::vector<Size> Graph<KeyType, ElemType>::depthFirstSearch(bool isSearchAllNode , Size visitIndex, Size (*Visit)(Graph& , Size)) {
+        std::vector<Size> visitNode;
         if (vexnum()<=0)
-            return std::vector<int>();
+            return std::vector<Size>();
         bool visited[vexnum()];
-        for (int i = 0; i < vexnum(); ++i) {
+        for (Size i = 0; i < vexnum(); ++i) {
             visited[i]= false;
         };
         DFS(visitIndex, visited, visitNode, Visit);
         if (isSearchAllNode) {
-            for (int i = 0; i < vexnum(); ++i) {
+            for (Size i = 0; i < vexnum(); ++i) {
                 if (!visited[i])
                     DFS(i, visited, visitNode, Visit);
             };
@@ -183,11 +183,11 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::depthFirstSearch(KeyType key, bool isSearchAllNode,
-                                                                int (*Visit)(Graph &, int)) {
-        int keyindex = findKeyOnIndex(key);
+    std::vector<Size> Graph<KeyType, ElemType>::depthFirstSearch(KeyType key, bool isSearchAllNode,
+                                                                Size (*Visit)(Graph &, Size)) {
+        Size keyindex = findKeyOnIndex(key);
         if (keyindex == -1)
-            return std::vector<int>();
+            return std::vector<Size>();
         return depthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
 
@@ -201,7 +201,7 @@ namespace SmartDongLib {
      * @param Visit      结点函数
      */
     template<class KeyType, class ElemType>
-    void Graph<KeyType, ElemType>::DFS(int visitIndex, bool visited[], std::vector<int> & output, int (*Visit)(Graph& , int)) {
+    void Graph<KeyType, ElemType>::DFS(Size visitIndex, bool visited[], std::vector<Size> & output, Size (*Visit)(Graph& , Size)) {
         Visit(*this,visitIndex);
         visited[visitIndex] = true;
         output.push_back(visitIndex);
@@ -224,23 +224,23 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int>
-    Graph<KeyType, ElemType>::breadthFirstSearch(bool isSearchAllNode, int visitIndex, int (*Visit)(Graph &, int)) {
-        std::vector<int> visitNode;
+    std::vector<Size>
+    Graph<KeyType, ElemType>::breadthFirstSearch(bool isSearchAllNode, Size visitIndex, Size (*Visit)(Graph &, Size)) {
+        std::vector<Size> visitNode;
         if (vexnum()<=0)
-            return std::vector<int>();
+            return std::vector<Size>();
         bool visited[vexnum()];
-        for (int i = 0; i < vexnum(); ++i) {
+        for (Size i = 0; i < vexnum(); ++i) {
             visited[i]= false;
         }
-        std::queue<int> indexQueue;
+        std::queue<Size> indexQueue;
         //把结点的边入访问队列,之后弹出,再把对应结点的边入队列
         Visit(*this,visitIndex);
         visited[visitIndex] = true;
         visitNode.push_back(visitIndex);
         indexQueue.push(visitIndex);
         while (!indexQueue.empty()){
-            int nextindex = indexQueue.front();
+            Size nextindex = indexQueue.front();
             indexQueue.pop();
             boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();
             while (edge->next) {
@@ -255,14 +255,14 @@ namespace SmartDongLib {
         }   //while (!indexQueue.empty()){
 
         if (isSearchAllNode){
-            for (int i = 0; i < vexnum(); ++i) {
+            for (Size i = 0; i < vexnum(); ++i) {
                 if (!visited[i]){
                     Visit(*this,i);
                     visited[i] = true;
                     visitNode.push_back(i);
                     indexQueue.push(i);
                     while (!indexQueue.empty()){
-                        int nextindex = indexQueue.front();
+                        Size nextindex = indexQueue.front();
                         indexQueue.pop();
                         boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();
                         while (edge->next) {
@@ -276,7 +276,7 @@ namespace SmartDongLib {
                         } // while (edge->next) {
                     }//while (!indexQueue.empty()){
                 }//  if (!visited[i]){
-            }// for (int i = 0; i < vexnum(); ++i) {
+            }// for (Size i = 0; i < vexnum(); ++i) {
         }//  if (isSearchAllNode){
         return visitNode;
     }
@@ -291,11 +291,11 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::breadthFirstSearch(KeyType key, bool isSearchAllNode,
-                                                                int (*Visit)(Graph &, int)) {
-        int keyindex = findKeyOnIndex(key);
+    std::vector<Size> Graph<KeyType, ElemType>::breadthFirstSearch(KeyType key, bool isSearchAllNode,
+                                                                Size (*Visit)(Graph &, Size)) {
+        Size keyindex = findKeyOnIndex(key);
         if (keyindex == -1)
-            return std::vector<int>();
+            return std::vector<Size>();
         return breadthFirstSearch(isSearchAllNode,keyindex,Visit);
     }
     /**
@@ -306,7 +306,7 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::connectedComponent(KeyType visitIndex) {
+    std::vector<Size> Graph<KeyType, ElemType>::connectedComponent(KeyType visitIndex) {
         return  depthFirstSearch(visitIndex);
     }
     /**
@@ -320,11 +320,11 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    bool Graph<KeyType, ElemType>::circuitJudge(int visitIndex, bool visited[], std::vector<int> &output,
-                                                   int (*Visit)(Graph &, int)) {
+    bool Graph<KeyType, ElemType>::circuitJudge(Size visitIndex, bool visited[], std::vector<Size> &output,
+                                                   Size (*Visit)(Graph &, Size)) {
         Visit(*this,visitIndex);
         visited[visitIndex] = true;
-        int outputsize=output.size();
+        Size outputsize=output.size();
         output.push_back(visitIndex);
         bool flag= false;
         boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[visitIndex].edge();
@@ -345,7 +345,7 @@ namespace SmartDongLib {
                     return true;
                 } else{
                     //无向图 如果访问的点是已访问的祖先结点 那就是回路
-                    for (int i = 0; i < outputsize -1 ; ++i) {
+                    for (Size i = 0; i < outputsize -1 ; ++i) {
                         if (edge->data.nodeIndex_ == output[i]){
                             output.push_back(edge->data.nodeIndex_);
                             return true;
@@ -365,13 +365,13 @@ namespace SmartDongLib {
      * @return 结点下标回路集
      */
     template<class KeyType, class ElemType>
-    std::vector<int>
-    Graph<KeyType, ElemType>::simpleCircuitOnIndex(int visitIndex, int (*Visit)(Graph &, int)) {
-        std::vector<int> visitNode;
+    std::vector<Size>
+    Graph<KeyType, ElemType>::simpleCircuitOnIndex(Size visitIndex, Size (*Visit)(Graph &, Size)) {
+        std::vector<Size> visitNode;
         if (vexnum()<=0)
-            return std::vector<int>();
+            return std::vector<Size>();
         bool visited[vexnum()];
-        for (int i = 0; i < vexnum(); ++i) {
+        for (Size i = 0; i < vexnum(); ++i) {
             visited[i]= false;
         };
         bool flag=circuitJudge(visitIndex, visited, visitNode, Visit);
@@ -391,10 +391,10 @@ namespace SmartDongLib {
      * @return 结点下标回路集
      */
     template<class KeyType, class ElemType>
-    std::vector<int> Graph<KeyType, ElemType>::simpleCircuitOnKey(KeyType key, int (*Visit)(Graph &, int)) {
-        int keyindex = findKeyOnIndex(key);
+    std::vector<Size> Graph<KeyType, ElemType>::simpleCircuitOnKey(KeyType key, Size (*Visit)(Graph &, Size)) {
+        Size keyindex = findKeyOnIndex(key);
         if (keyindex == -1)
-            return std::vector<int>();
+            return std::vector<Size>();
         return simpleCircuitOnIndex(keyindex, Visit);
     }
 
@@ -404,7 +404,7 @@ namespace SmartDongLib {
     }
 
     template<class KeyType, class ElemType>
-    const std::vector<std::vector<double>> &Graph<KeyType, ElemType>::getAdjacencyMatrix() const {
+    const std::vector<std::vector<Real>> &Graph<KeyType, ElemType>::getAdjacencyMatrix() const {
         return adjacencyMatrix_;
     }
     /**
@@ -415,14 +415,14 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnIndex(int nodeIndex) {
+    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnIndex(Size nodeIndex) {
 
-        std::vector<int> usedIndex; //已经加入最小树的顶点集
+        std::vector<Size> usedIndex; //已经加入最小树的顶点集
         std::vector<LowestCost> closedge; //已加入的顶点集到各其他顶点的最短路径
         Graph retGraph(this->isUndirectedgraph_);
         if (nodeIndex<0 || nodeIndex>=nodes_.size())
             return retGraph;
-        for (int j = 0; j < nodes_.size(); ++j) {
+        for (Size j = 0; j < nodes_.size(); ++j) {
             retGraph.addNode(nodes_[j].key(),nodes_[j].elem());
         }
         usedIndex.push_back(nodeIndex);
@@ -435,13 +435,13 @@ namespace SmartDongLib {
             closedge[edge->data.nodeIndex_] =LowestCost(nodeIndex,edge->data.weight_);
         }
 //        std::cout<<nodes_[nodeIndex].key()<<":";
-//        for (int i = 0; i < closedge.size(); ++i) {
+//        for (Size i = 0; i < closedge.size(); ++i) {
 //            std::cout<<i<<"-"<<nodes_[closedge[i].nodeIndex_].key()<<"-"<<closedge[i].lowcost_<<"\t";
 //        }
 //        std::cout<<"\n";
-        for (int meaninglessVar = 0; meaninglessVar < nodes_.size(); ++meaninglessVar) {
+        for (Size meaninglessVar = 0; meaninglessVar < nodes_.size(); ++meaninglessVar) {
             //获取closedge 中最小的下标
-            int newNodeIndex = getMinCostnodeIndex(closedge);
+            Size newNodeIndex = getMinCostnodeIndex(closedge);
             if (newNodeIndex < 0 )
                 break;
             retGraph.setEdgeByIndex(closedge[newNodeIndex].nodeIndex_,newNodeIndex,closedge[newNodeIndex].lowcost_);
@@ -455,7 +455,7 @@ namespace SmartDongLib {
                 }
             }
 //            std::cout<<nodes_[newNodeIndex].key()<<":";
-//            for (int i = 0; i < closedge.size(); ++i) {
+//            for (Size i = 0; i < closedge.size(); ++i) {
 //                std::cout<<i<<"-"<<nodes_[closedge[i].nodeIndex_].key()<<"-"<<closedge[i].lowcost_<<"\t";
 //            }
 //            std::cout<<"\n";
@@ -474,10 +474,10 @@ namespace SmartDongLib {
         adjacencyMatrix_.clear();
         adjacencyMatrix_.resize(nodes_.size());
         for (auto & i : adjacencyMatrix_) {
-            double maxdouble=SD_CONST::SD_MAXDOUBLE;
-            i.resize(nodes_.size(),maxdouble);
+            Real maxReal=SD_CONST::SD_MAXDOUBLE;
+            i.resize(nodes_.size(),maxReal);
         }
-        for (int j = 0; j < nodes_.size(); ++j) {
+        for (Size j = 0; j < nodes_.size(); ++j) {
             boost::shared_ptr<LinkList<GraphAdjacencyEdge> >edge =  nodes_[j].edge();
             while (edge->next){
                 edge =edge->next;
@@ -493,10 +493,10 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    int Graph<KeyType, ElemType>::getMinCostnodeIndex(std::vector<LowestCost> &closedge) {
-        int ret = -1;
-        double minValue=SD_CONST::SD_MAXDOUBLE;
-        for (int i = 0; i < closedge.size(); ++i) {
+    Size Graph<KeyType, ElemType>::getMinCostnodeIndex(std::vector<LowestCost> &closedge) {
+        Size ret = -1;
+        Real minValue=SD_CONST::SD_MAXDOUBLE;
+        for (Size i = 0; i < closedge.size(); ++i) {
             if (closedge[i].lowcost_<minValue && closedge[i].lowcost_>0.0){
                 minValue =closedge[i].lowcost_;
                 ret = i;
@@ -525,7 +525,7 @@ namespace SmartDongLib {
      */
     template<class KeyType, class ElemType>
     std::vector<LowestPath>
-    Graph<KeyType, ElemType>::shortPathOnIndex(int srcIndex, bool isInitAdjacencyMatrix) {
+    Graph<KeyType, ElemType>::shortPathOnIndex(Size srcIndex, bool isInitAdjacencyMatrix) {
         if (isInitAdjacencyMatrix){
             initialAdjacencyMatrix();
         }
@@ -536,7 +536,7 @@ namespace SmartDongLib {
         std::vector<LowestPath> lowestPaths ;
         retLowestPaths.resize(this->vexnum());
         lowestPaths.resize(this->vexnum());
-        for (int first = 0; first < lowestPaths.size(); ++first) {
+        for (Size first = 0; first < lowestPaths.size(); ++first) {
             lowestPaths.at(first).pathIndex_.push_back(srcIndex);
             lowestPaths.at(first).lowcost_=adjacencyMatrix_[srcIndex][first];
         }
@@ -547,11 +547,11 @@ namespace SmartDongLib {
         //∞(0,)  ∞(0,)                          60(0,4,3,)  5                   0,4,3,5       60
         //∞(0,)  ∞(0,)                                      0                   0,0           ∞
         //       ∞(0,)                                      1                   0,1           ∞
-        std::vector<int> currentPath;
-        double lowestCost;
-        for (int i = 0; i < lowestPaths.size(); ++i) {
+        std::vector<Size> currentPath;
+        Real lowestCost;
+        for (Size i = 0; i < lowestPaths.size(); ++i) {
             //获取最小lostCost的下标 并且返回结果
-            int currentPathIndex = LowestPath::getMincost(lowestPaths);
+            Size currentPathIndex = LowestPath::getMincost(lowestPaths);
             currentPath= lowestPaths[currentPathIndex].pathIndex_;
             currentPath.push_back(currentPathIndex);
             lowestCost=lowestPaths[currentPathIndex].lowcost_;
@@ -559,7 +559,7 @@ namespace SmartDongLib {
             retLowestPaths[currentPathIndex].pathIndex_=currentPath;
             lowestPaths[currentPathIndex].hasVisit_= true;
             //----------------------
-            for (int j = 0; j < lowestPaths.size(); ++j) {
+            for (Size j = 0; j < lowestPaths.size(); ++j) {
                 //如果当前路径是更短的路径，从新设置路径和该路径的最小值
                 if (lowestCost+ adjacencyMatrix_[currentPathIndex][j] <lowestPaths[j].lowcost_) {
                     lowestPaths[j].lowcost_= lowestCost+ adjacencyMatrix_[currentPathIndex][j] ;
@@ -594,7 +594,7 @@ namespace SmartDongLib {
      * @return  返回最长路径的消耗
      */
     template<class KeyType, class ElemType>
-    double Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex,int target,std::vector<int>& hasVisitIndex, bool isInitAdjacencyMatrix) {
+    Real Graph<KeyType, ElemType>::longPathOnIndex(Size srcIndex,Size target,std::vector<Size>& hasVisitIndex, bool isInitAdjacencyMatrix) {
         if (isInitAdjacencyMatrix){
             initialAdjacencyMatrix();
         }
@@ -604,10 +604,10 @@ namespace SmartDongLib {
         }
 
         hasVisitIndex.insert(hasVisitIndex.begin(), target);
-        std::vector<int> hasVisitIndex_temp=hasVisitIndex;  //保留递归入栈时的状态
+        std::vector<Size> hasVisitIndex_temp=hasVisitIndex;  //保留递归入栈时的状态
 
-        std::vector<int> preNode;//入栈时,未访问的前驱节点集合
-        for (int i = 0; i <  adjacencyMatrix_.size();++i) {
+        std::vector<Size> preNode;//入栈时,未访问的前驱节点集合
+        for (Size i = 0; i <  adjacencyMatrix_.size();++i) {
             if (adjacencyMatrix_[i][target] != SD_CONST::SD_MAXDOUBLE){
                 //判断是否已经访问,把入栈时未访问的前驱节点加进去
                 bool isVisit=isContain(hasVisitIndex,i);
@@ -616,12 +616,12 @@ namespace SmartDongLib {
                 }
             }
         }
-        double maxvalue=SD_CONST::SD_MINDOUBLE;
+        Real maxvalue=SD_CONST::SD_MINDOUBLE;
         if (adjacencyMatrix_[srcIndex][target] !=SD_CONST::SD_MAXDOUBLE){
             //如果再邻接矩阵有直接值，先初始化
             maxvalue = adjacencyMatrix_[srcIndex][target];
         }
-        for (int & pnode : preNode) {
+        for (Size & pnode : preNode) {
             //取 源节点到前驱节点,前驱节点到目标节点的最大值,并最大值且返回递归的路经
            if (adjacencyMatrix_[pnode][target] != SD_CONST::SD_MAXDOUBLE ){
                //使用复制后继节点入栈时的已访问状态
@@ -633,8 +633,8 @@ namespace SmartDongLib {
                //5       2,5,7,9            1           1,2,5,7,9               2,5,7,9          cost::18
                //3->6                       3                                   3,5,7,9
                //7       3,5,7,9            1           1,3,5,7,9
-               std::vector<int> hasVisitIndextemp=hasVisitIndex_temp;
-               double value = longPathOnIndex(srcIndex, pnode, hasVisitIndextemp, false)
+               std::vector<Size> hasVisitIndextemp=hasVisitIndex_temp;
+               Real value = longPathOnIndex(srcIndex, pnode, hasVisitIndextemp, false)
                               + adjacencyMatrix_[pnode][target];
                if (maxvalue<value){
                    maxvalue=value;
@@ -655,10 +655,10 @@ namespace SmartDongLib {
      * @return 已经访问过的点集和最长路径的消耗
      */
     template<class KeyType, class ElemType>
-    LongestPath Graph<KeyType, ElemType>::longPathOnIndex(int srcIndex, int target, bool isInitAdjacencyMatrix) {
+    LongestPath Graph<KeyType, ElemType>::longPathOnIndex(Size srcIndex, Size target, bool isInitAdjacencyMatrix) {
 
-        std::vector<int> retPath;
-        double maxPath=longPathOnIndex(srcIndex,target,retPath, isInitAdjacencyMatrix);
+        std::vector<Size> retPath;
+        Real maxPath=longPathOnIndex(srcIndex,target,retPath, isInitAdjacencyMatrix);
         retPath.insert(retPath.begin(),srcIndex);
         return LowestPath(retPath,maxPath);
     }
@@ -668,15 +668,15 @@ namespace SmartDongLib {
      * @param vec 路径集
      * @return  最小消耗路径下标
      */
-    inline int LowestPath::getMincost(std::vector<LowestPath> vec) {
-        int minIndex=-1;
-        for (int i = 0; i <vec.size() ; ++i) {
+    inline Size LowestPath::getMincost(std::vector<LowestPath> vec) {
+        Size minIndex=-1;
+        for (Size i = 0; i <vec.size() ; ++i) {
             if (!(vec[i].hasVisit_)){
                 minIndex = i;
                 break;
             }
         }
-        for (int i = 0; i <vec.size() ; ++i) {
+        for (Size i = 0; i <vec.size() ; ++i) {
             if (vec[i] < vec[minIndex] && !(vec[i].hasVisit_)){
                 minIndex = i;
             }
@@ -684,7 +684,7 @@ namespace SmartDongLib {
         return minIndex;
     }
 
-    inline LowestPath::LowestPath(std::vector<int> pathIndex, double lowcost, bool hasVisit ) : pathIndex_(std::move(pathIndex)),
+    inline LowestPath::LowestPath(std::vector<Size> pathIndex, Real lowcost, bool hasVisit ) : pathIndex_(std::move(pathIndex)),
                                                                                                lowcost_(lowcost),
                                                                                                hasVisit_(hasVisit) {}
 }

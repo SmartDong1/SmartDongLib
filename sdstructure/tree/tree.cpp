@@ -34,7 +34,7 @@ namespace SmartDongLib{
         parent_=t.parent_;
         childnum_=t.childnum_;
         initTree(childnum_);
-//        for (int i = 0; i < childnum_; ++i) {
+//        for (Size i = 0; i < childnum_; ++i) {
 //            t.setChild(i, NULL);
 //        }
 
@@ -48,13 +48,13 @@ namespace SmartDongLib{
         parent_=t.parent_;
         childnum_=t.childnum_;
         initTree(childnum_);
-//        for (int i = 0; i < childnum_; ++i) {
+//        for (Size i = 0; i < childnum_; ++i) {
 //            t.setChild(i, NULL);
 //        }
     }
 
     template<class KeyType, class ElemType>
-    TreeNode<KeyType, ElemType>::TreeNode(KeyType key, ElemType e, int cnum) {
+    TreeNode<KeyType, ElemType>::TreeNode(KeyType key, ElemType e, Size cnum) {
         key_=key;
         elem_=e;
         initTree(cnum);
@@ -66,10 +66,10 @@ namespace SmartDongLib{
      * @param childnum 最大孩子数
      */
     template<class KeyType, class ElemType>
-    void TreeNode<KeyType, ElemType>::initTree(int childnum){
+    void TreeNode<KeyType, ElemType>::initTree(Size childnum){
         childnum_=childnum;
         children_=boost::shared_ptr< boost::shared_ptr<TreeNode>[]>(new   boost::shared_ptr<TreeNode>[childnum]);
-//        for (int i = 0; i < childnum; ++i) {
+//        for (Size i = 0; i < childnum; ++i) {
 //            children_[i] = NULL ;
 //        }
 
@@ -82,13 +82,13 @@ namespace SmartDongLib{
      * @return
      */
     template<class KeyType, class ElemType>
-    boost::shared_ptr<TreeNode<KeyType, ElemType>> &TreeNode<KeyType, ElemType>::getChild(int i) {
+    boost::shared_ptr<TreeNode<KeyType, ElemType>> &TreeNode<KeyType, ElemType>::getChild(Size i) {
         if(i >= childnum_)
-            throw TreeRunTimeException("childPointer out of range Exception");
+            throw TreeRunTimeException("childPoSizeer out of range Exception");
         if (children_[i] != NULL )
             return children_[i];
 
-        throw TreeRunTimeException("null childPointer Exception");
+        throw TreeRunTimeException("null childPoSizeer Exception");
     }
     /**
     * <p> 返回第i个孩子节点.
@@ -98,9 +98,9 @@ namespace SmartDongLib{
     * @return 可以返回空指针
     */
     template<class KeyType, class ElemType>
-    boost::shared_ptr<TreeNode<KeyType, ElemType>> &TreeNode<KeyType, ElemType>::getChildEx(int i) {
+    boost::shared_ptr<TreeNode<KeyType, ElemType>> &TreeNode<KeyType, ElemType>::getChildEx(Size i) {
         if(i >= childnum_)
-            throw TreeRunTimeException("childPointer out of range Exception");
+            throw TreeRunTimeException("childPoSizeer out of range Exception");
         return children_[i];
     }
     /**
@@ -110,9 +110,9 @@ namespace SmartDongLib{
      * @return
      */
     template<class KeyType, class ElemType>
-    int TreeNode<KeyType, ElemType>::nodeCount(){
-        int sum = 1;
-        for (int i = 0; i < childnum_; ++i) {
+    Size TreeNode<KeyType, ElemType>::nodeCount(){
+        Size sum = 1;
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i] !=NULL)
                 sum += getChild(i)->nodeCount();
         }
@@ -125,14 +125,14 @@ namespace SmartDongLib{
      * @return
      */
     template<class KeyType, class ElemType>
-    int TreeNode<KeyType, ElemType>::treeDeep() {
-        int deep=0;
+    Size TreeNode<KeyType, ElemType>::treeDeep() {
+        Size deep=0;
         if (getThis() !=NULL)
             deep =1;
-        int maxdeep =deep;
-        for (int i = 0; i < childnum_; ++i) {
+        Size maxdeep =deep;
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i] !=NULL) {
-                int childdeep= getChild(i)->treeDeep();
+                Size childdeep= getChild(i)->treeDeep();
                 maxdeep = maxdeep - (1+childdeep)<0? 1+childdeep:maxdeep;
             }
         }
@@ -146,9 +146,9 @@ namespace SmartDongLib{
      * @param c 要插入的东西
      */
     template<class KeyType, class ElemType>
-    boost::shared_ptr<TreeNode<KeyType, ElemType> >& TreeNode<KeyType, ElemType>::setChild(int i, boost::shared_ptr<TreeNode> &c) {
+    boost::shared_ptr<TreeNode<KeyType, ElemType> >& TreeNode<KeyType, ElemType>::setChild(Size i, boost::shared_ptr<TreeNode> &c) {
         if(i >= childnum_)
-            throw TreeRunTimeException("childPointer out of range Exception");
+            throw TreeRunTimeException("childPoSizeer out of range Exception");
         if (c !=NULL){
             children_[i] =c;
             (children_[i])->parent_=getThis();
@@ -165,9 +165,9 @@ namespace SmartDongLib{
      * @param c 要插入的东西
      */
     template<class KeyType, class ElemType>
-    boost::shared_ptr<TreeNode<KeyType, ElemType>> TreeNode<KeyType, ElemType>::setChild(int i, TreeNode c) {
+    boost::shared_ptr<TreeNode<KeyType, ElemType>> TreeNode<KeyType, ElemType>::setChild(Size i, TreeNode c) {
         if(i >= childnum_)
-            throw TreeRunTimeException("childPointer out of range Exception");
+            throw TreeRunTimeException("childPoSizeer out of range Exception");
         boost::shared_ptr<TreeNode<KeyType, ElemType>>cc(new TreeNode<KeyType, ElemType>(c));
         children_[i] =cc;
         (children_[i])->parent_=getThis();
@@ -175,7 +175,7 @@ namespace SmartDongLib{
     }
 //-------------------------------static-------------------------
     template<class KeyType, class ElemType>
-    void TreeNode<KeyType, ElemType>::printData(boost::shared_ptr<TreeNode<KeyType, ElemType>>  c) {
+    void TreeNode<KeyType, ElemType>::prSizeData(boost::shared_ptr<TreeNode<KeyType, ElemType>>  c) {
         std::cout<<c->key() << "->" <<c->elem()<<"\n";
     }
     /**
@@ -186,7 +186,7 @@ namespace SmartDongLib{
      */
     template<class KeyType, class ElemType>
     void TreeNode<KeyType, ElemType>::postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>>) ) {
-        for (int i = 0; i < childnum_; ++i) {
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i]!= NULL){
                 children_[i] ->postOrderTraversal(Visit);
             }
@@ -203,7 +203,7 @@ namespace SmartDongLib{
     template<class KeyType, class ElemType>
     void TreeNode<KeyType, ElemType>::preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> )) {
         Visit(getThis());
-        for (int i = 0; i < childnum_; ++i) {
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i]!= NULL){
                 children_[i] ->preOrderTraversal(Visit);
             }
@@ -218,7 +218,7 @@ namespace SmartDongLib{
      */
     template<class KeyType, class ElemType>
     bool TreeNode<KeyType, ElemType>::isLeaf() {
-        for (int i = 0; i < childnum_; ++i) {
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i] != NULL)
                 return false;
         }
@@ -236,7 +236,7 @@ namespace SmartDongLib{
     boost::shared_ptr<TreeNode<KeyType, ElemType>> TreeNode<KeyType, ElemType>::getNodeByKey(KeyType key,bool mustleaf) {
         std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> vecNode;
         getAllTreeNode(vecNode);
-        for (int i = 0; i < vecNode.size(); ++i) {
+        for (Size i = 0; i < vecNode.size(); ++i) {
             if (vecNode.at(i)->key() == key){
                if (!mustleaf ||  vecNode.at(i)->isLeaf())
                   return vecNode.at(i);
@@ -256,7 +256,7 @@ namespace SmartDongLib{
     boost::shared_ptr<TreeNode<KeyType, ElemType>> TreeNode<KeyType, ElemType>::getNodeByElem(ElemType elem,bool mustleaf) {
         std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> vecNode;
         getAllTreeNode(vecNode);
-        for (int i = 0; i < vecNode.size(); ++i) {
+        for (Size i = 0; i < vecNode.size(); ++i) {
             if (vecNode.at(i)->elem() == elem){
                 if (!mustleaf ||  vecNode.at(i)->isLeaf())
                     return vecNode.at(i);
@@ -279,15 +279,15 @@ namespace SmartDongLib{
             return  getThis();
         }
 
-        int notnullChildIndex=-1; //最右孩子的位置
-        for(int i = delnode->getChildnum() - 1 ; i >= 0 ; i--){
+        Size notnullChildIndex=-1; //最右孩子的位置
+        for(Size i = delnode->getChildnum() - 1 ; i >= 0 ; i--){
             //从右子树寻找非空的孩子
             if (delnode->getChildEx(i) != NULL){
                 notnullChildIndex=i;
                 break;
             }
         }
-        int parentChildIndex=delnode->findIndexOnParent();
+        Size parentChildIndex=delnode->findIndexOnParent();
         if ( notnullChildIndex ==-1 && parentChildIndex == -1){
             //无孩子,无父母的节点
             return NULL;
@@ -323,15 +323,15 @@ namespace SmartDongLib{
             return  getThis();
         }
 
-        int notnullChildIndex=-1; //最右孩子的位置
-        for(int i = delnode->getChildnum() - 1 ; i >= 0 ; i--){
+        Size notnullChildIndex=-1; //最右孩子的位置
+        for(Size i = delnode->getChildnum() - 1 ; i >= 0 ; i--){
             //从右子树寻找非空的孩子
             if (delnode->getChildEx(i) != NULL){
                 notnullChildIndex=i;
                 break;
             }
         }
-        int parentChildIndex=delnode->findIndexOnParent();
+        Size parentChildIndex=delnode->findIndexOnParent();
         if ( notnullChildIndex ==-1 && parentChildIndex == -1){
             //无孩子,无父母的节点
             return NULL;
@@ -361,7 +361,7 @@ namespace SmartDongLib{
     template<class KeyType, class ElemType>
     void TreeNode<KeyType, ElemType>::getAllTreeNode(std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> &retVec) {
         retVec.push_back(getThis());
-        for (int i = 0; i < childnum_; ++i) {
+        for (Size i = 0; i < childnum_; ++i) {
             if (children_[i]!= NULL){
                 children_[i]->getAllTreeNode(retVec);
             }
@@ -374,9 +374,9 @@ namespace SmartDongLib{
      * @return -1无父母  0左子树  1次左子树(右子树)
      */
     template<class KeyType, class ElemType>
-    int TreeNode<KeyType, ElemType>::findIndexOnParent() {
+    Size TreeNode<KeyType, ElemType>::findIndexOnParent() {
         boost::shared_ptr<TreeNode<KeyType, ElemType>> delnode=getThis();
-        for (int i = 0; delnode->parent() != NULL && i < delnode->parent()->getChildnum(); ++i) {
+        for (Size i = 0; delnode->parent() != NULL && i < delnode->parent()->getChildnum(); ++i) {
             if (delnode->parent()->getChildEx(i) != NULL
                 && delnode->parent()->getChild(i).get() == delnode.get()) {
                 return i;
@@ -393,8 +393,8 @@ namespace SmartDongLib{
      * @return
      */
     template<class KeyType, class ElemType>
-    int TreeNode<KeyType, ElemType>::nodeDeep() {
-        int ret=0;
+    Size TreeNode<KeyType, ElemType>::nodeDeep() {
+        Size ret=0;
         if (getThis() !=NULL)
             ret =1;
         boost::shared_ptr<TreeNode<KeyType, ElemType>> node =getThis();

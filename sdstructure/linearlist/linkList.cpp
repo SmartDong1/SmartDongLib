@@ -13,7 +13,7 @@ namespace SmartDongLib {
 //     * @return   是否插入成功
 //     */
 //    template<class ElemType>
-//    STATUS LinkListUtil<ElemType>::listInsert(LinkList<ElemType> &L, int i, ElemType e) {
+//    STATUS LinkListUtil<ElemType>::listInsert(LinkList<ElemType> &L, Size i, ElemType e) {
 //        LinkList<ElemType> *p = &L;
 //        if ( i ==0){
 //            LinkList<ElemType> *s =new LinkList<ElemType>;
@@ -24,7 +24,7 @@ namespace SmartDongLib {
 //            return SD_CONST::SD_SUCCESS;
 //        }
 //
-//        int j = 0 ;
+//        Size j = 0 ;
 //        while ( p && j< i -1 ){
 //            //寻找第i-1个点
 //            p =  p->next;
@@ -57,9 +57,9 @@ namespace SmartDongLib {
 //     * @return           链表长度
 //     */
 //    template<class ElemType>
-//    int LinkListUtil<ElemType>::listLenth(LinkList<ElemType> &L) {
+//    Size LinkListUtil<ElemType>::listLenth(LinkList<ElemType> &L) {
 //        LinkList<ElemType> *p = &L;
-//        int len=0;
+//        Size len=0;
 //        while (p->next){
 //            len++;
 //            p=p->next;
@@ -74,7 +74,7 @@ namespace SmartDongLib {
 //     * @return  是否成功删除
 //     */
 //    template<class ElemType>
-//    STATUS LinkListUtil<ElemType>::listDelete(LinkList<ElemType> &L, int i) {
+//    STATUS LinkListUtil<ElemType>::listDelete(LinkList<ElemType> &L, Size i) {
 //        LinkList<ElemType> *p = &L;
 //        if (i== 0 && p->next){
 //            p=p->next;
@@ -82,7 +82,7 @@ namespace SmartDongLib {
 //            L.next = p->next;
 //            delete p;
 //        }
-//        int j = 0 ;
+//        Size j = 0 ;
 //        while ( p->next && j< i -1 ){
 //            //寻找第i-1个点
 //            p =  p->next;
@@ -115,9 +115,9 @@ namespace SmartDongLib {
 //     * @return 第i个值
 //     */
 //    template<class ElemType>
-//    ElemType LinkListUtil<ElemType>::listGet(LinkList<ElemType> &L, int i) {
+//    ElemType LinkListUtil<ElemType>::listGet(LinkList<ElemType> &L, Size i) {
 //        LinkList<ElemType> *p = &L;
-//        int j=0;
+//        Size j=0;
 //        while(p && j<i){
 //            p=p->next;
 //            j++;
@@ -165,7 +165,7 @@ namespace SmartDongLib {
     * @return   是否插入成功
     */
     template<class ElemType>
-    STATUS LinkListUtil<ElemType>::listInsert(boost::shared_ptr  < LinkList<ElemType>>L, int i, ElemType e) {
+    STATUS LinkListUtil<ElemType>::listInsert(boost::shared_ptr  < LinkList<ElemType>>L, Size i, ElemType e) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
         if ( i ==0){
             boost::shared_ptr  < LinkList<ElemType>> s(new LinkList<ElemType>);
@@ -176,7 +176,7 @@ namespace SmartDongLib {
             return SD_CONST::SD_SUCCESS;
         }
 
-        int j = 0 ;
+        Size j = 0 ;
         while ( p && j< i -1 ){
             //寻找第i-1个点
             p =  p->next;
@@ -209,9 +209,9 @@ namespace SmartDongLib {
      * @return           链表长度
      */
     template<class ElemType>
-    int LinkListUtil<ElemType>::listLenth(boost::shared_ptr  < LinkList<ElemType>>L) {
+    Size LinkListUtil<ElemType>::listLenth(boost::shared_ptr  < LinkList<ElemType>>L) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
-        int len=0;
+        Size len=0;
         while (p->next){
             len++;
             p=p->next;
@@ -226,14 +226,14 @@ namespace SmartDongLib {
      * @return  是否成功删除
      */
     template<class ElemType>
-    STATUS LinkListUtil<ElemType>::listDelete(boost::shared_ptr  < LinkList<ElemType>>L, int i) {
+    STATUS LinkListUtil<ElemType>::listDelete(boost::shared_ptr  < LinkList<ElemType>>L, Size i) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
         if (i== 0 && p->next){
             p=p->next;
             L->data=p->data;
             L->next = p->next;
         }
-        int j = 0 ;
+        Size j = 0 ;
         while ( p->next && j< i -1 ){
             //寻找第i-1个点
             p =  p->next;
@@ -265,9 +265,9 @@ namespace SmartDongLib {
      * @return 第i个值
      */
     template<class ElemType>
-    ElemType LinkListUtil<ElemType>::listGet(boost::shared_ptr  < LinkList<ElemType>>L, int i) {
+    ElemType LinkListUtil<ElemType>::listGet(boost::shared_ptr  < LinkList<ElemType>>L, Size i) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
-        int j=0;
+        Size j=0;
         while(p && j<i){
             p=p->next;
             j++;
@@ -313,9 +313,9 @@ namespace SmartDongLib {
      * @return
      */
     template<class ElemType>
-    int LinkListUtil<ElemType>::listGetIndex(boost::shared_ptr<LinkList<ElemType>> L1, ElemType elem) {
+    Size LinkListUtil<ElemType>::listGetIndex(boost::shared_ptr<LinkList<ElemType>> L1, ElemType elem) {
         boost::shared_ptr  < LinkList<ElemType>> p1 =L1;
-        int ret=-1;
+        Size ret=-1;
         if (p1->data==elem){
             ret++;
             return ret;
@@ -334,7 +334,7 @@ namespace SmartDongLib {
 
     template<class ElemType>
     STATUS LinkListUtil<ElemType>::listDeleteByData(boost::shared_ptr<LinkList<ElemType>> L, ElemType e) {
-       int index =listGetIndex(L,e);
+       Size index =listGetIndex(L,e);
        return listDelete(L,index);
     }
 

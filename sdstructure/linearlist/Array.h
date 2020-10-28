@@ -32,20 +32,20 @@ namespace SmartDongLib {
         Array<ElemType>( const Array<ElemType> & a);            //拷贝构造函数
         Array<ElemType>& operator =(const Array<ElemType> & a); //拷贝赋值运算符
         ~Array(){destroyArray();}
-        STATUS initArray(int dim, ...);
+        STATUS initArray(Size dim, ...);
         STATUS destroyArray();
-        STATUS locate(va_list ap,int &off);
+        STATUS locate(va_list ap,Size &off);
         STATUS value(ElemType & e,...);
         STATUS assign(ElemType e,...);
-        int elemtotal(){return  elemtotal_;}
-        ElemType &  operator [](int i);
+        Size elemtotal(){return  elemtotal_;}
+        ElemType &  operator [](Size i);
 //        void operator ()( Array<ElemType> & a);
     private:
         ElemType * base_;  //元素的基址
-        int dim_;          //维度
-        int * bounds_;     //维度基址 每个维度 的长度
-        int * constants_;   //锁定dim个纬度可以包含多少个元素
-        int elemtotal_;    //数组总元素个数
+        Size dim_;          //维度
+        Size * bounds_;     //维度基址 每个维度 的长度
+        Size * constants_;   //锁定dim个纬度可以包含多少个元素
+        Size elemtotal_;    //数组总元素个数
     };
 
 }

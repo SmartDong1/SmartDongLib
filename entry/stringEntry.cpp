@@ -6,19 +6,19 @@
 #include "sdstructure/linearlist/SString.cpp"
 using namespace std;
 using namespace SmartDongLib;
-int main(){
+Size main(){
     SString mainstr("acabaabaabcacaabc");
     SString substr("abaabcac");//-1   0   -1   1   0   2   -1   1
     SString target("ijn");
-    int next[substr.length()];
+    Size next[substr.length()];
     substr.getnext(next);
-    for (int i :next){
+    for (Size i :next){
         cout<<i<<"   ";
     }
 
 
-    int index= mainstr.indexKMP(substr);
-    int index2=mainstr.index(substr);
+    Size index= mainstr.indexKMP(substr);
+    Size index2=mainstr.index(substr);
     cout<<endl<<index;
     cout<<endl<<index2;
     mainstr.replace(substr,target);

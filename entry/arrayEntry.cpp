@@ -6,22 +6,22 @@
 #include "sdstructure/linearlist/Array.cpp"
 using namespace std;
 using namespace SmartDongLib;
-void show(int dim,...){
+void show(Size dim,...){
     va_list ap;
     va_start(ap,dim);
-    for (int i = 0; i < dim ; ++i) {
-        cout<<i<<":"<<(char)va_arg(ap,int )<<endl;
+    for (Size i = 0; i < dim ; ++i) {
+        cout<<i<<":"<<(char)va_arg(ap,Size )<<endl;
     }
     va_end(ap);
 }
 
-int main(){
+Size main(){
 
-    SmartDongLib::Array<int> array{};
-    int status=array.initArray(3,4,4,3);
+    SmartDongLib::Array<Size> array{};
+    Size status=array.initArray(3,4,4,3);
     array.assign(8,2,3,1);
     array.assign(9,0,0,0);
-    int e;
+    Size e;
     array.value(e,2,3,1);
     cout<<e;
     array.value(e,0,0,0);

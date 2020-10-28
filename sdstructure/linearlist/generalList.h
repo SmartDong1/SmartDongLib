@@ -6,6 +6,7 @@
 #define SMARTDONGLIB_GENERALLIST_H
 #include <boost/shared_ptr.hpp>
 #include <algorithm>
+#include "const.h"
 namespace SmartDongLib {
     enum ElemTag{ATOM=0,LIST};
     class GeneralListException: public std::runtime_error{
@@ -30,10 +31,10 @@ namespace SmartDongLib {
         }
         ElemTag getHead(AtomType & outAtom,generalList<AtomType>* outHead);
         boost::shared_ptr<generalList<AtomType>>  getTail();
-        int getDepth();
-        std::string print();
-        int getElemCount();
-        int getLength();
+        Size getDepth();
+        std::string prSize();
+        Size getElemCount();
+        Size getLength();
         void insertFirst(AtomType e);
         void insertFirst(boost::shared_ptr<generalList<AtomType>> e);
         void deleteFirst();

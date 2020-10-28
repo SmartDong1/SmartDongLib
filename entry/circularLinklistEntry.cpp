@@ -8,16 +8,16 @@
 using namespace SmartDongLib;
 using std::cout;
 using std::endl;
-int listmain();
-int listmain(int);
+Size listmain();
+Size listmain(Size);
 
-int main(){
+Size main(){
    listmain(1);
 }
-//int listmain() {
-//    boost::shared_ptr<circularLinkedlist<int>> linklist1 (new circularLinkedlist<int>);
+//Size listmain() {
+//    boost::shared_ptr<circularLinkedlist<Size>> linklist1 (new circularLinkedlist<Size>);
 //    linklist1->data=1;
-//    circularLinklistUtil<int> cLinklistUtil;
+//    circularLinklistUtil<Size> cLinklistUtil;
 //
 //    cLinklistUtil.listInsert(linklist1, 1, 3);
 //    cLinklistUtil.listInsert(linklist1, 0, 4);
@@ -25,9 +25,9 @@ int main(){
 //    cLinklistUtil.listDelete(linklist1, 2);
 //    cLinklistUtil.listDelete(linklist1, 0);
 //    cLinklistUtil.listAppend(linklist1, 93);
-//    int len =cLinklistUtil.listLenth(linklist1);
+//    Size len =cLinklistUtil.listLenth(linklist1);
 //    //-------------------------------
-//    boost::shared_ptr<circularLinkedlist<int>> s (new circularLinkedlist<int>);
+//    boost::shared_ptr<circularLinkedlist<Size>> s (new circularLinkedlist<Size>);
 //    s->data=1;
 //    cLinklistUtil.listInsert(s,1,3);
 //    cLinklistUtil.listInsert(s,0,4);
@@ -36,7 +36,7 @@ int main(){
 //    cLinklistUtil.listDelete(s,0);
 //    cLinklistUtil.listAppend(s,93);
 //    cLinklistUtil.listMerge(linklist1,s, true);
-//    int len2 =cLinklistUtil.listLenth(s);
+//    Size len2 =cLinklistUtil.listLenth(s);
 //    //此时把 s 链表的Free 掉 那么Linklist1 也就废了
 //    cout << len << endl
 //         << cLinklistUtil.listGet(linklist1, len) << endl
@@ -44,12 +44,12 @@ int main(){
 //    return 0;
 //}
 
-int listmain(int pppppppp) {
-    boost::shared_ptr<circularLinkedlist<int> > linklist1(new circularLinkedlist<int>);
+Size listmain(Size pppppppp) {
+    boost::shared_ptr<circularLinkedlist<Size> > linklist1(new circularLinkedlist<Size>);
 
     linklist1->data=1;
     linklist1->tocircularLinkedlist();
-    circularLinklistUtil<int> cLinklistUtil;
+    circularLinklistUtil<Size> cLinklistUtil;
 
     cLinklistUtil.listInsert(linklist1, 1, 3);
     cLinklistUtil.listInsert(linklist1, 0, 4);
@@ -57,9 +57,9 @@ int listmain(int pppppppp) {
     cLinklistUtil.listDelete(linklist1, 2);
     cLinklistUtil.listDelete(linklist1, 0);
     cLinklistUtil.listAppend(linklist1, 93);
-    int len =cLinklistUtil.listLenth(linklist1);
+    Size len =cLinklistUtil.listLenth(linklist1);
     //-------------------------------
-    boost::shared_ptr<circularLinkedlist<int> > s(new circularLinkedlist<int>);
+    boost::shared_ptr<circularLinkedlist<Size> > s(new circularLinkedlist<Size>);
     s->data=1;
     s->tocircularLinkedlist();
     cLinklistUtil.listInsert(s,1,3);
@@ -69,7 +69,7 @@ int listmain(int pppppppp) {
     cLinklistUtil.listDelete(s,0);
     cLinklistUtil.listAppend(s,93);
     cLinklistUtil.listMerge(linklist1,s, true);
-    int len2 =cLinklistUtil.listLenth(s);
+    Size len2 =cLinklistUtil.listLenth(s);
     //此时把 s 链表的Free 掉 那么Linklist1 也就废了
     cout << len << endl
          << cLinklistUtil.listGet(linklist1, len) << endl

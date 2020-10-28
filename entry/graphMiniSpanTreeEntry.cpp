@@ -6,8 +6,8 @@
 #include <iostream>
 using namespace SmartDongLib;
 using namespace std;
-int main() {
-    Graph<char,int> digraph(true);
+Size main() {
+    Graph<char,Size> digraph(true);
     digraph.addNode('A',1)
             .addNode('B',1)
             .addNode('C',1)
@@ -26,11 +26,11 @@ int main() {
             .setEdge('F','E',6.0);
     digraph.simpleCircuitOnKey('A');
 
-    cout<<sizeof(int) <<" "<<sizeof(char);
+    cout<<sizeof(Size) <<" "<<sizeof(char);
 
-    Graph<char,int> miniTree= digraph.miniSpanTreePrimOnIndex(0);
+    Graph<char,Size> miniTree= digraph.miniSpanTreePrimOnIndex(0);
     miniTree.connectedComponent('A');
-    Graph<char,int> digraph2;
+    Graph<char,Size> digraph2;
     digraph2.addNode('A',1)
             .addNode('B',1)
             .addNode('C',1)
@@ -49,7 +49,7 @@ int main() {
     std::vector<LowestPath> loestpath=digraph2.shortPathOnKey('A', false);
     cout<<"\n\n\n";
     for (auto & i : loestpath) {
-        for (int j : i.pathIndex_) {
+        for (Size j : i.pathIndex_) {
             cout << j <<",";
         }
         cout <<"\t";
@@ -57,7 +57,7 @@ int main() {
 
     }
 
-    Graph<char,int> digraph3(false);
+    Graph<char,Size> digraph3(false);
     digraph3.addNode('1',1)
             .addNode('2',1)
             .addNode('3',1)
@@ -82,7 +82,7 @@ int main() {
     cout<<"\n\n\n";
     LongestPath  maxValue = digraph2.longPathOnIndex(0,3, true);
     cout<<maxValue.lowcost_<<endl;
-    for (int k : maxValue.pathIndex_) {
+    for (Size k : maxValue.pathIndex_) {
         cout<<"V"<<k+1<<",";
     }
 }
