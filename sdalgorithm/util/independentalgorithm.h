@@ -12,6 +12,12 @@
 using std::vector;
 namespace SmartDongLib{
     namespace SDmath{
+        class DataTypeIllegalException: public std::runtime_error{
+        public:
+            DataTypeIllegalException():std::runtime_error("DataTypeIllegalException Exception"){}
+            DataTypeIllegalException(const std::string& __arg):std::runtime_error("DataTypeIllegalException Exception:"+__arg){}
+
+        };
         /**
          * <p> 最大公因数
          * @tparam Type 整数类型
@@ -21,6 +27,12 @@ namespace SmartDongLib{
          */
         template<typename Type>
         Type greatestCommonDivisor(Type x, Type y){
+            if (!   (typeid(Type) == typeid(short) ||
+                    typeid(Type) == typeid(int) ||
+                    typeid(Type) == typeid(long) ||
+                    typeid(Type) == typeid(long long) )
+               )
+                throw DataTypeIllegalException("The Type can't be decimal");
             if (y == 0)
                 return x;
             else
@@ -38,10 +50,18 @@ namespace SmartDongLib{
             return x*y/greatestCommonDivisor(x,y);
 
         }
+        /**
+         * <p> 获取所有子集
+         * @tparam ElemType  返回值类型
+         * @tparam _InputIterator 线性表的迭代器类型
+         * @param _first1      线性表的起始地址
+         * @param _last1    线性表的结束地址
+         * @param _null     用变量来指定返回值类型避免编译不过
+         * @return  所有子集
+         */
         template<class ElemType,typename _InputIterator>
-        vector<vector<ElemType>> print_subset(_InputIterator __first1, _InputIterator __last1,ElemType){
-            __glibcxx_function_requires(_InputIteratorConcept<_InputIterator>)
-            int n = __last1 - __first1;
+        vector<vector<ElemType>> print_subset(_InputIterator _first1, _InputIterator _last1,ElemType _null ){
+            int n = _last1 - _first1;
             vector<vector<ElemType>> ret;
             // 2的n次方   1<<n
             for(int s=0;s<(1<<n);s++) {
@@ -49,35 +69,18 @@ namespace SmartDongLib{
                 for (int i = 0; i < n; i++) {
                     if (s & (1 << i)) //1左移i位，监测s的哪一位为1，为1的话输出
                     {
-                        subRet.push_back(*(__first1 + i));
-                        std::cout<<i;
+                        subRet.push_back(*(_first1 + i));
+//                        std::cout<<i;
                     }
                 }
                 ret.push_back(subRet);
-                std::cout << std::endl;
+//                std::cout << std::endl;
             }
             return  ret;
         }
 
 
 
-
-
-
-        template<typename _InputIterator1, typename _InputIterator2, typename _Tp>
-        inline _Tp
-        inner_product(_InputIterator1 __first1, _InputIterator1 __last1,
-                      _InputIterator2 __first2, _Tp __init)
-        {
-            // concept requirements
-            __glibcxx_function_requires(_InputIteratorConcept<_InputIterator1>)
-            __glibcxx_function_requires(_InputIteratorConcept<_InputIterator2>)
-            __glibcxx_requires_valid_range(__first1, __last1);
-
-            for (; __first1 != __last1; ++__first1, ++__first2)
-                __init = __init + (*__first1 * *__first2);
-            return __init;
-        }
     }
 }
 #endif //SMARTDONGLIB_INDEPENDENTALGORITHM_H

@@ -36,8 +36,9 @@ int main(){
     cout<<"============"<<endl;
     cout<< std::count(a,a+10,24)<<endl;
     cout<<"============"<<endl;
-    int aaaa[3]={78,22,31};
-    vector<vector<int>>aaRet=print_subset(aaaa,aaaa+3,0);
+    string aaaa[3]={"7a8","2b2","3c1"};
+    string string1;
+    vector<vector<string>>aaRet=print_subset(aaaa,aaaa+3,string1);
     for (int j = 0; j < aaRet.size(); ++j) {
         cout<<"{";
         for (int i = 0; i < aaRet[j].size(); ++i) {
@@ -45,4 +46,7 @@ int main(){
         }
         cout<<"}\n";
     }
+    cout<<"============"<<endl;
+    cout<<greatestCommonDivisor(-6,-8)<<endl;
+
 }
