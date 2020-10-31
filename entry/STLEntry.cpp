@@ -4,7 +4,9 @@
 #include<algorithm>
 #include<iostream>
 #include<cstdlib>
+#include "sdalgorithm/util/independentalgorithm.h"
 using namespace std;
+using namespace SmartDongLib::SDmath;
 void print(int a[],int size){
     for (int i = 0; i < size; ++i) {
         cout<< a[i]<<"  ";
@@ -30,7 +32,17 @@ int main(){
     for (int i = 0; i < 10; ++i) {
         cout<<*(pai.first+i)<<" notMatch "<<*(pai.second+i)<<endl;
     }
+
     cout<<"============"<<endl;
     cout<< std::count(a,a+10,24)<<endl;
-
+    cout<<"============"<<endl;
+    int aaaa[3]={78,22,31};
+    vector<vector<int>>aaRet=print_subset(aaaa,aaaa+3,0);
+    for (int j = 0; j < aaRet.size(); ++j) {
+        cout<<"{";
+        for (int i = 0; i < aaRet[j].size(); ++i) {
+            cout<< aaRet[j][i] <<" ";
+        }
+        cout<<"}\n";
+    }
 }
