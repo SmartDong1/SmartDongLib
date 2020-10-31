@@ -5,7 +5,7 @@
 #ifndef SMARTDONGLIB_INDEPENDENTALGORITHM_H
 #define SMARTDONGLIB_INDEPENDENTALGORITHM_H
 #include "const.h"
-
+#include <math.h>
 #include <bits/concept_check.h>
 #include <vector>
 #include <iostream>
@@ -26,17 +26,22 @@ namespace SmartDongLib{
          * @return
          */
         template<typename Type>
-        Type greatestCommonDivisor(Type x, Type y){
+        Type greatestCommonDivisor(Type xx, Type yy){
             if (!   (typeid(Type) == typeid(short) ||
                     typeid(Type) == typeid(int) ||
                     typeid(Type) == typeid(long) ||
                     typeid(Type) == typeid(long long) )
-               )
+               ) {
                 throw DataTypeIllegalException("The Type can't be decimal");
+            }
+            long long x =xx;
+            long long y= yy;
+
             if (y == 0)
                 return x;
             else
                 return  greatestCommonDivisor(y,x % y);
+
         }
         /**
          * <p>最小公倍数
