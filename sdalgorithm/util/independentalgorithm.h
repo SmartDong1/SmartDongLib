@@ -65,7 +65,7 @@ namespace SmartDongLib{
          * @return  所有子集
          */
         template<class ElemType,typename _InputIterator>
-        vector<vector<ElemType>> print_subset(_InputIterator _first1, _InputIterator _last1,ElemType _null ){
+        vector<vector<ElemType>> makeSubset(_InputIterator _first1, _InputIterator _last1, ElemType _null ){
             int n = _last1 - _first1;
             vector<vector<ElemType>> ret;
             // 2的n次方   1<<n
