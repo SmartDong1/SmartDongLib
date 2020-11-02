@@ -3,7 +3,7 @@
 //
 #include<algorithm>
 #include<iostream>
-#include "sdalgorithm/util/independentalgorithm.h"
+#include "sdalgorithm/math/independentalgorithm.h"
 using namespace std;
 using namespace SmartDongLib::SDmath;
 void print(int a[],int size){

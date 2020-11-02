@@ -6,15 +6,16 @@
 #define SMARTDONGLIB_INDEPENDENTALGORITHM_H
 #include "const.h"
 #include <math.h>
-#include <bits/concept_check.h>
 #include <vector>
 #include <iostream>
+#include <stdexcept>
+
 using std::vector;
 namespace SmartDongLib{
     namespace SDmath{
         class DataTypeIllegalException: public std::runtime_error{
         public:
-            DataTypeIllegalException():std::runtime_error("DataTypeIllegalException Exception"){}
+            DataTypeIllegalException():runtime_error("DataTypeIllegalException Exception"){}
             DataTypeIllegalException(const std::string& __arg):std::runtime_error("DataTypeIllegalException Exception:"+__arg){}
 
         };
@@ -27,7 +28,7 @@ namespace SmartDongLib{
          */
         template<typename Type>
         Type greatestCommonDivisor(Type xx, Type yy){
-            if (!   (typeid(Type) == typeid(short) ||
+            if (!   (typeid (Type) == typeid(short)  ||
                     typeid(Type) == typeid(int) ||
                     typeid(Type) == typeid(long) ||
                     typeid(Type) == typeid(long long) )
