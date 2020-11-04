@@ -5,7 +5,7 @@
 #include<iostream>
 #include "sdalgorithm/util/sort.h"
 #include <cmath>
-
+#include <vector>
 using namespace std;
 using namespace SmartDongLib;
 void print(int a[],int size){
@@ -14,10 +14,20 @@ void print(int a[],int size){
     }
     cout<<endl;
 };
+class C1{
+public:
+    C1(int a){a_=a;}
+    int a_;
+};
 int main(){
     int a[10] ={9,34,24,56,31,24,66,3,45,98};
-    Sort::insertionSort(a,a+10,[](int x,int y){return abs(x-24)<abs(y-24);});
-    Sort::insertionSort(a,a+10);
+    Sort::quickSort(a,a+9,[](int x,int y){return abs(x-24)<=abs(y-24);});
+//    Sort::quickSort(a,a+9,[](int x,int y){return x<y;});
+
+//        Sort::quickSort(a,a+9,[](int x,int y){return x>=y;});
+
+//    auto aa=C1(2);
+    Sort::quickSort(a, a + 9);
 
     print(a,10);
 }
