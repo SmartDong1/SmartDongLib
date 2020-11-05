@@ -6,9 +6,8 @@
 #define SMARTDONGLIB_SORT_H
 #include "const.h"
 #include <vector>
-#include<iostream>
-
-//#include <math.h>
+#include <malloc.h>
+#include<cstring>
  namespace SmartDongLib{
     class Sort{
     public:
@@ -19,7 +18,83 @@
             InsertionSort,
             ShellSort,
             QuickSort,
+//            MergingSort=6
         };
+        template<class _RandomAccessIterator, class _Compare>
+        static void sort(_RandomAccessIterator _first, _RandomAccessIterator _last,
+                                _Compare _comp ,sortMethod method=QuickSort){
+            switch (method) {
+                case SelectionSort:
+                    selectionSort(_first,_last,_comp);
+                    break;
+                case BubbleSort:
+                    bubbleSort(_first,_last,_comp);
+                    break;
+                case InsertionSort:
+                    insertionSort(_first,_last,_comp);
+                    break;
+                case ShellSort:
+                    shellSort(_first,_last,_comp);
+                    break;
+                case QuickSort:
+                    quickSort(_first,_last,_comp);
+                    break;
+                default:
+                    quickSort(_first,_last,_comp);
+                    break;
+            }
+        }
+        template<class _RandomAccessIterator>
+        static void sort(_RandomAccessIterator _first, _RandomAccessIterator _last,sortMethod method=QuickSort){
+            switch (method) {
+                case SelectionSort:
+                    selectionSort(_first,_last);
+                    break;
+                case BubbleSort:
+                    bubbleSort(_first,_last);
+                    break;
+                case InsertionSort:
+                    insertionSort(_first,_last);
+                    break;
+                case ShellSort:
+                    shellSort(_first,_last);
+                    break;
+                case QuickSort:
+                    quickSort(_first,_last);
+                    break;
+
+                default:
+                    quickSort(_first,_last);
+                    break;
+            }
+        }
+        /**
+               * <p>归并排序.每次选择最值放到最前面
+               * @tparam _RandomAccessIterator    线性表地址类型
+               * @tparam _Compare                 比较函数类型
+               * @param _first                    线性表起始地址
+               * @param _last                     线性表结束地址
+               * @param _comp                     比较函数
+               */
+        template<class _RandomAccessIterator, class _Compare>
+        static void mergingSort(_RandomAccessIterator _first, _RandomAccessIterator _last,
+                                _Compare _comp ){
+            Size len = _last -_first;
+            _RandomAccessIterator  acopy=(_RandomAccessIterator)malloc(len* sizeof(*_first));
+            Sort::mergeSort(_first,acopy,0,len-1,_comp);
+            free(acopy);
+        }
+
+        template<class _RandomAccessIterator>
+        static void mergingSort(_RandomAccessIterator _first, _RandomAccessIterator _last){
+            Size len = _last -_first;
+            _RandomAccessIterator  acopy=(_RandomAccessIterator)malloc(len* sizeof(*_first));
+            Sort::mergeSort(_first,acopy,0,len-1);
+            free(acopy);
+        }
+
+    protected:
+
         /**
          * <p>选择排序.每次选择最值放到最前面
          * @tparam _RandomAccessIterator    线性表地址类型
@@ -164,7 +239,40 @@
 
             }
         }
-        protected:
+
+
+        template<class _RandomAccessIterator, class _Compare>
+        static void
+        mergeSort(_RandomAccessIterator _arr1first, _RandomAccessIterator _arr2first,int s, int t,
+                  _Compare _comp) {
+            //把arr1[s...t] 并入到 arr2[s...t];
+            if (s == t) {
+                *(_arr2first + s) =  *(_arr1first + s);
+            } else{
+                int m =(s + t )/2;
+                mergeSort(_arr1first,_arr2first,s,m,_comp);
+                mergeSort(_arr1first,_arr2first,m+1,t,_comp);
+                merging(_arr2first,_arr1first,s,m,t,_comp);
+                memcpy(_arr2first+s,_arr1first+s,(t-s+1)*sizeof(*_arr2first));
+            }
+
+        }
+
+        template<class _RandomAccessIterator>
+        static void
+        mergeSort(_RandomAccessIterator _arr1first, _RandomAccessIterator _arr2first,int s, int t) {
+            //把arr1[s...t] 并入到 arr2[s...t];
+            if (s == t) {
+                *(_arr2first + s) =  *(_arr1first + s);
+            } else{
+                int m =(s + t )/2;
+                mergeSort(_arr1first,_arr2first,s,m);
+                mergeSort(_arr1first,_arr2first,m+1,t);
+                merging(_arr2first,_arr1first,s,m,t);
+                memcpy(_arr2first+s,_arr1first+s,(t-s+1)*sizeof(*_arr2first));
+            }
+
+        }
 
         template<class _RandomAccessIterator, class _Compare>
         static void singleShellInsert(_RandomAccessIterator _first, _RandomAccessIterator _last,
@@ -199,7 +307,7 @@
             }
         }
 
-    public:
+    private:
         template<class _RandomAccessIterator>
         static void iteratorSwap(_RandomAccessIterator _elem1, _RandomAccessIterator _elem2){
             auto temp = *_elem1;
@@ -241,6 +349,45 @@
             }
             *_first=temp;
             return  _first;
+        }
+        template<class _RandomAccessIterator, class _Compare>
+        static void
+        merging(_RandomAccessIterator _arr1first, _RandomAccessIterator _arr2first, int i, int m, int n,
+                _Compare _comp) {
+            //把arr1[i...mid]和arr1[mid+1...n]  并入到 arr2[i .... n];
+            int j,k; //j属于mid+1...last     i属于i...mid   k属于 i...last
+            for (j = m+1 ,k=i; i <=m && j <= n ; ++k) {
+                if (_comp(*(_arr1first + i) , *(_arr1first + j))){
+                    *(_arr2first + k)  = *(_arr1first+ (i++));
+                } else{
+                    *(_arr2first + k)  = *(_arr1first+ (j++));
+                }
+            }
+            if ( i <=m){
+                memcpy(_arr2first+k,_arr1first+i,(m-i+1)*sizeof(*_arr2first));
+            }
+            if ( j <=n){
+                memcpy(_arr2first+k,_arr1first+j,(n-j+1)*sizeof(*_arr2first));
+            }
+        }
+        template<class _RandomAccessIterator>
+        static void
+        merging(_RandomAccessIterator _arr1first, _RandomAccessIterator _arr2first, int i, int m, int n) {
+            //把arr1[i...mid]和arr1[mid+1...n]  并入到 arr2[i .... n];
+            int j,k; //j属于mid+1...last     i属于i...mid   k属于 i...last
+            for (j = m+1 ,k=i; i <=m && j <= n ; ++k) {
+                if (*(_arr1first + i) < *(_arr1first + j)){
+                    *(_arr2first + k)  = *(_arr1first+ (i++));
+                } else{
+                    *(_arr2first + k)  = *(_arr1first+ (j++));
+                }
+            }
+            if ( i <=m){
+                memcpy(_arr2first+k,_arr1first+i,(m-i+1)*sizeof(*_arr2first));
+            }
+            if ( j <=n){
+                memcpy(_arr2first+k,_arr1first+j,(n-j+1)*sizeof(*_arr2first));
+            }
         }
     };
 }
