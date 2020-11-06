@@ -26,8 +26,8 @@ public:
 };
 int main(){
 
-    int veclen =20000;
-    int a[veclen];
+    const int veclen =100000 ;
+    int a[veclen] ;
 //    a.resize(veclen);
 //    int a[10] ={9,34,24,56,31,24,66,3,45,20};
 //    Sort::sort(a.begin(),a+veclen,[](int x,int y){return abs(x-30)<=abs(y-30);},SmartDongLib::Sort::QuickSort);
@@ -39,7 +39,7 @@ int main(){
     }
     clock_t startSelectionSort,endSelectionSort;
     startSelectionSort = clock();
-    Sort::sort(a,a+veclen,SmartDongLib::Sort::SelectionSort);
+    Sort::sort<int>(a,a+veclen,SmartDongLib::Sort::SelectionSort);
     endSelectionSort = clock();
     cout<<"1.SelectionSort:"<< (double)(endSelectionSort - startSelectionSort)
     <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
@@ -51,7 +51,7 @@ int main(){
 
     clock_t startBubbleSort,endBubbleSort;
     startBubbleSort = clock();
-    Sort::sort(a,a+veclen,SmartDongLib::Sort::BubbleSort);
+    Sort::sort<int>(a,a+veclen,SmartDongLib::Sort::BubbleSort);
     endBubbleSort = clock();
     cout<<"2.BubbleSort:"<< (double)(endBubbleSort - startBubbleSort)
             <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;;
@@ -61,7 +61,7 @@ int main(){
 
     clock_t startInsertionSort,endInsertionSort;
     startInsertionSort = clock();
-    Sort::sort(a,a+veclen,SmartDongLib::Sort::InsertionSort);
+    Sort::sort<int>(a,a+veclen,SmartDongLib::Sort::InsertionSort);
     endInsertionSort = clock();
     cout<<"3.InsertionSort:"<< (double)(endInsertionSort - startInsertionSort)
             <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
@@ -72,7 +72,7 @@ int main(){
     }
     clock_t startShellSort,endShellSort;
     startShellSort = clock();
-    Sort::sort(a,a+veclen,SmartDongLib::Sort::ShellSort);
+    Sort::sort<int>(a,a+veclen,SmartDongLib::Sort::ShellSort);
     endShellSort = clock();
     cout<<"4.ShellSort:"<< (double)(endShellSort - startShellSort)
             <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;;
@@ -82,7 +82,9 @@ int main(){
     }
     clock_t startQuickSort,endQuickSort;
     startQuickSort = clock();
-    Sort::sort(a,a+veclen,SmartDongLib::Sort::QuickSort);
+//    print(a, veclen);
+    Sort::sort<int>(a,a+veclen,SmartDongLib::Sort::QuickSort);
+//    print(a, veclen);
     endQuickSort = clock();
     cout<<"5.QuickSort:"<< (double)(endQuickSort - startQuickSort)
             <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;;
@@ -92,10 +94,20 @@ int main(){
     }
     clock_t startMergingSort,endMergingSort;
     startMergingSort = clock();
-    Sort::mergingSort(a,a+veclen);
+    Sort::sort<int>(a, a+veclen,Sort::MergingSort) ;
     endMergingSort = clock();
     cout<<"6.MergingSort:"<< (double)(endMergingSort - startMergingSort)
-            <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;;
-//    print(a,veclen);
+            <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
+
+
+    for (int i = 0; i < veclen; ++i) {
+        a[i]=rand();
+    }
+    clock_t startSTLSort,endSTLSort;
+    startSTLSort = clock();
+    std::sort(a, a+veclen) ;
+    endSTLSort = clock();
+    cout<<"7.STLSort:"<< (double)(endSTLSort - startSTLSort)
+        <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
 
 }
