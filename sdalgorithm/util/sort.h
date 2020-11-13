@@ -18,7 +18,8 @@
             InsertionSort,
             ShellSort,
             QuickSort,
-            MergingSort=6
+            MergingSort=6,
+            HeapSort
         };
         template<class _tp,class _RandomAccessIterator , class _Compare>
         static void sort(_RandomAccessIterator  _first, _RandomAccessIterator  _last,
@@ -41,6 +42,8 @@
                     break;
                 case MergingSort:
                     mergingSort<_tp>(_first,_last,_comp);
+                case HeapSort:
+                    heapSort(_first,_last,_comp);
                 default:
                     quickSort(_first,_last-1,_comp);
                     break;
@@ -66,6 +69,8 @@
                     break;
                 case MergingSort:
                     mergingSort<_tp>(_first,_last);
+                case HeapSort:
+                    heapSort(_first,_last);
                 default:
                     quickSort(_first,_last-1);
                     break;
@@ -73,14 +78,50 @@
         }
 
     protected:
+       /**
+       * <p>堆排序.每次选择最值放到子节点前
+       * @tparam _RandomAccessIterator    线性表地址类型
+       * @tparam _Compare                 比较函数类型
+       * @param _first                    线性表起始地址
+       * @param _last                     线性表结束地址
+       * @param _comp                     比较函数
+       */
+        template< class _RandomAccessIterator, class _Compare>
+        static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last,
+                             _Compare _comp ){
+            int heaplen  =_last - _first;
+            //把无序堆建立成有序堆,从最后一个节点的父节点 heaplen -1,堆的一半开始调整
+            for (int i = heaplen/2 -1 ; i >= 0 ; --i) {
+                HeapAdjust(_first,i,heaplen-1,_comp);
+            }
+            //有序堆,每次调整后堆顶和最后一元素交换。
+            for (int j = heaplen-1; j >0 ; --j) {
+                iteratorSwap(_first,_first+j);
+                HeapAdjust(_first,0,j-1,_comp);
+            }
+        }
+        template< class _RandomAccessIterator >
+        static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last ){
+            int heaplen  =_last - _first;
+            //把无序堆建立成有序堆,从最后一个节点的父节点 heaplen -1,堆的一半开始调整
+            for (int i = heaplen/2 -1 ; i >= 0 ; --i) {
+                HeapAdjust(_first,i,heaplen-1);
+            }
+            //有序堆,每次调整后堆顶和最后一元素交换。
+            for (int j = heaplen-1; j >0 ; --j) {
+                iteratorSwap(_first,_first+j);
+                HeapAdjust(_first,0,j-1);
+            }
+        }
+
         /**
-                     * <p>归并排序.每次选择最值放到最前面
-                     * @tparam _RandomAccessIterator    线性表地址类型
-                     * @tparam _Compare                 比较函数类型
-                     * @param _first                    线性表起始地址
-                     * @param _last                     线性表结束地址
-                     * @param _comp                     比较函数
-                     */
+        * <p>归并排序.每次选择最值放到最前面
+        * @tparam _RandomAccessIterator    线性表地址类型
+        * @tparam _Compare                 比较函数类型
+        * @param _first                    线性表起始地址
+        * @param _last                     线性表结束地址
+        * @param _comp                     比较函数
+        */
         template<class _tp,class _RandomAccessIterator, class _Compare>
         static void mergingSort(_RandomAccessIterator _first, _RandomAccessIterator _last,
                                 _Compare _comp ){
@@ -413,6 +454,54 @@
                     *(_arr2first + k)  = *(_arr1first+ i);
                 }
             }
+        }
+
+        /**
+        * 堆节点"筛选"函数,堆顶自堆底的调整方式
+        * @tparam _RandomAccessIterator
+        * @tparam _Compare
+        * @param _first
+        * @param _last
+        * @param _comp
+        */
+        template<class _RandomAccessIterator, class _Compare>
+        static void HeapAdjust(_RandomAccessIterator _first, int nodeIndex,int heapLenth,
+                               _Compare _comp ){
+            //从小到大排序用大顶堆,父节点比自身节点大,假如按层(从0开始)排列,那么 第n个节点的左孩子是 2n+1  2n+2
+            //和自己的孩子进行比较然后交换,接着继续和孩子比较到叶子节点
+            auto temp = *(_first + nodeIndex);
+            for (int i = 2*nodeIndex +1; i <=heapLenth ; i =2 *i+1 ) {
+                if (i < heapLenth && _comp( *(_first+i) , *(_first+i+1)))
+                    ++i;
+                if (!_comp(temp,*(_first + i)))
+                    break;
+                *(_first + nodeIndex) = *(_first+i);
+                nodeIndex = i;
+            }
+            *(_first+nodeIndex) = temp;
+        }
+        /**
+        * 堆节点"筛选"函数,堆顶自堆底的调整方式
+        * @tparam _RandomAccessIterator
+        * @tparam _Compare
+        * @param _first
+        * @param _last
+        * @param _comp
+        */
+        template<class _RandomAccessIterator >
+        static void HeapAdjust(_RandomAccessIterator _first, int nodeIndex,int heapLenth){
+            //从小到大排序用大顶堆,父节点比自身节点大,假如按层(从0开始)排列,那么 第n个节点的左孩子是 2n+1  2n+2
+            //和自己的孩子进行比较然后交换,接着继续和孩子比较到叶子节点
+            auto temp = *(_first + nodeIndex);
+            for (int i = 2*nodeIndex +1; i <=heapLenth ; i =2 *i+1 ) {
+                if (i < heapLenth &&  *(_first+i)< *(_first+i+1) )
+                    ++i;
+                if (! temp<*(_first + i) )
+                    break;
+                *(_first + nodeIndex) = *(_first+i);
+                nodeIndex = i;
+            }
+            *(_first+nodeIndex) = temp;
         }
     };
 }

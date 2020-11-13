@@ -99,6 +99,18 @@ int main(){
     cout<<"6.MergingSort:"<< (double)(endMergingSort - startMergingSort)
             <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
 
+    for (int i = 0; i < veclen; ++i) {
+        a[i]=rand();
+    }
+//    int b[8] = {49,38,65,97,76,13,27,49};
+    clock_t startHeapSort,endHeapSort;
+    startHeapSort = clock();
+    Sort::sort<int>(a, a+veclen,Sort::HeapSort) ;
+    endHeapSort = clock();
+    cout<<"7.HeapSort:"<< (double)(endHeapSort - startHeapSort)
+        <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
+//    print(a,veclen);
+
 
     for (int i = 0; i < veclen; ++i) {
         a[i]=rand();
@@ -107,7 +119,14 @@ int main(){
     startSTLSort = clock();
     std::sort(a, a+veclen) ;
     endSTLSort = clock();
-    cout<<"7.STLSort:"<< (double)(endSTLSort - startSTLSort)
+    cout<<"8.STLSort:"<< (double)(endSTLSort - startSTLSort)
         <<"\t isSort:"<<std::is_sorted(a,a+veclen)<<endl;
 
 }
+
+
+
+
+
+
+
