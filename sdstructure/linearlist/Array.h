@@ -1,12 +1,13 @@
 //
 // Created by hu on 2020/8/12.
-//
+//无序数组
 
 #ifndef SMARTDONGLIB_ARRAY_H
 #define SMARTDONGLIB_ARRAY_H
 #include "const.h"
 #include <boost/shared_ptr.hpp>
 #include<cstring>
+#include <stdarg.h>
 namespace SmartDongLib {
 #define Max_ARRAY_DIM 8
     class ArrayIndexOutOfBoundsException: public std::out_of_range{
@@ -29,9 +30,16 @@ namespace SmartDongLib {
             elemtotal_=0;
             dim_=0;
         }
+        Array& operator =( Array && a)noexcept;
+
+        Array (Array && a) noexcept;
+
+
         Array<ElemType>( const Array<ElemType> & a);            //拷贝构造函数
         Array<ElemType>& operator =(const Array<ElemType> & a); //拷贝赋值运算符
-        ~Array(){destroyArray();}
+        ~Array(){
+            destroyArray();
+        }
         STATUS initArray(Size dim, ...);
         STATUS destroyArray();
         STATUS locate(va_list ap,Size &off);
@@ -41,6 +49,9 @@ namespace SmartDongLib {
         Size elemtotal(){return  elemtotal_;}
         ElemType &  operator [](Size i);
 //        void operator ()( Array<ElemType> & a);
+
+        Size getElemtotal() const;
+
     private:
         ElemType * base_;  //元素的基址
         Size dim_;          //维度

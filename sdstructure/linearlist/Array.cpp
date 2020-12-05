@@ -77,21 +77,21 @@ namespace SmartDongLib {
 
     template<class ElemType>
     STATUS Array<ElemType>::destroyArray() {
-        std::cout<<"array:"<<this<<std::endl;
-        if (base_){
+//        std::cout<<"array:"<<this<<std::endl;
+        if (base_ != nullptr){
             std::cout<<"base_:"<<base_<<std::endl;
             free(base_);
-            base_=NULL;
+            base_=nullptr;
         }
-        if (bounds_){
+        if (bounds_ != nullptr){
             std::cout<<"bounds_:"<<bounds_<<std::endl;
             free(bounds_);
-            bounds_=NULL;
+            bounds_=nullptr;
         }
-        if (constants_){
+        if (constants_!= nullptr){
             std::cout<<"constants_:"<<constants_<<std::endl;
             free(constants_);
-            constants_=NULL;
+            constants_=nullptr;
         }
         return SD_CONST::SD_SUCCESS;
     }
@@ -202,6 +202,44 @@ namespace SmartDongLib {
             this->assign(e,strIndex + i -start);
         }
         return SD_CONST::SD_SUCCESS;
+    }
+
+
+
+    template<class ElemType>
+    Size Array<ElemType>::getElemtotal() const {
+        return elemtotal_;
+    }
+
+    template<class ElemType>
+    Array<ElemType> &Array<ElemType>::operator=(Array &&a) noexcept {
+        //避免自己移动自己
+        if ( this == &a )
+            return *this;
+        dim_ = a.dim_;
+        elemtotal_= a.elemtotal_;
+        delete base_;
+        base_ = a.base_;
+        a.base_ = nullptr;
+        delete bounds_;
+        bounds_ = a.bounds_;
+        a.bounds_ = nullptr;
+        delete constants_;
+        constants_ = a.constants_;
+        a.constants_ = nullptr;
+        return *this;
+    }
+
+    template<class ElemType>
+    Array<ElemType>::Array(Array &&a) noexcept {
+        dim_ = a.dim_;
+        elemtotal_= a.elemtotal_;
+        base_ = a.base_;
+        a.base_ = nullptr;
+        bounds_ = a.bounds_;
+        a.bounds_ = nullptr;
+        constants_ = a.constants_;
+        a.constants_ = nullptr;
     }
 
 

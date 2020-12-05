@@ -6,9 +6,6 @@
 #include "sdalgorithm/util/sort.h"
 #include <ctime>
 #include <malloc.h>
-#include<cstring>
-#include <cstdlib>
-#include <typeinfo>
 #include<algorithm>
 
 using namespace std;

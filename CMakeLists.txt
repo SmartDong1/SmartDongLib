@@ -46,4 +46,6 @@ add_executable(SmartDongLib
         sdstructure/graph/graphadjacencyedge.h
         sdalgorithm/math/independentalgorithm.h
         sdalgorithm/util/sort.h
-        entry/sortEntry.cpp)
+        sdstructure/linearlist/Matrix.cpp
+        sdstructure/linearlist/Matrix.h
+        entry/MatrixEntry.cpp)

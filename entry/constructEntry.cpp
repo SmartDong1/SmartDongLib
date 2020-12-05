@@ -3,8 +3,9 @@
 //
 
 #include <iostream>
+#include "const.h"
 using namespace std;
-
+using namespace SmartDongLib;
 class ConstructTest{
 public:
     ConstructTest(){
