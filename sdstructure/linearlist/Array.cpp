@@ -119,17 +119,17 @@ namespace SmartDongLib {
     STATUS Array<ElemType>::destroyArray() {
 //        std::cout<<"array:"<<this<<std::endl;
         if (base_ != nullptr){
-            std::cout<<"base_:"<<base_<<std::endl;
+//            std::cout<<"base_:"<<base_<<std::endl;
             free(base_);
             base_=nullptr;
         }
         if (bounds_ != nullptr){
-            std::cout<<"bounds_:"<<bounds_<<std::endl;
+//            std::cout<<"bounds_:"<<bounds_<<std::endl;
             free(bounds_);
             bounds_=nullptr;
         }
         if (constants_!= nullptr){
-            std::cout<<"constants_:"<<constants_<<std::endl;
+//            std::cout<<"constants_:"<<constants_<<std::endl;
             free(constants_);
             constants_=nullptr;
         }
