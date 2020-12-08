@@ -37,6 +37,13 @@ int main() {
 //    print(plusMatrix) ;
     Matrix<int> multiMatrix(2,3);
     multiMatrix = matrix1 * matrix2;
+    multiMatrix=multiMatrix.transposition();
+    multiMatrix.rowSwap(0,1);
 //    print(multiMatrix);
-    print(multiMatrix.transposition());
+
+    Matrix<double> A(3,6);
+    A(0,0) =1;A(0,1) =1;A(0,2) =1;A(0,3) =1;
+    A(1,0) =1;A(1,1) =1;A(1,4) =1;
+    A(2,1) =1;A(2,2) =1;A(2,5) =1;
+    print(A.rowTransform());
 }

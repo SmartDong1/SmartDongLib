@@ -6,7 +6,7 @@
 #define SMARTDONGLIB_MATRIX_H
 #include "Array.cpp"
 namespace SmartDongLib {
-    template<class ElemType>
+    template<typename ElemType>
     class Matrix {
     public:
         Matrix(int theRow, int thecol);
@@ -20,13 +20,15 @@ namespace SmartDongLib {
         Matrix<ElemType> operator -(Matrix<ElemType> &) ;
         Matrix<ElemType> operator *(Matrix<ElemType> &) ;
         Matrix<ElemType>& operator +=(ElemType) ;
-
+        virtual ElemType get(int i, int j);
         Matrix<ElemType>& operator +=(Matrix<ElemType> &) ;
         Matrix<ElemType>   transposition();
         Integer getTheRows() const;
         Integer getTheCols() const;
         const Array<ElemType> &getMatrix() const;
-
+        Matrix<ElemType> rowTransform();
+        void rowSwap(int row1 ,int row2);
+        void initMatrixBy2DArray( Array<ElemType> array,int theRow, int thecol);
     private:
         Integer theRows_;
         Integer theCols_;
