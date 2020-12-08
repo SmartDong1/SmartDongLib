@@ -30,6 +30,7 @@ namespace SmartDongLib {
             elemtotal_=0;
             dim_=0;
         }
+        Array(Size dim, ...);
         Array& operator =( Array && a)noexcept;
 
         Array (Array && a) noexcept;

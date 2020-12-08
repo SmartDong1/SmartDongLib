@@ -4,7 +4,7 @@
 
 #include "Matrix.h"
 template<class ElemType>
-SmartDongLib::Matrix<ElemType>::Matrix(int therow, int thecol)
+SmartDongLib::Matrix<ElemType>::Matrix(int therow, int thecol):matrix_(2, therow, thecol)
 {
     if (therow<=0 || thecol <=0){
         std::string err="matrix init fail,the row&col must be positive"  ;
@@ -12,7 +12,6 @@ SmartDongLib::Matrix<ElemType>::Matrix(int therow, int thecol)
      }
     theRows_=therow;
     theCols_=thecol;
-    matrix_.initArray(2, therow, thecol);
 }
 
 template<class ElemType>

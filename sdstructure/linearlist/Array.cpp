@@ -74,7 +74,47 @@ namespace SmartDongLib {
         }
         return SD_CONST::SD_SUCCESS;
     }
+    template<class ElemType>
+    Array<ElemType>::Array(Size dim, ...) {
+        if (dim < 1 || dim >Max_ARRAY_DIM)
+            throw ArrayStackOverflowException();
+        dim_=dim;
+        bounds_=(Size *)malloc(dim * sizeof(Size));
+        if (!bounds_){
+            // 内存溢出
+            throw ArrayStackOverflowException();
+        }
+        Size elemtotal =1 ; //元素总数
+        va_list ap;
+        va_start(ap,dim);
+        for (Size i = 0; i < dim ; ++i) {
+            bounds_[i] =va_arg(ap,Size);
+            if (bounds_[i] < 0 )
+                // 内存溢出
+                throw ArrayStackOverflowException("Underflowed");
+            elemtotal *=bounds_[i];
+        }
+        elemtotal_=elemtotal;
+        va_end(ap);
+        base_ = (ElemType * )malloc(elemtotal * sizeof(ElemType));
+        if (!base_){
+            // 内存溢出
+            throw ArrayStackOverflowException();
+        }
+        constants_ = (Size * ) malloc(dim * sizeof(Size));
+        if (!constants_){
+            // 内存溢出
+            throw ArrayStackOverflowException();
+        }
+        constants_[dim_ -1] =1;
+        //3维 constants_[2]= 1
+        //constants[1] =3 ;
+        //constants[0] =12
+        for (Size j =dim-2; j >=0 ; --j) {
+            constants_[j]=bounds_[j+1] *constants_[j+1];
+        }
 
+    }
     template<class ElemType>
     STATUS Array<ElemType>::destroyArray() {
 //        std::cout<<"array:"<<this<<std::endl;
@@ -241,6 +281,8 @@ namespace SmartDongLib {
         constants_ = a.constants_;
         a.constants_ = nullptr;
     }
+
+
 
 
 }
