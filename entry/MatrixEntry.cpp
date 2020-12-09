@@ -48,6 +48,8 @@ int main() {
     UnitMatrix<double> a(3);
     print(A.simplyTransform());
     cout<<"-----------------------\n";
+    print(A.divideMatrix(0,3,0,3).rightJoin(A.divideMatrix(0,3,3,6)));
+    cout<<"-----------------------\n";
     Matrix<double> B(3, 3);
     B(0,0) =1;B(0,1) =1;B(0,2) =1;
     B(1,0) =1;B(1,1) =1;

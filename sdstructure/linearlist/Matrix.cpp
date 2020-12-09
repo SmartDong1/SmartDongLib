@@ -270,34 +270,84 @@ SmartDongLib::SquareMatrix<ElemType> SmartDongLib::Matrix<ElemType>::inverse() {
         return SquareMatrix<ElemType>(1);
     }
     //在右边接入单位矩阵
-    Matrix<ElemType> combineMatrix( theRows_, 2 *theCols_);
-    for (int i = 0; i < theRows_; ++i) {
-        for (int j = 0; j < theCols_; ++j) {
-            combineMatrix(i,j) = (*this)(i,j);
-        }
-    }
-    for (int k = 0; k < theCols_; ++k) {
-        combineMatrix(k,k+theCols_) =1;
-    }
+    Matrix<ElemType> combineMatrix( *this);
+    combineMatrix=combineMatrix.rightJoin(UnitMatrix<ElemType>(theCols_));
     //进行行变换成最简矩阵
     combineMatrix = combineMatrix.simplyTransform();
-
-    SquareMatrix<ElemType> leftMatrix(theRows_);
-    for (int i = 0; i < theRows_; ++i) {
-        for (int j = 0; j < theCols_; ++j) {
-            leftMatrix(i,j)=combineMatrix(i,j);
-        }
-    }
+    //左半部分矩阵要求是单位阵时右半部分矩阵才是逆矩阵
+    Matrix<ElemType> leftMatrix =combineMatrix.divideMatrix(0,theRows_,0,theCols_);
+    Matrix<ElemType> rightMatrix =combineMatrix.divideMatrix(0,theRows_,theCols_,2*theCols_);
+    SquareMatrix<ElemType> ret  = MatrixUtil<ElemType>::Convert2SquareMatrix(rightMatrix);
     if (! MatrixUtil<ElemType>::isUnitMatrix(leftMatrix)){
         return SquareMatrix<ElemType>(1);
     }
-    SquareMatrix<ElemType> ret (theRows_);
+
+    return ret;
+}
+
+/**
+ * 向右拼接矩阵
+ * @tparam ElemType
+ * @param src
+ * @return
+ */
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType> SmartDongLib::Matrix<ElemType>::rightJoin(SmartDongLib::Matrix<ElemType> src) {
+    if (theRows_  != src.theRows_ ){
+        std::string err="matrix rightjoin fail,the row must be positive"  ;
+        throw ArrayIndexOutOfBoundsException(err);
+    }
+    Matrix<ElemType> ret(theRows_,theCols_+src.theCols_);
     for (int i = 0; i < theRows_; ++i) {
         for (int j = 0; j < theCols_; ++j) {
-            ret(i,j)=combineMatrix(i,j+theCols_);
+            ret(i,j) = (*this)(i,j);
+        }
+    }
+    for (int i = 0; i < src.theRows_; ++i) {
+        for (int j = 0; j < src.theCols_; ++j) {
+            ret(i,j+theCols_) = src(i,j);
         }
     }
     return ret;
+}
+/**
+ * <p> 分割矩阵
+ * @tparam ElemType
+ * @param rowBegin 行开始位置(包含)
+ * @param rowEnd   行结束位置(不包含)
+ * @param colBegin 列开始位置(包含)
+ * @param colEnd   列结束位置(不包含)
+ * @return
+ */
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType>
+SmartDongLib::Matrix<ElemType>::divideMatrix(int rowBegin, int rowEnd, int colBegin, int colEnd) {
+    rowBegin = rowBegin<=0? 0 :rowBegin;
+    rowEnd = rowEnd >= theRows_ ? theRows_:rowEnd;
+    colBegin = colBegin<=0 ? 0 : colBegin;
+    colEnd = colEnd >= theCols_ ? theCols_ : colEnd;
+    Matrix<ElemType> ret(rowEnd-rowBegin,colEnd-colBegin);
+    for (int i = rowBegin; i < rowEnd; ++i) {
+        for (int j = colBegin; j < colEnd; ++j) {
+            ret(i - rowBegin ,j-colBegin) =(*this)(i,j);
+        }
+    }
+    return ret;
+}
+
+template<typename ElemType>
+void SmartDongLib::Matrix<ElemType>::setTheRows(int theRows) {
+    theRows_ = theRows;
+}
+
+template<typename ElemType>
+void SmartDongLib::Matrix<ElemType>::setTheCols(int theCols) {
+    theCols_ = theCols;
+}
+
+template<typename ElemType>
+void SmartDongLib::Matrix<ElemType>::setMatrix(const SmartDongLib::Array<ElemType> &matrix) {
+    matrix_ = matrix;
 }
 
 template<typename ElemType>
@@ -305,8 +355,8 @@ SmartDongLib::SquareMatrix<ElemType> SmartDongLib::MatrixUtil<ElemType>::Convert
     if (!isSquareMatrix(src)){
         throw ArrayIndexOutOfBoundsException("SquareMatrix init fail");
     }
-    SquareMatrix<ElemType> ret(src.theRows_);
-    ret.matrix_ = src.matrix_;
+    SquareMatrix<ElemType> ret(src.getTheRows());
+    ret.setMatrix( src.getMatrix());
     return ret;
 }
 

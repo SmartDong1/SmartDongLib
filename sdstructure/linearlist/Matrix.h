@@ -33,12 +33,20 @@ namespace SmartDongLib {
         Matrix<ElemType>   transposition();
         Integer getTheRows() const;
         Integer getTheCols() const;
+        Matrix<ElemType> rightJoin(Matrix<ElemType>);
+        Matrix<ElemType> divideMatrix(int rowBegin,int rowEnd,int colBegin,int colEnd);
         const Array<ElemType> &getMatrix() const;
         Matrix<ElemType> simplyTransform();
         SquareMatrix<ElemType> inverse();
         void rowSwap(int row1 ,int row2);
         virtual void initMatrixBy2DArray( Array<ElemType> array,int theRow, int thecol);
         virtual ElemType get(int i, int j);
+
+        void setTheRows(Integer theRows);
+
+        void setTheCols(Integer theCols);
+
+        void setMatrix(const Array<ElemType> &matrix);
 
     protected:
         Integer theRows_;
