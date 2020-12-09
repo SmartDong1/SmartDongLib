@@ -4,8 +4,7 @@
 
 #ifndef SMARTDONGLIB_MATRIX_H
 #define SMARTDONGLIB_MATRIX_H
-#include "Array.cpp"
-
+#include "tsMatrix.cpp"
 namespace SmartDongLib {
     template<typename ElemType>
     class Matrix;
@@ -110,7 +109,9 @@ namespace SmartDongLib {
     template<typename ElemType>
     class MatrixUtil{
     public:
-        static SquareMatrix<ElemType> Convert2SquareMatrix(Matrix<ElemType>);
+        static SquareMatrix<ElemType> convert2SquareMatrix(Matrix<ElemType>&);
+        static tsMatrix<ElemType> convert2TsMatrix(Matrix<ElemType>&);
+        static Matrix<ElemType> convertTsMatrix2Matrix(tsMatrix<ElemType>&);
         static bool isSquareMatrix(Matrix<ElemType>);
         static bool isUnitMatrix(Matrix<ElemType>);
         static bool isZeroMatrix(Matrix<ElemType>);

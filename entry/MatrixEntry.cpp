@@ -58,4 +58,11 @@ int main() {
     diagonalMatrix3(0,0)=1; diagonalMatrix3(1,1)=2; diagonalMatrix3(2,2)=3;
     Matrix<double> Binverse=B.inverse();
     print(     Binverse * diagonalMatrix3);
+    cout<<"-----------------------\n";
+    tsMatrix<double> tsBinverse = MatrixUtil<double>::convert2TsMatrix(Binverse);
+    for (Size i = 0; i < tsBinverse.tnum_; ++i) {
+        cout<<tsBinverse.data_[i].rowindex<<" "<<tsBinverse.data_[i].colindex<<" "<<tsBinverse.data_[i].elem<<endl;
+    }
+    cout<<"-----------------------\n";
+    print( MatrixUtil<double>::convertTsMatrix2Matrix(tsBinverse) );
 }

@@ -274,7 +274,7 @@ SmartDongLib::SquareMatrix<ElemType> SmartDongLib::Matrix<ElemType>::inverse() {
     //左半部分矩阵要求是单位阵时右半部分矩阵才是逆矩阵
     Matrix<ElemType> leftMatrix =combineMatrix.divideMatrix(0,theRows_,0,theCols_);
     Matrix<ElemType> rightMatrix =combineMatrix.divideMatrix(0,theRows_,theCols_,2*theCols_);
-    SquareMatrix<ElemType> ret  = MatrixUtil<ElemType>::Convert2SquareMatrix(rightMatrix);
+    SquareMatrix<ElemType> ret  = MatrixUtil<ElemType>::convert2SquareMatrix(rightMatrix);
     if (! MatrixUtil<ElemType>::isUnitMatrix(leftMatrix)){
         return SquareMatrix<ElemType>(1);
     }
@@ -357,7 +357,7 @@ SmartDongLib::SquareMatrix<ElemType> SmartDongLib::Matrix<ElemType>::operator+(S
     for (int i = 0; i < theRows_; ++i) {
         ret1(i,i) += src(i,i);
     }
-    SquareMatrix<ElemType> ret= MatrixUtil<ElemType>::Convert2SquareMatrix(ret1);
+    SquareMatrix<ElemType> ret= MatrixUtil<ElemType>::convert2SquareMatrix(ret1);
     return ret;
 }
 
@@ -411,7 +411,7 @@ SmartDongLib::Matrix<ElemType> SmartDongLib::UnitMatrix<ElemType>::operator*(Mat
 
 }
 template<typename ElemType>
-SmartDongLib::SquareMatrix<ElemType> SmartDongLib::MatrixUtil<ElemType>::Convert2SquareMatrix(Matrix<ElemType> src) {
+SmartDongLib::SquareMatrix<ElemType> SmartDongLib::MatrixUtil<ElemType>::convert2SquareMatrix(Matrix<ElemType> &src) {
     if (!isSquareMatrix(src)){
         throw ArrayIndexOutOfBoundsException("SquareMatrix init fail");
     }
@@ -462,4 +462,37 @@ void SmartDongLib::MatrixUtil<ElemType>::printMatrix(SmartDongLib::Matrix<ElemTy
         }
         std::cout << std::endl;
     }
+}
+
+template<typename ElemType>
+SmartDongLib::tsMatrix<ElemType> SmartDongLib::MatrixUtil<ElemType>::convert2TsMatrix(SmartDongLib::Matrix<ElemType>& src) {
+    int row = src.getTheRows();
+    int col = src.getTheCols();
+    int tnum =  0;
+    Array<triple<ElemType>> array(1,row * col);
+    for (int i = 0; i < row; ++i) {
+        for (int j = 0; j < col; ++j) {
+            if(src(i,j)!=0) {
+                triple<ElemType> member(i,j,src(i,j));
+                array[tnum++]=member;
+            }
+        }
+    }
+    return tsMatrix<ElemType>(row,col,tnum,array);
+}
+
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType>
+SmartDongLib::MatrixUtil<ElemType>::convertTsMatrix2Matrix(SmartDongLib::tsMatrix<ElemType> &src) {
+    int row = src.rownum_;
+    int col = src.colnum_;
+    int tnum =  0;
+    Matrix<ElemType> ret(row,col);
+    for (;tnum< src.tnum_ ; tnum++) {
+        int memberRow=src.data_[tnum].rowindex;
+        int memberCol=src.data_[tnum].colindex;
+        ElemType memberElem=src.data_[tnum].elem;
+        ret(memberRow,memberCol)=memberElem;
+    }
+    return ret;
 }
