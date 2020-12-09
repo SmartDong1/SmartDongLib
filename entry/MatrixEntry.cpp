@@ -54,5 +54,8 @@ int main() {
     B(0,0) =1;B(0,1) =1;B(0,2) =1;
     B(1,0) =1;B(1,1) =1;
     B(2,1) =1;B(2,2) =1;
-    print(B.inverse());
+    DiagonalMatrix<double> diagonalMatrix3(3);
+    diagonalMatrix3(0,0)=1; diagonalMatrix3(1,1)=2; diagonalMatrix3(2,2)=3;
+    Matrix<double> Binverse=B.inverse();
+    print(     Binverse * diagonalMatrix3);
 }

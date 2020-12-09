@@ -121,7 +121,7 @@ SmartDongLib::Matrix<ElemType> &SmartDongLib::Matrix<ElemType>::operator+=(Smart
 }
 
 template<typename ElemType>
-SmartDongLib::Matrix<ElemType> SmartDongLib::Matrix<ElemType>::operator*(SmartDongLib::Matrix<ElemType> & b)  {
+SmartDongLib::Matrix<ElemType>  SmartDongLib::Matrix<ElemType>::operator*(SmartDongLib::Matrix<ElemType> & b)  {
     if (this->theCols_ != b.theRows_){
         std::string err="Matrix multiplication requery b.col and b.rows to be equal"  ;
         throw ArrayStackOverflowException(err);
@@ -181,10 +181,7 @@ void SmartDongLib::Matrix<ElemType>::initMatrixBy2DArray(SmartDongLib::Array<Ele
     matrix_ = array;
 }
 
-template<typename ElemType>
-ElemType SmartDongLib::Matrix<ElemType>::get(int i, int j) {
-    return matrix_ [ i*theCols_ + j];
-}
+
 /**
  * 矩阵行变换成最简矩阵
  * @tparam ElemType
@@ -350,6 +347,69 @@ void SmartDongLib::Matrix<ElemType>::setMatrix(const SmartDongLib::Array<ElemTyp
     matrix_ = matrix;
 }
 
+template<typename ElemType>
+SmartDongLib::SquareMatrix<ElemType> SmartDongLib::Matrix<ElemType>::operator+(SmartDongLib::DiagonalMatrix<ElemType> & src) {
+    if (theRows_  != src.theRows_  ||  theCols_  != src.theCols_  ){
+        std::string err="matrix rightjoin fail,the row must be positive"  ;
+        throw ArrayIndexOutOfBoundsException(err);
+    }
+     Matrix<ElemType> ret1(*this);
+    for (int i = 0; i < theRows_; ++i) {
+        ret1(i,i) += src(i,i);
+    }
+    SquareMatrix<ElemType> ret= MatrixUtil<ElemType>::Convert2SquareMatrix(ret1);
+    return ret;
+}
+
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType>
+SmartDongLib::Matrix<ElemType>::operator*(SmartDongLib::DiagonalMatrix<ElemType> & b) {
+    if (this->theCols_ != b.theRows_){
+        std::string err="Matrix multiplication requery b.col and b.rows to be equal"  ;
+        throw ArrayStackOverflowException(err);
+    }
+    Matrix<ElemType> ret1(*this);
+    for (int j = 0; j < ret1.theCols_; ++j) {
+        for (int i = 0; i < ret1.theRows_; ++i) {
+            ret1(i,j) *= b(j,j);
+        }
+    }
+    return ret1;
+}
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType> SmartDongLib::DiagonalMatrix<ElemType>::operator*(Matrix<ElemType> & b) {
+    if (this->getTheCols()  != b.getTheRows() ){
+        std::string err="Matrix multiplication requery b.col and b.rows to be equal"  ;
+        throw ArrayStackOverflowException(err);
+    }
+    Matrix<ElemType> ret1(b);
+    for (int i = 0; i < ret1.getTheRows() ; ++i) {
+        for (int j = 0; j < ret1.getTheCols() ; ++j) {
+            ret1(i,j) *= (*this)(i,i);
+        }
+    }
+    return ret1;
+}
+
+
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType> SmartDongLib::Matrix<ElemType>::operator*(SmartDongLib::UnitMatrix<ElemType> & b) {
+    if (this->theCols_ != b.theRows_){
+        std::string err="Matrix multiplication requery b.col and b.rows to be equal"  ;
+        throw ArrayStackOverflowException(err);
+    }
+    return Matrix<ElemType>(*this);
+}
+
+template<typename ElemType>
+SmartDongLib::Matrix<ElemType> SmartDongLib::UnitMatrix<ElemType>::operator*(Matrix<ElemType> & b) {
+    if (this->getTheCols() != b.getTheRows()){
+        std::string err="Matrix multiplication requery b.col and b.rows to be equal"  ;
+        throw ArrayStackOverflowException(err);
+    }
+    return Matrix<ElemType>(b);
+
+}
 template<typename ElemType>
 SmartDongLib::SquareMatrix<ElemType> SmartDongLib::MatrixUtil<ElemType>::Convert2SquareMatrix(Matrix<ElemType> src) {
     if (!isSquareMatrix(src)){
