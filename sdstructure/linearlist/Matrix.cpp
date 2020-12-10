@@ -190,21 +190,22 @@ void SmartDongLib::Matrix<ElemType>::initMatrixBy2DArray(SmartDongLib::Array<Ele
 template<typename ElemType>
 SmartDongLib::Matrix<ElemType> SmartDongLib::Matrix<ElemType>::simplyTransform() {
     Matrix<ElemType> ret(*this);
-
+    //表示将要化1的矩阵行
     for (int transferRow = 0; transferRow < theRows_; ++transferRow) {
-        //寻找最长元素行
+        //按列循环每行找首个非0元素，从transferRow行开始寻找最长元素行
         int firstNotNullCol = 0;
         for (; firstNotNullCol < ret.theCols_; ++firstNotNullCol) {
             int row = transferRow;
             bool isfind= false;
             for (; row < ret.theRows_; ++row) {
                 ElemType firstelem=ret(row, firstNotNullCol);
-                if (!close(firstelem, (ElemType)0)) {
+                if (!close(firstelem, (ElemType)0 )) {
                     isfind = true;
                     break;
                 }
             }
             if (isfind){
+                //如果找到最长元素行，则和transferRow行进行行交换
                 ret.rowSwap(transferRow,row);
                 break;
             }
@@ -216,7 +217,7 @@ SmartDongLib::Matrix<ElemType> SmartDongLib::Matrix<ElemType>::simplyTransform()
         //当前行化1
         Real factor = ret(transferRow,firstNotNullCol);
         for (int col = firstNotNullCol; col < ret.theCols_; ++col) {
-            ElemType debug = ret(transferRow,col) ;
+
             ret(transferRow,col) =  ret(transferRow,col) / factor;
 
         }
