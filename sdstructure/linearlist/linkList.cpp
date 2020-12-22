@@ -338,5 +338,28 @@ namespace SmartDongLib {
        return listDelete(L,index);
     }
 
+    /**
+     * <p>有序插入链表
+     * @tparam ElemType
+     * @param L
+     * @param e
+     * @return
+     */
+    template<class ElemType>
+    STATUS LinkListUtil<ElemType>::listOrderInsert(boost::shared_ptr<LinkList<ElemType>> L, ElemType e) {
+        boost::shared_ptr  < LinkList<ElemType>> p =L;
+        int i=0;
+        p=p->next;
+        while ( p && i< listLenth(L)){
+            if (p->data <= e ){
+                p=p->next;
+                i++;
+            }else{
+                break;
+            }
+        }
+        return listInsert(L,i+1,e);
+    }
+
 
 }

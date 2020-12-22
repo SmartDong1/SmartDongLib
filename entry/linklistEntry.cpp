@@ -74,5 +74,15 @@ Size boost_main() {
     cout << len << endl
          << linkListUtil.listGet(linklist1, len) << endl
          << linkListUtil.listGet(linklist1, 0) << endl;
+    boost::shared_ptr< LinkList<int>> linklistOrder (new  LinkList<Size>);
+    linkListUtil.listOrderInsert(linklistOrder,5);
+    linkListUtil.listOrderInsert(linklistOrder,15);
+    linkListUtil.listOrderInsert(linklistOrder,5);
+    linkListUtil.listOrderInsert(linklistOrder,25);
+    linkListUtil.listOrderInsert(linklistOrder,3);
+    linkListUtil.listOrderInsert(linklistOrder,7);
+    linkListUtil.listOrderInsert(linklistOrder,1);
+
+
     return 0;
 }
