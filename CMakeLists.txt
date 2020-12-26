@@ -48,6 +48,6 @@ add_executable(SmartDongLib
         sdalgorithm/util/sort.h
         sdstructure/linearlist/Matrix.cpp
         sdstructure/linearlist/Matrix.h
-        entry/linklistEntry.cpp
         sdstructure/linearlist/SkipList.cpp
-        sdstructure/linearlist/SkipList.h)
+        sdstructure/linearlist/SkipList.h
+        entry/SkipListEntry.cpp)

@@ -82,7 +82,7 @@ Size boost_main() {
     linkListUtil.listOrderInsert(linklistOrder,3);
     linkListUtil.listOrderInsert(linklistOrder,7);
     linkListUtil.listOrderInsert(linklistOrder,1);
-
+    cout<<linkListUtil.listGet(linklistOrder,2)<<"   "<<linkListUtil.listLenth(linklistOrder);
 
     return 0;
 }

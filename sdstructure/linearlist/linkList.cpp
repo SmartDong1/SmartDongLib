@@ -266,15 +266,7 @@ namespace SmartDongLib {
      */
     template<class ElemType>
     ElemType LinkListUtil<ElemType>::listGet(boost::shared_ptr  < LinkList<ElemType>>L, Size i) {
-        boost::shared_ptr  < LinkList<ElemType>> p =L;
-        Size j=0;
-        while(p && j<i){
-            p=p->next;
-            j++;
-        }
-        //如果数据为空,或者遍历完全部都比i小
-        if ( !p || j > i)
-            return SD_CONST::SD_FAIL;
+        boost::shared_ptr  < LinkList<ElemType>> p =listGetNode(L,i);
         return p->data;
     }
     /**
@@ -349,9 +341,10 @@ namespace SmartDongLib {
     STATUS LinkListUtil<ElemType>::listOrderInsert(boost::shared_ptr<LinkList<ElemType>> L, ElemType e) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
         int i=0;
-        p=p->next;
-        while ( p && i< listLenth(L)){
-            if (p->data <= e ){
+//        p=p->next;
+        while ( p->next && i< listLenth(L)){
+            //不写成 <=的原因是可以少重载 <=的运算符
+            if (p->next->data < e || p->next->data == e){
                 p=p->next;
                 i++;
             }else{
@@ -359,6 +352,20 @@ namespace SmartDongLib {
             }
         }
         return listInsert(L,i+1,e);
+    }
+
+    template<class ElemType>
+    boost::shared_ptr  < LinkList<ElemType>> LinkListUtil<ElemType>::listGetNode(boost::shared_ptr<LinkList<ElemType>> L, Size i) {
+        boost::shared_ptr  < LinkList<ElemType>> p =L;
+        Size j=0;
+        while(p && j<i){
+            p=p->next;
+            j++;
+        }
+        //如果数据为空,或者遍历完全部都比i小
+        if ( !p || j > i)
+            return NULL;
+        return p;
     }
 
 

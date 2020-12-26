@@ -5,7 +5,7 @@
 #include "generalList.h"
 namespace SmartDongLib {
     template<class AtomType>
-    ElemTag generalList<AtomType>::getHead(AtomType &outAtom, generalList<AtomType> *outHead) {
+    GeneralListNodeType generalList<AtomType>::getHead(AtomType &outAtom, generalList<AtomType> *outHead) {
         std::string retString = "";
         AtomType tempatom;
         if (tag_ == ATOM){

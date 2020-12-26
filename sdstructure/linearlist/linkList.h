@@ -1,6 +1,6 @@
 //
 // Created by hu on 2020/8/2.
-// 链表类和链表工具类,头节点不装数据
+// 链表类和链表工具类,头节点不装数据,模板元素需要重载 小于 和 等于号
 //
 
 #ifndef SMARTDONGLIB_LINKLIST_H
@@ -47,6 +47,7 @@ namespace SmartDongLib {
         virtual  STATUS listDelete(boost::shared_ptr  < LinkList<ElemType>> L, Size i );
         virtual  STATUS listDeleteByData(boost::shared_ptr  < LinkList<ElemType>> L, ElemType e );
         virtual  STATUS listPop( boost::shared_ptr  < LinkList<ElemType>> L);
+        virtual  boost::shared_ptr  < LinkList<ElemType>> listGetNode(boost::shared_ptr  < LinkList<ElemType>> L, Size i );
         virtual  ElemType listGet(boost::shared_ptr  < LinkList<ElemType>> L, Size i );
         virtual  STATUS listMerge(boost::shared_ptr  < LinkList<ElemType>> L1, boost::shared_ptr  < LinkList<ElemType>>  L2, bool isMegerHead= true);
         virtual  Size listGetIndex(boost::shared_ptr  < LinkList<ElemType>> L1, ElemType elem);
