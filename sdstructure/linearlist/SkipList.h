@@ -17,8 +17,7 @@ namespace SmartDongLib {
         public:
             ElemType position() const;
             void position(ElemType position);
-//            void pointer(const boost::shared_ptr<LinkList<ElemType>> &pointer);
-//            const boost::shared_ptr<LinkList<ElemType>>& pointer() const{ return pointer_;};
+
             bool operator <(IndexStruct a);
             bool operator ==(IndexStruct a);
             bool operator >(IndexStruct a);
@@ -29,15 +28,6 @@ namespace SmartDongLib {
             enum IndexStructNodeType{pointToData=0,pointToIndex};
 
             struct U{
-//                U(){
-//                    new (&this->dataPointer)  boost::shared_ptr<LinkList<ElemType>>;
-//                    new (&this->indexPointer)  boost::shared_ptr<LinkList<IndexStruct>>;
-//                }
-//                ~U(){
-//                    //if (head_)
-//                    dataPointer.~shared_ptr();
-//                    indexPointer.~shared_ptr();
-//                }
                 boost::shared_ptr<LinkList<IndexStruct>> indexPointer;
                 boost::shared_ptr<LinkList<ElemType>> dataPointer;
             }pointer_;
@@ -47,18 +37,19 @@ namespace SmartDongLib {
 
         public:
             ElemType position_;      //datalist的索引位
-//            U pointer_;             //datalist或indexlist的指针
+
         };
-        explicit SkipList(Integer skipstep = 3):skipstep_(skipstep){}
-        boost::shared_ptr<LinkList<ElemType>> findDataNode(int i);
+        explicit SkipList(Integer skipstep = 2):skipstep_(skipstep+1){}
 
     public:
-        int findIndexListPosition(int indexlevel,ElemType dataPos);
-        void rebuildIndex(ElemType startIndex );
-        void removeByPos(Size e);
+        int findIndexListPosition(int indexlevel,ElemType dataPos,boost::shared_ptr<LinkList<IndexStruct>>& idxlist);
+        void rebuildIndex(ElemType startElem );
+        int findPosByElem(ElemType elem);
+        void removeByPos(Size pos);
         void removeByElem(ElemType e);
         void insertElem(ElemType e);
-
+        boost::shared_ptr<LinkList<ElemType>>findDataNode(ElemType elem,bool isAccurate = true);
+        boost::shared_ptr<LinkList<IndexStruct>> findIndexNode(int indexlevel,ElemType dataPos);
         const std::vector<boost::shared_ptr<LinkList<IndexStruct>>> &indexLinklist() const{
             return indexLinklist_;
         };

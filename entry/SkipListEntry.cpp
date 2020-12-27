@@ -24,10 +24,12 @@ int main(){
     linkListUtil.listOrderInsert(linklist1, 43);
     linkListUtil.listOrderInsert(linklist1, 93);
 
-    SkipList<int> skipList(3);
+    SkipList<int> skipList(2);
     skipList.dataLinklist( linklist1);
-    skipList.rebuildIndex(0);
+//    skipList.rebuildIndex(0);
     skipList.removeByElem(93);
     skipList.insertElem(93);
+    boost::shared_ptr<LinkList<SkipList<int>::IndexStruct>> aaaaa=skipList.findIndexNode(0,1);
+    cout<<linkListUtil.listGetIndex(linklist1,23) <<"           "<<skipList.findPosByElem(23);
     return  0 ;
 }
