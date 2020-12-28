@@ -30,6 +30,6 @@ int main(){
     skipList.removeByElem(93);
     skipList.insertElem(93);
     boost::shared_ptr<LinkList<SkipList<int>::IndexStruct>> aaaaa=skipList.findIndexNode(0,1);
-    cout<<linkListUtil.listGetIndex(linklist1,23) <<"           "<<skipList.findPosByElem(23);
+    cout<<linkListUtil.listGet(linklist1,8) <<"           "<<skipList.findNodeByPos(8)->data;
     return  0 ;
 }

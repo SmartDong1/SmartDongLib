@@ -180,18 +180,18 @@ void SmartDongLib::SkipList<ElemType>::rebuildIndex(ElemType startElem) {
 
 }
 /**
- * <p>根据位置删除元素并重建索引
+ * <p>根据位置删除元素并重建索引(已优化)
  * @tparam ElemType
  * @param pos
  */
 template<class ElemType>
 void SmartDongLib::SkipList<ElemType>::removeByPos(Size pos) {
-    ElemType elem=dataListUtil_.listGet(dataLinklist_, pos);
+    ElemType elem=findNodeByPos(pos)->data;
     dataListUtil_.listDelete(dataLinklist_, pos);
     rebuildIndex(elem);
 }
 /**
- * <p>根据元素删除元素并重建索引
+ * <p>根据元素删除元素并重建索引(已优化)
  * @tparam ElemType
  * @param e
  */
@@ -214,7 +214,7 @@ void SmartDongLib::SkipList<ElemType>::insertElem(ElemType e) {
     rebuildIndex(e);
 }
 /**
- * <p>根据元素寻找索引节点
+ * <p>根据元素寻找索引节点(已优化)
  * @tparam ElemType
  * @param indexlevel 索引层级
  * @param dataPos    datalist中的位置
@@ -245,7 +245,7 @@ SmartDongLib::SkipList<ElemType>::findIndexNode(int indexlevel, ElemType dataPos
     return NULL;
 }
 /**
- * <p>根据elem寻找节点
+ * <p>根据elem寻找节点(已优化)
  * @tparam ElemType
  * @param elem
  * @param isAccurate  是否精准匹配，当为否的时候，匹配最接近（大）的节点
@@ -265,7 +265,7 @@ boost::shared_ptr<SmartDongLib::LinkList<ElemType>>SmartDongLib::SkipList<ElemTy
     }
 }
 /**
- * <p>根据元素寻找在datalinklist中的位置
+ * <p>根据元素寻找在datalinklist中的位置(已优化)
  * @tparam ElemType
  * @param elem
  * @return 位找到是-1 ，头节点是第0个位置
@@ -301,5 +301,44 @@ int SmartDongLib::SkipList<ElemType>::findPosByElem(ElemType elem) {
         else
             return  pos + dataListUtil_.listGetIndex(dataNode,elem);
     }
+}
+
+/**
+ * <p>获取节点(已优化)
+ * @tparam ElemType
+ * @param pos data的位置
+ * @return 获取pos对应的元素节点
+ */
+template<class ElemType>
+boost::shared_ptr<SmartDongLib::LinkList<ElemType>> SmartDongLib::SkipList<ElemType>::findNodeByPos(Size pos) {
+    int indexlistsize = indexLinklist_.size();
+    int currentIndexlevel = indexlistsize-1;
+    boost::shared_ptr<LinkList<IndexStruct>> currentIndexNode  = indexLinklist_[currentIndexlevel];
+    int currentPos = 0;
+    int posIncrement =1;
+    boost::shared_ptr<LinkList<ElemType>> ret  = dataLinklist_;
+    while(currentPos  <= pos && currentIndexlevel >=0){
+        posIncrement = std::pow(skipstep_,currentIndexlevel + 1);
+        if ( currentIndexNode->next!=NULL  && currentPos + posIncrement <=pos ){
+            //如果查在后面
+            currentIndexNode=currentIndexNode->next;
+            currentPos +=posIncrement;
+        }else{
+            //如果当前层确定了位置，就下一层直到第indexlevel结束
+            if (  currentIndexlevel == 0 ){
+                ret = currentIndexNode->data.pointer_.dataPointer;
+                currentIndexlevel --;
+                break;
+            }else{
+                currentIndexNode  = currentIndexNode->data.pointer_.indexPointer;
+                currentIndexlevel --;
+            }
+        }
+    }
+    while (pos - currentPos >0 && currentIndexlevel<0){
+        ret = ret->next;
+        currentPos ++ ;
+    }
+    return ret;
 }
 

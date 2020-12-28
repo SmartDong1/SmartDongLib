@@ -46,6 +46,7 @@ namespace SmartDongLib {
         void rebuildIndex(ElemType startElem );
         int findPosByElem(ElemType elem);
         void removeByPos(Size pos);
+        boost::shared_ptr<LinkList<ElemType>> findNodeByPos(Size pos);
         void removeByElem(ElemType e);
         void insertElem(ElemType e);
         boost::shared_ptr<LinkList<ElemType>>findDataNode(ElemType elem,bool isAccurate = true);
