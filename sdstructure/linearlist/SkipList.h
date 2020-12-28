@@ -24,9 +24,8 @@ namespace SmartDongLib {
             IndexStruct& operator =(const IndexStruct & a);
             IndexStruct(ElemType position, const boost::shared_ptr<LinkList<ElemType>> &pointer);
             IndexStruct(){}
-            boost::shared_ptr<LinkList<ElemType>>& nextPointer() { return pointer_->next;};
-            enum IndexStructNodeType{pointToData=0,pointToIndex};
 
+        public:
             struct U{
                 boost::shared_ptr<LinkList<IndexStruct>> indexPointer;
                 boost::shared_ptr<LinkList<ElemType>> dataPointer;
@@ -34,8 +33,6 @@ namespace SmartDongLib {
             const U &pointer() const;
 
             void pointer(const U &pointer);
-
-        public:
             ElemType position_;      //datalist的索引位
 
         };

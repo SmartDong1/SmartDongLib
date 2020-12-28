@@ -136,6 +136,7 @@ void SmartDongLib::SkipList<ElemType>::rebuildIndex(ElemType startElem) {
             }
             indexLinklist_.push_back(currentIndexList);
         } else{
+            //如果在原来的索引层上进行修改，那么确认要修改的索引节点进行重建
             boost::shared_ptr<LinkList<IndexStruct>> currentIndexList=indexLinklist_[indexlevel];
             //找到startElem前一个元素的位置
             boost::shared_ptr<LinkList<IndexStruct>>  startIndexNode;
@@ -208,10 +209,12 @@ void SmartDongLib::SkipList<ElemType>::removeByElem(ElemType e) {
  * @param e
  */
 template<class ElemType>
-void SmartDongLib::SkipList<ElemType>::insertElem(ElemType e) {
+void SmartDongLib::SkipList<ElemType>::insertElem(ElemType e ) {
     boost::shared_ptr<LinkList<ElemType>>  a=findDataNode(e, false);
     dataListUtil_.listOrderInsert(a,e);
+
     rebuildIndex(e);
+
 }
 /**
  * <p>根据元素寻找索引节点(已优化)
