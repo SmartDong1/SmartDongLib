@@ -50,4 +50,6 @@ add_executable(SmartDongLib
         sdstructure/linearlist/Matrix.h
         sdstructure/linearlist/SkipList.cpp
         sdstructure/linearlist/SkipList.h
-        entry/SkipListEntry.cpp)
+        sdstructure/linearlist/priorityqueue.cpp
+        sdstructure/linearlist/priorityqueue.h
+        entry/PriorityQueueEntry.cpp)
