@@ -21,5 +21,16 @@ namespace SmartDongLib{
         constexpr static const Real SD_MINDOUBLE = DBL_MIN;
 
     };
+
+    template<class  T>
+    bool close(T a, T b){
+        if ( a == b)
+            return true;
+        else if(a > b){
+            return a-b <=DBL_EPSILON ;
+        } else {
+            return b-a <=DBL_EPSILON;
+        }
+    }
 }
 #endif //SMARTDONGLIB_CONST_H

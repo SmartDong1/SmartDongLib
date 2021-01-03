@@ -17,10 +17,10 @@ namespace SmartDongLib {
         GraphAdjacencyList(KeyType key, ElemType elem) : key_(key), elem_(elem) {
             edge_=boost::shared_ptr<LinkList<GraphAdjacencyEdge> >(new LinkList<GraphAdjacencyEdge> ());
         }
-        GraphAdjacencyList & insertEdge(int edgeIndex,double weight = 1.0);
-        GraphAdjacencyList & deleteEdge(int edgeIndex);
-        bool  isExistEdge(int edgeIndex);
-        int outDegree();
+        GraphAdjacencyList & insertEdge(Size edgeIndex,Real weight = 1.0);
+        GraphAdjacencyList & deleteEdge(Size edgeIndex);
+        bool  isExistEdge(Size edgeIndex);
+        Size outDegree();
 
         KeyType key() const;
         GraphAdjacencyList & key(KeyType key);

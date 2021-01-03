@@ -5,7 +5,7 @@
 #include "generalList.h"
 namespace SmartDongLib {
     template<class AtomType>
-    ElemTag generalList<AtomType>::getHead(AtomType &outAtom, generalList<AtomType> *outHead) {
+    GeneralListNodeType generalList<AtomType>::getHead(AtomType &outAtom, generalList<AtomType> *outHead) {
         std::string retString = "";
         AtomType tempatom;
         if (tag_ == ATOM){
@@ -24,7 +24,7 @@ namespace SmartDongLib {
     }
 
     template<class AtomType>
-    int generalList<AtomType>:: getDepth() {
+    Size generalList<AtomType>:: getDepth() {
         if (tag_ == ATOM){
             return  0 ;
         }
@@ -40,7 +40,7 @@ namespace SmartDongLib {
     }
 
     template<class AtomType>
-    std::string generalList<AtomType>::print() {
+    std::string generalList<AtomType>::prSize() {
         std::string ret;
         if (tag_==ATOM){
 
@@ -48,13 +48,13 @@ namespace SmartDongLib {
         }else {
             ret="(";
             if (elem.head_!=NULL){
-                ret.append(elem.head_->print());
+                ret.append(elem.head_->prSize());
             }
             ret.append(")");
         }
         if (tail_){
             ret.append(",");
-            ret.append(tail_->print());
+            ret.append(tail_->prSize());
         }
 
         return ret;
@@ -64,7 +64,7 @@ namespace SmartDongLib {
 
 
     template<class AtomType>
-    int generalList<AtomType>::getElemCount() {
+    Size generalList<AtomType>::getElemCount() {
         if (tag_==ATOM && !tail_){
             return 1;
         } else if(tag_==ATOM && tail_){
@@ -85,7 +85,7 @@ namespace SmartDongLib {
     }
 
     template<class AtomType>
-    int generalList<AtomType>::getLength() {
+    Size generalList<AtomType>::getLength() {
         if (!tail_){
             return 1;
         }

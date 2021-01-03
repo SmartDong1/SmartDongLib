@@ -14,7 +14,7 @@
 #define SMARTDONGLIB_REDBLACKTREE_H
 #include "binarySearchTree.cpp"
 namespace SmartDongLib {
-    enum ColorTag{Red = 0, Black,DoubleBlack};
+    enum ColorTag{Red = 0, Black,RealBlack};
     template<class KeyType,class ElemType >
     class RedBlackTree: public BinarySearchTree<KeyType, ElemType>{
     public:

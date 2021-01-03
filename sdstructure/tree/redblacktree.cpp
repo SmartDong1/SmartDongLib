@@ -36,7 +36,7 @@ namespace SmartDongLib {
     boost::shared_ptr<RedBlackTree<KeyType, ElemType>> RedBlackTree<KeyType, ElemType>::resetBalance(KeyType findKey) {
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> root=getThis();
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> lossBalanceNode =getNodeByKey(findKey);
-        int indexOnParent= lossBalanceNode->findIndexOnParent();
+        Size indexOnParent= lossBalanceNode->findIndexOnParent();
         if (indexOnParent == -1){
             //根节点
             colorTag_ = Black;
@@ -63,7 +63,7 @@ namespace SmartDongLib {
                 } else{
                     //父节点是红，叔叔是黑   黑在哪边往哪旋转
 
-                    int indexOnGrandParent= lossNodeParent->findIndexOnParent();
+                    Size indexOnGrandParent= lossNodeParent->findIndexOnParent();
                     if (indexOnGrandParent == 0 ){
                         //父亲是左孩子,那么叔叔就是右孩子
                         if (indexOnParent == 1) {
@@ -105,7 +105,7 @@ namespace SmartDongLib {
     RedBlackTree<KeyType, ElemType>::resetDelBalance(boost::shared_ptr<RedBlackTree<KeyType,ElemType>> delnode) {
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> root=getThis();
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> lossBalanceNode =delnode;
-        int indexOnParent= lossBalanceNode->findIndexOnParent();
+        Size indexOnParent= lossBalanceNode->findIndexOnParent();
         if (indexOnParent == -1){
             //根节点
             colorTag_ = Black;
@@ -232,7 +232,7 @@ namespace SmartDongLib {
         if (newRoot == NULL)
             return orginRoot;
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> parenttemp=orginRoot->parent();
-        int findIndexOnParent = orginRoot->findIndexOnParent();
+        Size findIndexOnParent = orginRoot->findIndexOnParent();
         if (findIndexOnParent ==0){
             orginRoot->parent()->leftChild(newRoot);
         } else if(findIndexOnParent ==1){
@@ -260,7 +260,7 @@ namespace SmartDongLib {
         if (newRoot == NULL)
             return orginRoot;
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> parenttemp=orginRoot->parent();
-        int findIndexOnParent = orginRoot->findIndexOnParent();
+        Size findIndexOnParent = orginRoot->findIndexOnParent();
         if (findIndexOnParent ==0){
             orginRoot->parent()->leftChild(newRoot);
         } else if(findIndexOnParent ==1){
@@ -318,7 +318,7 @@ namespace SmartDongLib {
         vector<boost::shared_ptr<TreeNode<KeyType, ElemType>> >temp;
         TreeNode<KeyType, ElemType>::getAllTreeNode(temp);
         vector<boost::shared_ptr<RedBlackTree<KeyType, ElemType>>> ret;
-        for (int i = 0; i < temp.size(); ++i) {
+        for (Size i = 0; i < temp.size(); ++i) {
             boost::shared_ptr<RedBlackTree<KeyType, ElemType>> a = boost::static_pointer_cast<RedBlackTree<KeyType, ElemType>>(temp.at(i));
             ret.push_back(a);
         }
@@ -349,7 +349,7 @@ namespace SmartDongLib {
     RedBlackTree<KeyType, ElemType>::deleteNodeptr(boost::shared_ptr<RedBlackTree<KeyType, ElemType>> delnode) {
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> ret = getThis();
         boost::shared_ptr<RedBlackTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -382,7 +382,7 @@ namespace SmartDongLib {
             while (ret->parent()){
                 ret= ret->parent();
             }
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){

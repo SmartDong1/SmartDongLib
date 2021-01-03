@@ -9,29 +9,29 @@ namespace SmartDongLib {
         tsMatrix<ElemType> ret;
         ret.colnum_=rownum_ ; ret.rownum_=colnum_;ret.tnum_=tnum_;
         ret.data_.initArray(1,data_.elemtotal());
-        int rowElemNum[ret.rownum_];
-        int cpotNum[ret.rownum_];
+        Size rowElemNum[ret.rownum_];
+        Size cpotNum[ret.rownum_];
         if (tnum_>0){
             //初始化所有转置后的各个行数;
-            for (int i = 0; i < ret.rownum_; ++i) {
+            for (Size i = 0; i < ret.rownum_; ++i) {
                 rowElemNum[i] = 0;
             }
-            for (int j = 0; j < tnum_ ; ++j) {
+            for (Size j = 0; j < tnum_ ; ++j) {
                 triple<ElemType> e ;
                 data_.value(e,j);
                 ++rowElemNum[e.colindex];
             }
             //求转置后每一行第一个元素的应放data的位置
             cpotNum[0] = 0;
-            for (int col = 1; col < ret.rownum_ ; ++col) {
+            for (Size col = 1; col < ret.rownum_ ; ++col) {
                 cpotNum[col] = cpotNum[col-1] +rowElemNum[col-1];
             }
             //接下来就是取元素然后 把元素放在对应的位置。
-            for (int p = 0; p < tnum_ ; ++p) {
+            for (Size p = 0; p < tnum_ ; ++p) {
                 triple<ElemType> e ;
                 data_.value(e,p);
-                int col = e.colindex;
-                int q = cpotNum[col];
+                Size col = e.colindex;
+                Size q = cpotNum[col];
                 triple<ElemType> dat ;
                 dat.rowindex=e.colindex;
                 dat.colindex=e.rowindex;
@@ -65,7 +65,7 @@ namespace SmartDongLib {
             return false;
         }
         //行列非零元长度相等
-        for (int i = 0; i < rownum_ ; ++i) {
+        for (Size i = 0; i < rownum_ ; ++i) {
             if (!(data_[i].rowindex == data_[i].colindex && data_[i].rowindex==i && data_[i].elem == 1 ))
                 return false;
         }
@@ -82,34 +82,34 @@ namespace SmartDongLib {
         }
 
         //先把元素个数初始化成0
-        int retTu=0 , retMu=rownum_,retNu=a.colnum_;
+        Size retTu=0 , retMu=rownum_,retNu=a.colnum_;
         Array <triple<ElemType>> retData;
         retData.initArray(2,retMu,retNu);
         ElemType ctemp[rownum_];
 
         //遍历矩阵 M中data arow行,找到N中对应的相同的N.data.row == M.data.col的位置范围:
         // M中的 rowPos_[arow] ~ tp; 相同行标   N 中的  brow ~ t 相同的行标 ,其中 M.col = brow~t=N.row
-        for (int arow = 0; arow < rownum_; ++arow) {
+        for (Size arow = 0; arow < rownum_; ++arow) {
             //按矩阵行遍历
-            for (int i = 0; i < rownum_; ++i) {
+            for (Size i = 0; i < rownum_; ++i) {
                ctemp[i]=0;
             }
             //查询对于矩阵arow行的 非零元素的范围rowPos_[arow]<= x <tp
-            int tp =arow < rownum_-1?rowPos_[arow+1]:tnum_;//M
-            for (int p = rowPos_[arow]; p < tp; ++p) {
+            Size tp =arow < rownum_-1?rowPos_[arow+1]:tnum_;//M
+            for (Size p = rowPos_[arow]; p < tp; ++p) {
                 //遍历arow行非零元素,对于每个data[p]元素的列值对应矩阵a的行位置范围
                 //a.rowPos_[data_[p].colindex]<= x < t
-                int brow = data_[p].colindex;
-                int t =brow < a.rownum_ -1 ? a.rowPos_[brow+1]:a.tnum_;
-                for (int q = a.rowPos_[brow]; q < t ; ++q) {
+                Size brow = data_[p].colindex;
+                Size t =brow < a.rownum_ -1 ? a.rowPos_[brow+1]:a.tnum_;
+                for (Size q = a.rowPos_[brow]; q < t ; ++q) {
                     //此时，对于每个data[p] (arow，brow) 和a.data[q] (brow,coll) 元素相乘累加
-                    int ccol = a.data_[q].colindex;
+                    Size ccol = a.data_[q].colindex;
                     std::cout<< "arow"<<arow<<"ccol"<<ccol<<":"<<data_[p].elem <<"*"<<a.data_[q].elem<<"\n";
                     ctemp[ccol]  += data_[p].elem * a.data_[q].elem;
                 }
             }
             //确认了第 arow 行和a矩阵的乘积后赋值后再遍历下一行
-            for (int ccol = 0; ccol < retNu; ++ccol ) {
+            for (Size ccol = 0; ccol < retNu; ++ccol ) {
                 if (ctemp[ccol]){
                     retData[retTu++] = triple<ElemType>(arow,ccol,ctemp[ccol]);
                  }
@@ -126,10 +126,10 @@ namespace SmartDongLib {
             throw MatrixIndexInvalidBoundsException("矩阵维度无法做加法");
         }
         //先把元素个数初始化成0
-        int retTu=0 , retMu=rownum_,retNu=colnum_;
+        Size retTu=0 , retMu=rownum_,retNu=colnum_;
         Array <triple<ElemType>> retData;
         retData.initArray(2,retMu,retNu);
-        for (int tn = 0,atn =0; tn <tnum_ || atn <a.tnum_ ; ) {
+        for (Size tn = 0,atn =0; tn <tnum_ || atn <a.tnum_ ; ) {
 
             if (tn >=tnum_){
                 //如果M矩阵先遍历完,把 a 矩阵剩下的赋值
@@ -167,23 +167,23 @@ namespace SmartDongLib {
 
     template<class ElemType>
     void tsMatrix<ElemType>::setRowPos() {
-        rowPos_ = boost::shared_ptr<int[]>(new int[rownum_]);
-        for (int i = 0; i <rownum_ ; ++i) {
+        rowPos_ = boost::shared_ptr<Size[]>(new Size[rownum_]);
+        for (Size i = 0; i <rownum_ ; ++i) {
             rowPos_[i]=0;
         }
 
-        for (int j = 0; j < tnum_; ++j) {
-            int row=data_[j].rowindex;
-            for (int r = row+1; r < rownum_; ++r) {
+        for (Size j = 0; j < tnum_; ++j) {
+            Size row=data_[j].rowindex;
+            for (Size r = row+1; r < rownum_; ++r) {
                 rowPos_[r]++;
             }
         }
     }
 
     template<class ElemType>
-    tsMatrix<ElemType> tsMatrix<ElemType>::operator*(const int a) {
+    tsMatrix<ElemType> tsMatrix<ElemType>::operator*(const Size a) {
         tsMatrix<ElemType> ret(*this);
-        for (int i = 0; i < ret.tnum_; ++i) {
+        for (Size i = 0; i < ret.tnum_; ++i) {
             ret.data_[i].elem *=a;
         }
         return ret;

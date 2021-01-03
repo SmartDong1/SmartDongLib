@@ -6,8 +6,9 @@
 #define SMARTDONGLIB_GENERALLIST_H
 #include <boost/shared_ptr.hpp>
 #include <algorithm>
+#include "const.h"
 namespace SmartDongLib {
-    enum ElemTag{ATOM=0,LIST};
+    enum GeneralListNodeType{ATOM=0,LIST};
     class GeneralListException: public std::runtime_error{
     public:
         GeneralListException():std::runtime_error("GeneralListException"){}
@@ -28,17 +29,17 @@ namespace SmartDongLib {
             elem.head_=ha;
             tail_=t;
         }
-        ElemTag getHead(AtomType & outAtom,generalList<AtomType>* outHead);
+        GeneralListNodeType getHead(AtomType & outAtom, generalList<AtomType>* outHead);
         boost::shared_ptr<generalList<AtomType>>  getTail();
-        int getDepth();
-        std::string print();
-        int getElemCount();
-        int getLength();
+        Size getDepth();
+        std::string prSize();
+        Size getElemCount();
+        Size getLength();
         void insertFirst(AtomType e);
         void insertFirst(boost::shared_ptr<generalList<AtomType>> e);
         void deleteFirst();
     public:
-        ElemTag tag_;    //表明是原子还是广义子表
+        GeneralListNodeType tag_;    //表明是原子还是广义子表
         //广义子表的头指针 和元素类型
         union U{
             U(){

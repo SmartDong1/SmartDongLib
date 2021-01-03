@@ -7,8 +7,8 @@
 #include <iostream>
 using namespace SmartDongLib;
 using namespace std;
-int main() {
-    Graph<char,int> digraph;
+Size main() {
+    Graph<char,Size> digraph;
     digraph.addNode('A',1)
            .addNode('B',1)
            .addNode('C',1)
@@ -38,9 +38,9 @@ int main() {
     digraph.initialAdjacencyMatrix();
 //    digraph.deleteNodeByKey('B');
 //    digraph.deleteEdge('M','L').deleteEdge('M','J').deleteEdge('M','B');
-    vector<int> indexes = digraph.simpleCircuitOnKey('B');
+    vector<Size> indexes = digraph.simpleCircuitOnKey('B');
     cout<<"\n";
-    for (int indexe : indexes) {
+    for (Size indexe : indexes) {
         cout<<indexe<<endl;
     }
 

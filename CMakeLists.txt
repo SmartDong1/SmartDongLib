@@ -44,4 +44,12 @@ add_executable(SmartDongLib
         sdstructure/graph/graph.cpp
         sdstructure/graph/graph.h
         sdstructure/graph/graphadjacencyedge.h
-        entry/graphMiniSpanTreeEntry.cpp)
+        sdalgorithm/math/independentalgorithm.h
+        sdalgorithm/util/sort.h
+        sdstructure/linearlist/Matrix.cpp
+        sdstructure/linearlist/Matrix.h
+        sdstructure/linearlist/SkipList.cpp
+        sdstructure/linearlist/SkipList.h
+        sdstructure/linearlist/priorityqueue.cpp
+        sdstructure/linearlist/priorityqueue.h
+        entry/PriorityQueueEntry.cpp)

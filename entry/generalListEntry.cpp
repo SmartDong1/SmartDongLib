@@ -7,7 +7,7 @@
 #include <generalList.cpp>
 using namespace std;
 using namespace SmartDongLib;
-int main(){
+Size main(){
     boost::shared_ptr<generalList<char>> alist( new generalList<char>('a'));
     boost::shared_ptr<generalList<char>> dlist( new generalList<char>('d'));
     boost::shared_ptr<generalList<char>> flist( new generalList<char>('f'));
@@ -35,7 +35,7 @@ int main(){
     boost::shared_ptr<generalList<char>> ilist( new generalList<char>('i'));
     zlist->insertFirst(ilist);  //((a,f),g),d,h
     zlist->deleteFirst();
-    cout << zlist->print() << endl;
+    cout << zlist->prSize() << endl;
     cout << "ElemCount: "<<zlist->getElemCount() << endl;
     cout << "Depth: "<<zlist->getDepth() << endl;
     cout << "Length: "<<zlist->getLength() << endl;

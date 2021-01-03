@@ -26,20 +26,20 @@ namespace SmartDongLib {
     namespace detail {
 
         template <bool>
-        struct FloatingPointNull;
+        struct FloatingPoSizeNull;
 
-        // null value for floating-point types
+        // null value for floating-poSize types
         template <>
-        struct FloatingPointNull<true> {
+        struct FloatingPoSizeNull<true> {
             static float nullValue() {
                 return  INT_MIN;
             }
         };
 
-        // null value for integer types
+        // null value for Sizeeger types
         template <>
-        struct FloatingPointNull<false> {
-            static int nullValue() {
+        struct FloatingPoSizeNull<false> {
+            static Size nullValue() {
                 return  INT_MIN;
             }
         };
@@ -52,8 +52,8 @@ namespace SmartDongLib {
     public:
         Null() {}
         operator T() const {
-            return T(detail::FloatingPointNull<
-                    boost::is_floating_point<T>::value>::nullValue());
+            return T(detail::FloatingPoSizeNull<
+                    boost::is_floating_poSize<T>::value>::nullValue());
         }
     };
 

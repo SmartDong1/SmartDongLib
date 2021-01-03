@@ -3,8 +3,9 @@
 //
 
 #include <iostream>
+#include "const.h"
 using namespace std;
-
+using namespace SmartDongLib;
 class ConstructTest{
 public:
     ConstructTest(){
@@ -17,19 +18,19 @@ public:
         delete base_;
 
     }
-    ConstructTest(int dim){
+    ConstructTest(Size dim){
         cout<<"Constructor with param"<<endl;
         dim_=dim;
-        base_ = new int [dim];
-        for (int i = 0; i < dim_; ++i) {
+        base_ = new Size [dim];
+        for (Size i = 0; i < dim_; ++i) {
             *(base_ + i) = 0;
         }
     }
     ConstructTest (const ConstructTest & a){
         cout<<"copy Constructor"<<endl;
         dim_= a.dim_;
-        base_ = new int [dim_];
-        for (int i = 0; i < dim_; ++i) {
+        base_ = new Size [dim_];
+        for (Size i = 0; i < dim_; ++i) {
             *(base_ + i) = *(a.base_+i);
         }
     }
@@ -38,8 +39,8 @@ public:
         if ( this == &a )
             return *this;
         dim_= a.dim_;
-        base_ = new int [dim_];
-        for (int i = 0; i < dim_; ++i) {
+        base_ = new Size [dim_];
+        for (Size i = 0; i < dim_; ++i) {
             *(base_ + i) = *(a.base_+i);
         }
         return *this;
@@ -64,20 +65,20 @@ public:
     }
 
 public:
-    int  dim_;
-    int * base_;
+    Size  dim_;
+    Size * base_;
 };
 ConstructTest square(ConstructTest para){
     ConstructTest ret(para.dim_);
-    ret.base_ = new int [para.dim_];
-    for (int i = 0; i < para.dim_; ++i) {
+    ret.base_ = new Size [para.dim_];
+    for (Size i = 0; i < para.dim_; ++i) {
         *(ret.base_+i) = *(para.base_+i) * (*(para.base_+i));
     }
    // ConstructTest* rett=&ret;
     return  ret;
 }
 
-int main(){
+Size main(){
     ConstructTest c1(3);
     ConstructTest c2(c1);
     ConstructTest c4 ;

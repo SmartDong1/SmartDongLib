@@ -5,8 +5,8 @@
 #include "sdstructure/linearlist/SString.h"
 namespace SmartDongLib {
 
-   inline int SString::index(const SString& str2,  int pos ) {
-        int iptr = pos , jptr = 0;
+   inline Size SString::index(const SString& str2,  Size pos ) {
+        Size iptr = pos , jptr = 0;
         while (iptr < str_.length() && jptr<str2.str_.length()){
             if (str_[iptr] == str2.str_[jptr]){
                 //相等则比较下一位
@@ -24,17 +24,17 @@ namespace SmartDongLib {
     }
     /**
      * <p> 1 . 求next数组,有了next数组后一个一个匹配，如果失配让 j = next[j];
-     * @param substr
+     * @param str2
      * @param pos
      * @return
      */
-    inline int SString::index_KMP(SString& substr, int pos) {
-        int i=pos, j=0;
-        int next[substr.str_.length()];
-        substr.getnext(next);
-        int thisLen=length(),sublen=substr.length();
+    inline Size SString::indexKMP(SString& str2, Size pos) {
+        Size i=pos, j=0;
+        Size next[str2.str_.length()];
+        str2.getnext(next);
+        Size thisLen=length(),sublen=str2.length();
         while ( i < thisLen && j < sublen){
-            if (j==-1 || str_[i] == substr.str_[j]){
+            if (j==-1 || str_[i] == str2.str_[j]){
                 i++;
                 j++;
             } else{
@@ -42,7 +42,7 @@ namespace SmartDongLib {
             }
         }
         if (j >= sublen){
-            int ret =i-sublen;
+            Size ret =i-sublen;
             return ret;
         }
         return -1;
@@ -52,9 +52,9 @@ namespace SmartDongLib {
         if (src.str_.empty()){
             return *this;
         }
-        int index=0;
+        Size index=0;
         while ( index != -1) {
-            index = index_KMP(src);
+            index = indexKMP(src);
             if(index != -1) {
                 str_.erase(index,  src.str_.length());
                 str_.insert(index, target.str_);
@@ -71,11 +71,11 @@ namespace SmartDongLib {
      * @param substr
      * @return
      */
-    inline void SString::getnext(int next[]) {
+    inline void SString::getnext(Size next[]) {
 
-        const int len =str_.length();
+        const Size len =str_.length();
 //        next.resize(len,-1);
-        int i = 0,j=-1;next[0]=-1;
+        Size i = 0,j=-1;next[0]=-1;
         while (i<len){
             if (j==-1 ||str_[i] == str_[j]){
                 ++i;++j;
@@ -89,5 +89,51 @@ namespace SmartDongLib {
             }
         }
         //return next;
+    }
+    /**
+     * <p> 返回最长公共字串
+     * @param str2
+     * @return
+     */
+    inline SString SString::maxCommonSubstr(SString &str2) {
+        //原理: 动态规划  x 轴和 y 轴分别取 自身和str2
+        //然后表格对齐，相同的字符 设成 1 其他为 0 ,取斜对角线最长不为0
+        //asbbefg   和   aubeg  最大值2
+        /*
+            a	s	b	b	e	f	g
+        a	1	0	0	0	0	0	0
+        u	0	0	0	0	0	0	0
+        b	0	0	1	1	0	0	0
+        e	0	0	0	0	2	0	0
+        g	0	0	0	0	0	0	1
+        */
+        Size len1 = this->length();
+        Size len2 = str2.length();
+        if (len1 ==0 || len2 == 0 ){
+            return SString();
+        }
+        Size maxlen=-1;      //最大长度
+        Size lastIndex =-1;  //最大值在主串的位置
+        Size comparetbl[len2][len1];
+        for (Size i = 0; i <len2 ; ++i) {
+            char modelchar=str2[i];
+            for (Size j = 0; j < len1; ++j) {
+                if (str_[j]==modelchar){
+                    if (i<1 || j<1 ){
+                        comparetbl[i][j]=1;
+                    }else{
+                        comparetbl[i][j]=1+comparetbl[i-1][j-1];
+                    }
+                } else{
+                    comparetbl[i][j]=0;
+                }
+                if (maxlen<comparetbl[i][j]){
+                    maxlen=comparetbl[i][j];
+                    lastIndex = j;
+                }
+            }
+        }
+        SString ret = this->subString(lastIndex-maxlen+1,maxlen);
+        return ret;
     }
 }

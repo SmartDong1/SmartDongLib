@@ -10,16 +10,16 @@ namespace SmartDongLib {
     class GraphAdjacencyEdge {
     public:
         GraphAdjacencyEdge(){ weight_ =1.0;};
-        GraphAdjacencyEdge(int nodeIndex, double weight=1.0) : nodeIndex_(nodeIndex),
+        GraphAdjacencyEdge(Size nodeIndex, Real weight=1.0) : nodeIndex_(nodeIndex),
                                                            weight_(weight) {}
         bool operator ==(GraphAdjacencyEdge & ge){
             return nodeIndex_ == ge.nodeIndex_ ;
         }
-        bool operator ==(int index){
+        bool operator ==(Size index){
             return nodeIndex_ == index;
         }
-        int nodeIndex_;
-        double  weight_;
+        Size nodeIndex_;
+        Real  weight_;
     };
 }
 

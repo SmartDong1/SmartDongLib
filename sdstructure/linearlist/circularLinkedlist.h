@@ -19,7 +19,7 @@ namespace SmartDongLib {
 //    template<class ElemType>
 //    class  circularLinklistUtil: public LinkListUtil<ElemType>{
 //    public:
-//         int listLenth(LinkList<ElemType> &L);
+//         Size listLenth(LinkList<ElemType> &L);
 //         STATUS listMerge(LinkList<ElemType> & L1,LinkList<ElemType>&  L2,bool isMergeHead= true);
 //    };
 
@@ -40,7 +40,7 @@ namespace SmartDongLib {
     class  circularLinklistUtil: public LinkListUtil<ElemType>{
     public:
         STATUS listMerge(boost::shared_ptr  < LinkList<ElemType>> L1, boost::shared_ptr  < LinkList<ElemType>>  L2, bool isMergeHead= true);
-        int listLenth( boost::shared_ptr  < LinkList<ElemType>> L);
+        Size listLenth( boost::shared_ptr  < LinkList<ElemType>> L);
     };
 
 

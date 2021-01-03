@@ -11,10 +11,10 @@ namespace SmartDongLib {
     class triple{
     public:
         triple(){}
-        triple(int row,int col , ElemType e){ rowindex=row;colindex=col;elem=e;}
+        triple(Size row,Size col , ElemType e){ rowindex=row;colindex=col;elem=e;}
         triple(const triple &t){ rowindex=t.rowindex;colindex=t.colindex;elem=t.elem;}
-        int rowindex;
-        int colindex;
+        Size rowindex;
+        Size colindex;
         ElemType elem;
         bool operator <(triple t2){
             return  elem<t2.elem;
@@ -30,7 +30,7 @@ namespace SmartDongLib {
     class tsMatrix {
     public:
         tsMatrix(){rownum_ = 0;colnum_=0;tnum_=0; }
-        tsMatrix(int rownum,int colnum,int tnum, Array<triple<ElemType>> & array){
+        tsMatrix(Size rownum,Size colnum,Size tnum, Array<triple<ElemType>> & array){
 //            Array<triple<ElemType>> temp(array);
             data_ = array;
             rownum_ = rownum;
@@ -40,7 +40,7 @@ namespace SmartDongLib {
         }
         tsMatrix<ElemType>& operator =(const tsMatrix<ElemType> & a);   //拷贝赋值运算符
         tsMatrix<ElemType> operator *( tsMatrix<ElemType> & a);
-        tsMatrix<ElemType> operator *( int a);
+        tsMatrix<ElemType> operator *( Size a);
         tsMatrix<ElemType> operator +( tsMatrix<ElemType> & a);
         tsMatrix(const tsMatrix & t){
             //拷贝构造函数
@@ -56,11 +56,11 @@ namespace SmartDongLib {
     public:
         void setRowPos();
         Array <triple<ElemType>> data_;
-       // int * rowPos_;   //
-        boost::shared_ptr<int[]> rowPos_;
-        int rownum_;
-        int colnum_;
-        int tnum_;   //非零元个数
+       // Size * rowPos_;   //
+        boost::shared_ptr<Size[]> rowPos_;
+        Size rownum_;
+        Size colnum_;
+        Size tnum_;   //非零元个数
     };
 
 

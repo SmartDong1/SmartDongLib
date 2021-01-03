@@ -29,7 +29,7 @@ namespace SmartDongLib {
                                          leftchild_(this->getChildEx(0)), rightchild_(this->getChildEx(1)){/*复制构造只复制key和elem,其他用自身初始化*/}
 
         boost::shared_ptr<BinaryTree<KeyType,ElemType> > & leftChild(boost::shared_ptr<BinaryTree<KeyType,ElemType> > & c){
-            boost::shared_ptr<TreeNode<KeyType,ElemType>> cc=boost::static_pointer_cast<TreeNode<KeyType,ElemType>>(c);
+            boost::shared_ptr<TreeNode<KeyType,ElemType>> cc=boost::static_pointer_cast <TreeNode<KeyType,ElemType>>(c);
             this->setChild(0,cc);
             return  c;
         }
@@ -81,7 +81,7 @@ namespace SmartDongLib {
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByKey(KeyType key);
         boost::shared_ptr<BinaryTree<KeyType, ElemType>> deleteNodeByElem(ElemType elem);
         void inOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>>)
-                = TreeNode<KeyType,ElemType>::printData);
+                = TreeNode<KeyType,ElemType>::prSizeData);
         BiTreeType getTreeType();
         std::vector<boost::shared_ptr<BinaryTree<KeyType, ElemType>>> getAllnode();
     protected:

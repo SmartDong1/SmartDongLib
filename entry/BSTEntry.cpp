@@ -6,16 +6,16 @@
 #include <iostream>
 using namespace SmartDongLib;
 using namespace std;
-int main() {
-    boost::shared_ptr<BinarySearchTree<int,char>> root(new BinarySearchTree<int,char>(12,'-'));
-    BinarySearchTree<int,char> node2(5,'+');
-    BinarySearchTree<int,char> node3(18,'/');
-    BinarySearchTree<int,char> node4(15,'a');
-    BinarySearchTree<int,char> node5(19,'*');
-    BinarySearchTree<int,char> node6(2,'e');
-    BinarySearchTree<int,char> node7(9,'f');
-    BinarySearchTree<int,char> node8(17,'b');
-    BinarySearchTree<int,char> node9(16,'-');
+Size main() {
+    boost::shared_ptr<BinarySearchTree<Size,char>> root(new BinarySearchTree<Size,char>(12,'-'));
+    BinarySearchTree<Size,char> node2(5,'+');
+    BinarySearchTree<Size,char> node3(18,'/');
+    BinarySearchTree<Size,char> node4(15,'a');
+    BinarySearchTree<Size,char> node5(19,'*');
+    BinarySearchTree<Size,char> node6(2,'e');
+    BinarySearchTree<Size,char> node7(9,'f');
+    BinarySearchTree<Size,char> node8(17,'b');
+    BinarySearchTree<Size,char> node9(16,'-');
     root->insertNode(node2)->insertNode(node3)->insertNode(node4)->insertNode(node5)
     ->insertNode(node6)->insertNode(node7)->insertNode(node8)->insertNode(node9)->getNodeByElem('/');
     root->deleteNodeByKey(17);

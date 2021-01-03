@@ -12,7 +12,7 @@ namespace SmartDongLib {
     template<class KeyType, class ElemType>
     boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> BinarySearchTree<KeyType, ElemType>::insertNode( boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> node) {
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> root = boost::dynamic_pointer_cast<BinarySearchTree<KeyType,ElemType>>(this->getThis());
-        int childpos=-1;
+        Size childpos=-1;
         while (root !=NULL){
             if (node->key() <= root->key() ){
                 //小的往左子樹走,
@@ -51,7 +51,7 @@ namespace SmartDongLib {
         vector<boost::shared_ptr<TreeNode<KeyType, ElemType>> >temp;
         TreeNode<KeyType, ElemType>::getAllTreeNode(temp);
         vector<boost::shared_ptr<BinarySearchTree<KeyType, ElemType>>> ret;
-        for (int i = 0; i < temp.size(); ++i) {
+        for (Size i = 0; i < temp.size(); ++i) {
             boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> a = boost::static_pointer_cast<BinarySearchTree<KeyType, ElemType>>(temp.at(i));
             ret.push_back(a);
         }
@@ -78,7 +78,7 @@ namespace SmartDongLib {
     boost::shared_ptr<BinarySearchTree<KeyType, ElemType>>
     BinarySearchTree<KeyType, ElemType>::getNodeByKey(KeyType key, bool mustleaf) {
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> root =this->getThis() ;
-        int childpos=-1;
+        Size childpos=-1;
         while (root !=NULL){
             if (root->key()== key){
                 boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> ret = boost::static_pointer_cast<BinarySearchTree<KeyType, ElemType>>(root);
@@ -120,7 +120,7 @@ namespace SmartDongLib {
             return  getThis();
         }
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -147,7 +147,7 @@ namespace SmartDongLib {
                 //如果删除唯一根节点
                 return  NULL;
             }
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){
@@ -173,7 +173,7 @@ namespace SmartDongLib {
             return  getThis();
         }
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> targetNode = delnode;
-        int notnullChildIndex=-1; //最右孩子的位置
+        Size notnullChildIndex=-1; //最右孩子的位置
         if (delnode ->leftChild()!=NULL){
             targetNode = delnode ->leftChild();
             //左子树不空,拿左子树的最深右子树替代
@@ -200,7 +200,7 @@ namespace SmartDongLib {
                 //如果删除唯一根节点
                 return  NULL;
             }
-            int parentChildIndex=delnode->findIndexOnParent();
+            Size parentChildIndex=delnode->findIndexOnParent();
             if (parentChildIndex == 0){
                 delnode->parent()->leftchild_=NULL;
             }else if(parentChildIndex == 1){

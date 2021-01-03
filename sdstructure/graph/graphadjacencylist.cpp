@@ -11,7 +11,7 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    int GraphAdjacencyList<KeyType, ElemType>::outDegree() {
+    Size GraphAdjacencyList<KeyType, ElemType>::outDegree() {
         return  linkListUtil_.listLenth(edge_);
     }
     /**
@@ -22,7 +22,7 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    GraphAdjacencyList<KeyType, ElemType> &GraphAdjacencyList<KeyType, ElemType>::deleteEdge(int edgeIndex) {
+    GraphAdjacencyList<KeyType, ElemType> &GraphAdjacencyList<KeyType, ElemType>::deleteEdge(Size edgeIndex) {
         linkListUtil_.listDeleteByData(edge_, edgeIndex);
     }
     /**
@@ -33,7 +33,7 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    GraphAdjacencyList<KeyType, ElemType>  &GraphAdjacencyList<KeyType, ElemType>::insertEdge(int edgeIndex,double weight ) {
+    GraphAdjacencyList<KeyType, ElemType>  &GraphAdjacencyList<KeyType, ElemType>::insertEdge(Size edgeIndex,Real weight ) {
         GraphAdjacencyEdge newedge(edgeIndex,weight);
         linkListUtil_.listAppend(edge_, newedge);
         return  *this;
@@ -46,8 +46,8 @@ namespace SmartDongLib {
      * @return
      */
     template<class KeyType, class ElemType>
-    bool GraphAdjacencyList<KeyType, ElemType>::isExistEdge(int edgeIndex) {
-        int index=linkListUtil_.listGet(edge_,edgeIndex).nodeIndex_;
+    bool GraphAdjacencyList<KeyType, ElemType>::isExistEdge(Size edgeIndex) {
+        Size index=linkListUtil_.listGet(edge_,edgeIndex).nodeIndex_;
         return index != -1;
     }
 

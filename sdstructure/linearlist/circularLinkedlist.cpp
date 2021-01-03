@@ -6,9 +6,9 @@
 #include "circularLinkedlist.h"
 namespace SmartDongLib{
 //    template<class ElemType>
-//    int circularLinklistUtil<ElemType>::listLenth(LinkList<ElemType> &L) {
+//    Size circularLinklistUtil<ElemType>::listLenth(LinkList<ElemType> &L) {
 //        LinkList<ElemType> *p = &L;
-//        int len=0;
+//        Size len=0;
 //        while (p->next && p->next != &L){
 //            len++;
 //            p=p->next;
@@ -41,9 +41,9 @@ namespace SmartDongLib{
 //        return SD_CONST::SD_SUCCESS;
 //    }
     template<class ElemType>
-    int circularLinklistUtil<ElemType>::listLenth(shared_ptr<LinkList<ElemType>> L) {
+    Size circularLinklistUtil<ElemType>::listLenth(shared_ptr<LinkList<ElemType>> L) {
         boost::shared_ptr  < LinkList<ElemType>> p =L;
-        int len=0;
+        Size len=0;
         while (p->next && p->next != L){
             len++;
             p=p->next;

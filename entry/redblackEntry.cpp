@@ -8,25 +8,25 @@
 using namespace SmartDongLib;
 using namespace std;
 
-void printData(boost::shared_ptr<TreeNode<int, char>> c) {
-    boost::shared_ptr<RedBlackTree<int,char>> cc =boost::static_pointer_cast<RedBlackTree<int,char>>(c);
+void prSizeData(boost::shared_ptr<TreeNode<Size, char>> c) {
+    boost::shared_ptr<RedBlackTree<Size,char>> cc =boost::static_pointer_cast<RedBlackTree<Size,char>>(c);
     std::cout<<cc->key() << "->" <<cc->getColor()<<"\n";
 }
-int main() {
+Size main() {
     // 5 3 6 2 4 1
-    boost::shared_ptr<RedBlackTree<int,char>> root(new RedBlackTree<int,char>(16,'-'));
-    RedBlackTree<int,char> node2(2,'+');
-    RedBlackTree<int,char> node3(3,'/');
-    RedBlackTree<int,char> node4(4,'a');
-    RedBlackTree<int,char> node1(1,'*');
-    RedBlackTree<int,char> node6(6,'e');
-    RedBlackTree<int,char> node16(16,'e');
-    RedBlackTree<int,char> node7(7,'e');
-    RedBlackTree<int,char> node11(11,'e');
-    RedBlackTree<int,char> node9(9,'e');
-    RedBlackTree<int,char> node26(26,'e');
-    RedBlackTree<int,char> node18(18,'k');
-    RedBlackTree<int,char> node27(27,'k');
+    boost::shared_ptr<RedBlackTree<Size,char>> root(new RedBlackTree<Size,char>(16,'-'));
+    RedBlackTree<Size,char> node2(2,'+');
+    RedBlackTree<Size,char> node3(3,'/');
+    RedBlackTree<Size,char> node4(4,'a');
+    RedBlackTree<Size,char> node1(1,'*');
+    RedBlackTree<Size,char> node6(6,'e');
+    RedBlackTree<Size,char> node16(16,'e');
+    RedBlackTree<Size,char> node7(7,'e');
+    RedBlackTree<Size,char> node11(11,'e');
+    RedBlackTree<Size,char> node9(9,'e');
+    RedBlackTree<Size,char> node26(26,'e');
+    RedBlackTree<Size,char> node18(18,'k');
+    RedBlackTree<Size,char> node27(27,'k');
 
 //    root->insertNode(node3)->insertNode(node6)->insertNode(node2)->insertNode(node4);
 //    root=root->insertNode(node1);
@@ -51,11 +51,11 @@ int main() {
     cout << root->treeDeep() << endl;
     cout << root->getTreeType() << endl;
     cout<<"------------postOrderTraversal------------------"<<endl;
-    root->postOrderTraversal(printData);
+    root->postOrderTraversal(prSizeData);
     cout<<"------------preOrderTraversal------------------"<<endl;
-    root->preOrderTraversal(printData);
+    root->preOrderTraversal(prSizeData);
     cout<<"------------inOrderTraversal------------------"<<endl;
-    root->inOrderTraversal(printData);
+    root->inOrderTraversal(prSizeData);
     cout<<"<<<<<finish>>>>>>>"<<endl;
 
 }
