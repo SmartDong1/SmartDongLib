@@ -52,4 +52,6 @@ add_executable(SmartDongLib
         sdstructure/linearlist/SkipList.h
         sdstructure/linearlist/priorityqueue.cpp
         sdstructure/linearlist/priorityqueue.h
-        entry/PriorityQueueEntry.cpp)
+        sdstructure/tree/splayTree.cpp
+        sdstructure/tree/splayTree.h
+        entry/splayTreeEntry.cpp)
