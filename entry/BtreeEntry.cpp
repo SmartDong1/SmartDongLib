@@ -3,8 +3,8 @@
 //
 
 
-#include "sdstructure/tree/BTree.cpp"
-#include "sdstructure/tree/BPlusTree.cpp"
+#include "sdstructure/tree/btree.cpp"
+#include "sdstructure/tree/bplustree.cpp"
 #include "sdstructure/tree/Context.h"
 using namespace SmartDongLib ;
  int main()
