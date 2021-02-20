@@ -6,8 +6,8 @@
 #include "sdstructure/tree/BTree.cpp"
 #include "sdstructure/tree/BPlusTree.cpp"
 #include "sdstructure/tree/Context.h"
-
-int main()
+using namespace SmartDongLib ;
+ int main()
 {
 
     /*************************************ֱ�ӵ���B  B+ �ĵ���ʹ��****************************************/

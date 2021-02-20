@@ -2,12 +2,13 @@
 #include "multitree.h"
 /*************************************调度类****************************************/
 //调度类,根据传进来的参数,选择具体某个策略
+using namespace SmartDongLib ;
 class Context 
 {
 private:
-	Tree *strategyChild;
+	MultiTree *strategyChild;
 public:
-	Context(Tree *child)
+	Context(MultiTree *child)
  	{
 		strategyChild=child;
 	}
