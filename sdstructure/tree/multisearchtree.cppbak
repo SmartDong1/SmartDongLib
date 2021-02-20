@@ -1,0 +1,105 @@
+//
+// Created by Administrator on 2021/1/21.
+//
+
+#include "multisearchtree.hbak"
+namespace  SmartDongLib {
+    /**
+     * <p>在该节点下，根据key值确认孩子节点和队应的键值单节点
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key  查询的key
+     * @param pret 返回的孩子节点
+     * @return      返回的单路节点
+     */
+    template<class KeyType, class ElemType>
+    MultiTreeNode<KeyType, ElemType> &MultiSearchTree<KeyType, ElemType>::findSingleWayNode(KeyType key,boost::shared_ptr<MultiWayTree<KeyType,ElemType>>& pret) {
+        int i ;
+        for ( i = 0; i < this->multinodes_.size(); ++i) {
+            if ( this->multinodes_[i] <= key){
+                pret =  this->pchilds_[i];
+                return this->multinodes_[i];
+            }
+        }
+        //如果超过了最大key值
+        pret  = this->pchilds_[i];
+        return  this->multinodes_[i-1];
+
+     }
+    /**
+     * <p> 根据要寻找的key,从根节点开始向下寻找对应的树节点
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<MultiWayTree<KeyType, ElemType>> MultiSearchTree<KeyType, ElemType>::findTreeNode(KeyType key) {
+        boost::shared_ptr<MultiWayTree<KeyType, ElemType>> ret =this->getThis();
+        boost::shared_ptr<MultiWayTree<KeyType, ElemType>> child =NULL;
+        while(ret ==NULL){
+            MultiTreeNode<KeyType, ElemType> singleWayNode = ret->findSingleWayNode(key,child);
+            if (singleWayNode.key_  == key){
+                return  ret;
+            } else{
+                ret =  child;
+            }
+        }
+        return ret;
+    }
+    /**
+     * <p> 根据key值查找值。
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param key
+     * @return
+     */
+    template<class KeyType, class ElemType>
+    ElemType MultiSearchTree<KeyType, ElemType>::findElemByKey(KeyType key) {
+        boost::shared_ptr<MultiWayTree<KeyType, ElemType>> keynode = this->getThis()->findTreeNode(key);
+        boost::shared_ptr<MultiWayTree<KeyType, ElemType>> tempPtr =NULL;
+        if (keynode != NULL){
+            return keynode->findSingleWayNode(key,tempPtr);
+        }else{
+            return ElemType();
+        }
+
+    }
+
+    /***
+     * <p>在本节点中插入数据.
+     * @tparam KeyType
+     * @tparam ElemType
+     * @param type
+     * @param elemType
+     */
+    template<class KeyType, class ElemType>
+    void MultiSearchTree<KeyType, ElemType>::multinodesInsert(KeyType key, ElemType elem,
+            boost::shared_ptr<MultiWayTree<KeyType,ElemType>> pleft,boost::shared_ptr<MultiWayTree<KeyType,ElemType>> pright) {
+        int i=0;
+        for (; i < this->cvalidData_; ++i) {
+            if (this->multinodes_[i] <key  ){
+                //如果 key值比较大则下一个节点比较
+                continue;
+            }else if(this->multinodes_[i] == key ){
+                //如果 key值存在则替换原来的值
+                this->multinodes_[i].elem_=elem;
+                return;
+            }else {
+                //如果 key值比较小则找到了要插入的地方
+                break;
+            }
+        }
+        //i即要插入的位置
+        int j = this->multinodes_.size()-1;
+        for (; j >=i ; --j) {
+            //将数组和指针像后移动
+            this->multinodes_[j]=this->multinodes_[j-1];
+            this->multinodes_[j+1]=this->multinodes_[j];
+        }
+        this->multinodes_[j] = MultiTreeNode<KeyType,ElemType>(key, elem);
+        this->pchilds_[j]=pleft;
+        this->pchilds_[j+1]=pright;
+        this->cvalidData_ ++;
+    }
+}

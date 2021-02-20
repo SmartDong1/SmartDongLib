@@ -54,4 +54,9 @@ add_executable(SmartDongLib
         sdstructure/linearlist/priorityqueue.h
         sdstructure/tree/splayTree.cpp
         sdstructure/tree/splayTree.h
-        entry/splayTreeEntry.cpp)
+        sdstructure/tree/multitree.hbak
+        sdstructure/tree/multisearchtree.cppbak
+        sdstructure/tree/multisearchtree.hbak
+        sdstructure/tree/btree.cppbak
+        sdstructure/tree/btree.hbak
+        entry/BtreeEntry.cpp sdstructure/tree/multitree.h)
