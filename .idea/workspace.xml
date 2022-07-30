@@ -12,171 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23f4f15e-0827-4946-9fc1-6001b2bce4e6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/compounding.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/config.hpp.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/discretizedasset.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/discretizedasset.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/exercise.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/exercise.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/experimental/math/claytoncopularng.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/experimental/math/claytoncopularng.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/experimental/math/expm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/experimental/math/expm.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/experimental/math/fireflyalgorithm.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/experimental/math/fireflyalgorithm.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/experimental/math/latentmodel.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/experimental/math/latentmodel.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/experimental/math/piecewiseintegral.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/experimental/math/piecewiseintegral.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/index.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/index.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/instrument.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/interestrate.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/interestrate.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/math/randomnumbers/rngtraits.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/math/randomnumbers/rngtraits.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/option.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/payoff.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/position.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/methods/montecarlo/sample.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/position.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/prices.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/prices.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/pricingengine.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/qldefines.hpp.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/quantlib.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/quantlib.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/quote.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/rebatedexercise.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/rebatedexercise.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/termstructure.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/termstructure.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/all.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/time/all.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/asx.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/asx.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/businessdayconvention.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/businessdayconvention.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendar.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendar.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/Makefile.am" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/all.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/argentina.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/argentina.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/australia.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/australia.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/austria.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/austria.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/bespokecalendar.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/bespokecalendar.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/botswana.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/botswana.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/brazil.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/brazil.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/canada.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/canada.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/chile.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/chile.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/china.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/china.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/czechrepublic.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/czechrepublic.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/denmark.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/denmark.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/finland.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/finland.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/france.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/france.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/germany.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/germany.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/hongkong.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/hongkong.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/hungary.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/hungary.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/iceland.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/iceland.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/india.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/india.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/indonesia.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/indonesia.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/israel.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/israel.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/italy.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/italy.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/japan.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/japan.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/jointcalendar.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/jointcalendar.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/mexico.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/mexico.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/newzealand.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/newzealand.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/norway.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/norway.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/nullcalendar.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/poland.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/poland.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/romania.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/romania.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/russia.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/russia.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/saudiarabia.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/saudiarabia.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/singapore.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/singapore.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/slovakia.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/slovakia.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/southafrica.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/southafrica.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/southkorea.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/southkorea.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/sweden.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/sweden.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/switzerland.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/switzerland.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/taiwan.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/taiwan.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/target.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/target.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/thailand.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/thailand.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/turkey.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/turkey.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/ukraine.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/ukraine.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/unitedkingdom.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/unitedkingdom.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/unitedstates.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/unitedstates.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/weekendsonly.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/calendars/weekendsonly.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/dategenerationrule.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/dategenerationrule.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounter.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/Makefile.am" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actual360.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actual364.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actual365fixed.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actual365fixed.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actualactual.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/actualactual.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/all.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/business252.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/business252.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/one.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/simpledaycounter.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/simpledaycounter.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/thirty360.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/thirty360.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/thirty365.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/daycounters/thirty365.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/ecb.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/ecb.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/frequency.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/frequency.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/imm.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/imm.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/period.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/time/period.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/period.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/ql/time/period.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/schedule.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/time/schedule.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/version.hpp.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ql/volatilitymodel.hpp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +74,7 @@
       <workItem from="1659109965868" duration="74000" />
       <workItem from="1659144847122" duration="692000" />
       <workItem from="1659151820095" duration="8588000" />
-      <workItem from="1659163569659" duration="753000" />
+      <workItem from="1659163569659" duration="1378000" />
     </task>
     <task id="LOCAL-00001" summary="迁移后可运行的程序">
       <created>1659159398661</created>
@@ -246,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659159398662</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="build  SmartDongLib SHARED Succeed">
+      <created>1659164419902</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659164419904</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,7 +98,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="迁移后可运行的程序" />
-    <option name="LAST_COMMIT_MESSAGE" value="迁移后可运行的程序" />
+    <MESSAGE value="build  SmartDongLib SHARED Succeed" />
+    <option name="LAST_COMMIT_MESSAGE" value="build  SmartDongLib SHARED Succeed" />
   </component>
   <component name="WindowStateProjectService">
     <state x="736" y="123" key="#com.intellij.ide.ui.customization.CustomizableActionsPanel.FindAvailableActionsDialog" timestamp="1659109085293">
@@ -265,10 +110,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1659162008011" />
-    <state x="281" y="0" key="CommitChangelistDialog2" timestamp="1659159394006">
+    <state x="265" y="0" key="CommitChangelistDialog2" timestamp="1659164408512">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="281" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1659159394006" />
+    <state x="265" y="0" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1659164408512" />
     <state x="463" y="138" key="FileChooserDialogImpl" timestamp="1659163526450">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
@@ -297,10 +142,10 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="184" y="28" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1659159586621" />
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1659159831667">
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2" timestamp="1659164422694">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
-    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1659159831667" />
+    <state x="275" y="103" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1659164422694" />
     <state x="384" y="116" width="598" height="536" key="find.popup" timestamp="1659157661687">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
