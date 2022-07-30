@@ -1,0 +1,1461 @@
+Index: main.cpp
+===================================================================
+--- main.cpp	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ main.cpp	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
+@@ -1,34 +0,0 @@
+-#include <iostream>
+-#include <vector>
+-#include <structure/linearlist/linkList.cpp>
+-
+-using namespace SmartDongLib;
+-using std::cout;
+-using std::endl;
+-Size main() {
+-    LinkList<Size> linklist1;
+-    linklist1.data=1;
+-    LinkListUtil<Size>::listInsert(linklist1, 1, 3);
+-    LinkListUtil<Size>::listInsert(linklist1, 0, 4);
+-    LinkListUtil<Size>::listAppend(linklist1, 92);
+-    LinkListUtil<Size>::listDelete(linklist1, 2);
+-    LinkListUtil<Size>::listDelete(linklist1, 0);
+-    LinkListUtil<Size>::listAppend(linklist1, 93);
+-    Size len =LinkListUtil<Size>::listLenth(linklist1);
+-    //-------------------------------
+-    LinkList<Size> s;
+-    s.data=1;
+-    LinkListUtil<Size>::listInsert(s,1,3);
+-    LinkListUtil<Size>::listInsert(s,0,4);
+-    LinkListUtil<Size>::listAppend(s,92);
+-    LinkListUtil<Size>::listDelete(s,2);
+-    LinkListUtil<Size>::listDelete(s,0);
+-    LinkListUtil<Size>::listAppend(s,93);
+-    LinkListUtil<Size>::listMerge(linklist1,s, true);
+-    Size len2 =LinkListUtil<Size>::listLenth(s);
+-    //此时把 s 链表的Free 掉 那么Linklist1 也就废了
+-    cout << len << endl
+-         << LinkListUtil<Size>::listGet(linklist1, len) << endl
+-         << LinkListUtil<Size>::listGet(linklist1, 0) << endl;
+-    return 0;
+-}
+Index: sdstructure/tree/commontree.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Administrator on 2020/9/1.\r\n//\r\n\r\n#include \"commontree.h\"\r\n#include <stack>\r\nnamespace SmartDongLib {\r\n    /**\r\n     * <p> 普通树转二叉树 :最左孩子为左子树，兄弟节点为最左节点的右子树，\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param treeRoot 普通树\r\n     * @return  转化后的二叉树\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    boost::shared_ptr<BinaryTree<KeyType, ElemType>>\r\n    CommonTree<KeyType, ElemType>::treeNode2BinartTree(boost::shared_ptr<TreeNode<KeyType, ElemType>> treeRoot) {\r\n        //左子树依然是左子树,兄弟节点为最左兄弟的右子树。\r\n        KeyType key = treeRoot->key();\r\n        ElemType elem = treeRoot->elem();\r\n        boost::shared_ptr<BinaryTree<KeyType, ElemType>> rootbinode(new BinaryTree<KeyType,ElemType> (key,elem));\r\n        //访问根节点,访问第一个孩子建立左子树链接,根节点孩子依次入栈，入栈过程中建立右子树链接。\r\n        //孩子全入栈后,然后弹出栈，出栈元素当作根节点。\r\n        std:stack<boost::shared_ptr<TreeNode<KeyType, ElemType>>> sta;\r\n        boost::shared_ptr<BinaryTree<KeyType, ElemType>> binode =rootbinode;\r\n        sta.push(treeRoot);\r\n        while (treeRoot && !sta.empty() &&binode){\r\n            treeRoot = sta.top();\r\n            sta.pop();\r\n            //如果没孩子 新结点回溯\r\n            if (treeRoot->getChildnum()==0 || treeRoot->getChildEx(0) == NULL){\r\n                binode = binode->parent();\r\n            }\r\n            //遍历节点的所有孩子,重新建立关联关系，孩子依次入栈\r\n            for (Size i = 0; i < treeRoot->getChildnum(); ++i) {\r\n                if(treeRoot->getChildEx(i) == NULL){\r\n                    break;\r\n                }\r\n                boost::shared_ptr<TreeNode<KeyType, ElemType>> temptree= treeRoot->getChild(i);\r\n                BinaryTree<KeyType,ElemType> newnode(temptree->key(),temptree->elem());\r\n                if(i==0){\r\n                    binode->leftChild(newnode);\r\n                    binode = binode->leftChild();\r\n                }else{\r\n                    binode->rightChild(newnode);\r\n                    binode = binode->rightChild();\r\n                }\r\n                sta.push(temptree);\r\n            }\r\n\r\n        }\r\n        \r\n        return rootbinode;\r\n    }\r\n    /**\r\n     * <p>  森林转二叉树 :最左孩子为左子树，兄弟节点为最左节点的右子树，\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param forestRoot  森林\r\n     * @return 新二叉树\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    boost::shared_ptr<BinaryTree<KeyType, ElemType>>\r\n    CommonTree<KeyType, ElemType>::forest2BinartTree(boost::shared_ptr<Forest<KeyType, ElemType>> forestRoot) {\r\n        Size size = forestRoot-> getTreenum();\r\n        if(size==0)\r\n            return  NULL;\r\n        std::vector<boost::shared_ptr<BinaryTree<KeyType, ElemType>>> roots;\r\n        for (Size i = 0; i < size; ++i) {\r\n            boost::shared_ptr<BinaryTree<KeyType, ElemType>> tempBiroot = treeNode2BinartTree(forestRoot->getTree(i));\r\n            roots.push_back(tempBiroot);\r\n        }\r\n        boost::shared_ptr<BinaryTree<KeyType, ElemType>> ret=roots.at(0);\r\n        boost::shared_ptr<BinaryTree<KeyType, ElemType>> retTemp=ret;\r\n        for (Size j = 1; j < roots.size(); ++j) {\r\n            retTemp->rightChild(roots.at(j));\r\n            retTemp=retTemp->rightChild();\r\n        }\r\n        return ret;\r\n    }\r\n    /**\r\n     * <p> 叶子节点集转哈夫曼树\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param leaves_ 叶子节点集合\r\n     * @return 哈夫曼树\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    boost::shared_ptr<HuffmanTree<KeyType, ElemType>> CommonTree<KeyType, ElemType>::leaves2HuffmanTree(\r\n            vector<boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> leaves_) {\r\n        if (leaves_.empty()) {\r\n            return NULL;\r\n        }\r\n        std::vector <boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vecElem = leaves_;\r\n        boost::shared_ptr <HuffmanTree<KeyType, ElemType>> minElem = vecElem.at(0);\r\n        boost::shared_ptr <HuffmanTree<KeyType, ElemType>> secElem = minElem;\r\n        while (vecElem.size() > 1) {\r\n            Size minindex,secindex;\r\n            findLeast(vecElem,minindex,secindex);\r\n            minElem=vecElem.at(minindex);\r\n            secElem=vecElem.at(secindex);\r\n            boost::shared_ptr <HuffmanTree<KeyType, ElemType>> newNode(\r\n                    new HuffmanTree<KeyType, ElemType>(secElem->key() + minElem->key(), -1));\r\n            newNode->leftChild(minElem);\r\n            newNode->rightChild(secElem);\r\n            if (minindex<secindex){\r\n                vecElem.erase(secindex+vecElem.begin());\r\n                vecElem.erase(minindex+vecElem.begin());\r\n            }\r\n            else{\r\n                vecElem.erase(minindex+vecElem.begin());\r\n                vecElem.erase(secindex+vecElem.begin());\r\n            }\r\n\r\n            vecElem.push_back(newNode);\r\n        }\r\n        return vecElem.at(0);\r\n    }\r\n    /**\r\n     * <p>找到最小key和此小key的节点，哈夫曼树构建私有\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param vec   叶子节点集\r\n     * @param nIdx1 返回最小值的位置下标\r\n     * @param nIdx2 返回次小值的位置下标\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    void\r\n    CommonTree<KeyType, ElemType>::findLeast(vector<boost::shared_ptr<HuffmanTree<KeyType, ElemType>>> vec, Size &nIdx1,\r\n                                             Size &nIdx2) {\r\n        Size nSize = (Size)vec.size();\r\n        boost::shared_ptr<HuffmanTree<KeyType, ElemType>> d1;\r\n        boost::shared_ptr<HuffmanTree<KeyType, ElemType>> d2;\r\n        for (Size i = 0; i < nSize; i++)\r\n        {\r\n            if ( d1 ==NULL ||vec[i]->key() < d1->key() )\r\n            {\r\n                nIdx1 = i;\r\n                d1 = vec[i];\r\n            }\r\n\r\n            if ( (d2 ==NULL ||vec[i]->key() < d2->key() )&& vec[i]->key() > d1->key() )\r\n            {\r\n                nIdx2 = i;\r\n                d2 = vec[i];\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdstructure/tree/commontree.cpp	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdstructure/tree/commontree.cpp	(date 1659158188033)
+@@ -101,8 +101,7 @@
+             secElem=vecElem.at(secindex);
+             boost::shared_ptr <HuffmanTree<KeyType, ElemType>> newNode(
+                     new HuffmanTree<KeyType, ElemType>(secElem->key() + minElem->key(), -1));
+-            newNode->leftChild(minElem);
+-            newNode->rightChild(secElem);
++
+             if (minindex<secindex){
+                 vecElem.erase(secindex+vecElem.begin());
+                 vecElem.erase(minindex+vecElem.begin());
+Index: sdstructure/graph/graphadjacencyedge.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Administrator on 2020/9/15.\r\n//\r\n\r\n#ifndef SMARTDONGLIB_GRAPHADJACENCYEDGE_H\r\n#define SMARTDONGLIB_GRAPHADJACENCYEDGE_H\r\n\r\nnamespace SmartDongLib {\r\n\r\n    class GraphAdjacencyEdge {\r\n    public:\r\n        GraphAdjacencyEdge(){ weight_ =1.0;};\r\n        GraphAdjacencyEdge(Size nodeIndex, Real weight=1.0) : nodeIndex_(nodeIndex),\r\n                                                           weight_(weight) {}\r\n        bool operator ==(GraphAdjacencyEdge & ge){\r\n            return nodeIndex_ == ge.nodeIndex_ ;\r\n        }\r\n        bool operator ==(Size index){\r\n            return nodeIndex_ == index;\r\n        }\r\n        Size nodeIndex_;\r\n        Real  weight_;\r\n    };\r\n}\r\n\r\n#endif //SMARTDONGLIB_GRAPHADJACENCYEDGE_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdstructure/graph/graphadjacencyedge.h	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdstructure/graph/graphadjacencyedge.h	(date 1659157867979)
+@@ -15,6 +15,9 @@
+         bool operator ==(GraphAdjacencyEdge & ge){
+             return nodeIndex_ == ge.nodeIndex_ ;
+         }
++        bool operator <(GraphAdjacencyEdge & ge){
++            return nodeIndex_ < ge.nodeIndex_ ;
++        }
+         bool operator ==(Size index){
+             return nodeIndex_ == index;
+         }
+Index: ql/methods/finitedifferences/tridiagonaloperator.hpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ql/methods/finitedifferences/tridiagonaloperator.hpp	(date 1631786025000)
++++ ql/methods/finitedifferences/tridiagonaloperator.hpp	(date 1631786025000)
+@@ -0,0 +1,294 @@
++/* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
++
++/*
++ Copyright (C) 2000, 2001, 2002, 2003 RiskMap srl
++ Copyright (C) 2003, 2004, 2005, 2006 StatPro Italia srl
++ Copyright (C) 2011 Ferdinando Ametrano
++
++ This file is part of QuantLib, a free-software/open-source library
++ for financial quantitative analysts and developers - http://quantlib.org/
++
++ QuantLib is free software: you can redistribute it and/or modify it
++ under the terms of the QuantLib license.  You should have received a
++ copy of the license along with this program; if not, please email
++ <quantlib-dev@lists.sf.net>. The license is also available online at
++ <http://quantlib.org/license.shtml>.
++
++ This program is distributed in the hope that it will be useful, but WITHOUT
++ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ FOR A PARTICULAR PURPOSE.  See the license for more details.
++*/
++
++/*! \file tridiagonaloperator.hpp
++    \brief tridiagonal operator
++*/
++
++#ifndef quantlib_tridiagonal_operator_hpp
++#define quantlib_tridiagonal_operator_hpp
++
++#include <ql/math/array.hpp>
++#include <ql/math/comparison.hpp>
++#include <ql/shared_ptr.hpp>
++
++namespace QuantLib {
++
++    //! Base implementation for tridiagonal operator
++    /*! \warning to use real time-dependant algebra, you must overload
++                 the corresponding operators in the inheriting
++                 time-dependent class.
++
++        \ingroup findiff
++    */
++    class TridiagonalOperator {
++        // unary operators
++        friend Disposable<TridiagonalOperator>
++        operator+(const TridiagonalOperator&);
++        friend Disposable<TridiagonalOperator>
++        operator-(const TridiagonalOperator&);
++        // binary operators
++        friend Disposable<TridiagonalOperator>
++        operator+(const TridiagonalOperator&,
++                  const TridiagonalOperator&);
++        friend Disposable<TridiagonalOperator>
++        operator-(const TridiagonalOperator&,
++                  const TridiagonalOperator&);
++        friend Disposable<TridiagonalOperator>
++        operator*(Real,
++                  const TridiagonalOperator&);
++        friend Disposable<TridiagonalOperator>
++        operator*(const TridiagonalOperator&,
++                  Real);
++        friend Disposable<TridiagonalOperator>
++        operator/(const TridiagonalOperator&,
++                  Real);
++      public:
++        typedef Array array_type;
++        // constructors
++        explicit TridiagonalOperator(Size size = 0);
++        TridiagonalOperator(const Array& low,
++                            const Array& mid,
++                            const Array& high);
++        TridiagonalOperator(const TridiagonalOperator&) = default;
++        TridiagonalOperator(TridiagonalOperator&&) QL_NOEXCEPT;
++        #ifdef QL_USE_DISPOSABLE
++        TridiagonalOperator(const Disposable<TridiagonalOperator>&);
++        #endif
++        TridiagonalOperator& operator=(const TridiagonalOperator&);
++        TridiagonalOperator& operator=(TridiagonalOperator&&) QL_NOEXCEPT;
++        #ifdef QL_USE_DISPOSABLE
++        TridiagonalOperator& operator=(const Disposable<TridiagonalOperator>&);
++        #endif
++        //! \name Operator interface
++        //@{
++        //! apply operator to a given array
++        Disposable<Array> applyTo(const Array& v) const;
++        //! solve linear system for a given right-hand side
++        Disposable<Array> solveFor(const Array& rhs) const;
++        /*! solve linear system for a given right-hand side
++            without result Array allocation. The rhs and result parameters
++            can be the same Array, in which case rhs will be changed
++        */
++        void solveFor(const Array& rhs,
++                      Array& result) const;
++        //! solve linear system with SOR approach
++        Disposable<Array> SOR(const Array& rhs,
++                              Real tol) const;
++        //! identity instance
++        static Disposable<TridiagonalOperator> identity(Size size);
++        //@}
++        //! \name Inspectors
++        //@{
++        Size size() const { return n_; }
++        bool isTimeDependent() const { return !!timeSetter_; }
++        const Array& lowerDiagonal() const { return lowerDiagonal_; }
++        const Array& diagonal() const { return diagonal_; }
++        const Array& upperDiagonal() const { return upperDiagonal_; }
++        //@}
++        //! \name Modifiers
++        //@{
++        void setFirstRow(Real, Real);
++        void setMidRow(Size, Real, Real, Real);
++        void setMidRows(Real, Real, Real);
++        void setLastRow(Real, Real);
++        void setTime(Time t);
++        //@}
++        //! \name Utilities
++        //@{
++        void swap(TridiagonalOperator&);
++        //@}
++        //! encapsulation of time-setting logic
++        class TimeSetter {
++          public:
++            virtual ~TimeSetter() = default;
++            virtual void setTime(Time t,
++                                 TridiagonalOperator& L) const = 0;
++        };
++      protected:
++        Size n_;
++        Array diagonal_, lowerDiagonal_, upperDiagonal_;
++        mutable Array temp_;
++        ext::shared_ptr<TimeSetter> timeSetter_;
++    };
++
++    /* \relates TridiagonalOperator */
++    void swap(TridiagonalOperator&, TridiagonalOperator&);
++
++
++    // inline definitions
++
++    inline TridiagonalOperator::TridiagonalOperator(TridiagonalOperator&& from) QL_NOEXCEPT {
++        swap(from);
++    }
++
++    #ifdef QL_USE_DISPOSABLE
++    inline TridiagonalOperator::TridiagonalOperator(
++                                const Disposable<TridiagonalOperator>& from) {
++        swap(const_cast<Disposable<TridiagonalOperator>&>(from));
++    }
++    #endif
++
++    inline TridiagonalOperator& TridiagonalOperator::operator=(
++                                const TridiagonalOperator& from) {
++        TridiagonalOperator temp(from);
++        swap(temp);
++        return *this;
++    }
++
++    inline TridiagonalOperator&
++    TridiagonalOperator::operator=(TridiagonalOperator&& from) QL_NOEXCEPT {
++        swap(from);
++        return *this;
++    }
++
++    #ifdef QL_USE_DISPOSABLE
++    inline TridiagonalOperator& TridiagonalOperator::operator=(
++                                const Disposable<TridiagonalOperator>& from) {
++        swap(const_cast<Disposable<TridiagonalOperator>&>(from));
++        return *this;
++    }
++    #endif
++
++    inline void TridiagonalOperator::setFirstRow(Real valB,
++                                                 Real valC) {
++        diagonal_[0]      = valB;
++        upperDiagonal_[0] = valC;
++    }
++
++    inline void TridiagonalOperator::setMidRow(Size i,
++                                               Real valA,
++                                               Real valB,
++                                               Real valC) {
++        QL_REQUIRE(i>=1 && i<=n_-2,
++                   "out of range in TridiagonalSystem::setMidRow");
++        lowerDiagonal_[i-1] = valA;
++        diagonal_[i]        = valB;
++        upperDiagonal_[i]   = valC;
++    }
++
++    inline void TridiagonalOperator::setMidRows(Real valA,
++                                                Real valB,
++                                                Real valC) {
++        for (Size i=1; i<=n_-2; i++) {
++            lowerDiagonal_[i-1] = valA;
++            diagonal_[i]        = valB;
++            upperDiagonal_[i]   = valC;
++        }
++    }
++
++    inline void TridiagonalOperator::setLastRow(Real valA,
++                                                Real valB) {
++        lowerDiagonal_[n_-2] = valA;
++        diagonal_[n_-1]      = valB;
++    }
++
++    inline void TridiagonalOperator::setTime(Time t) {
++        if (timeSetter_ != nullptr)
++            timeSetter_->setTime(t, *this);
++    }
++
++    inline void TridiagonalOperator::swap(TridiagonalOperator& from) {
++        using std::swap;
++        swap(n_, from.n_);
++        diagonal_.swap(from.diagonal_);
++        lowerDiagonal_.swap(from.lowerDiagonal_);
++        upperDiagonal_.swap(from.upperDiagonal_);
++        temp_.swap(from.temp_);
++        swap(timeSetter_, from.timeSetter_);
++    }
++
++
++    // Time constant algebra
++
++    inline Disposable<TridiagonalOperator>
++    operator+(const TridiagonalOperator& D) {
++        TridiagonalOperator D1 = D;
++        return D1;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator-(const TridiagonalOperator& D) {
++        Array low = -D.lowerDiagonal_,
++            mid = -D.diagonal_,
++            high = -D.upperDiagonal_;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator+(const TridiagonalOperator& D1,
++              const TridiagonalOperator& D2) {
++        Array low = D1.lowerDiagonal_ + D2.lowerDiagonal_,
++            mid = D1.diagonal_ + D2.diagonal_,
++            high = D1.upperDiagonal_ + D2.upperDiagonal_;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator-(const TridiagonalOperator& D1,
++              const TridiagonalOperator& D2) {
++        Array low = D1.lowerDiagonal_ - D2.lowerDiagonal_,
++            mid = D1.diagonal_ - D2.diagonal_,
++            high = D1.upperDiagonal_ - D2.upperDiagonal_;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator*(Real a,
++              const TridiagonalOperator& D) {
++        Array low = D.lowerDiagonal_ * a,
++            mid = D.diagonal_ * a,
++            high = D.upperDiagonal_ * a;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator*(const TridiagonalOperator& D,
++              Real a) {
++        Array low = D.lowerDiagonal_ * a,
++            mid = D.diagonal_ * a,
++            high = D.upperDiagonal_ * a;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline Disposable<TridiagonalOperator>
++    operator/(const TridiagonalOperator& D,
++              Real a) {
++        Array low = D.lowerDiagonal_ / a,
++            mid = D.diagonal_ / a,
++            high = D.upperDiagonal_ / a;
++        TridiagonalOperator result(low, mid, high);
++        return result;
++    }
++
++    inline void swap(TridiagonalOperator& L1,
++                     TridiagonalOperator& L2) {
++        L1.swap(L2);
++    }
++
++}
++
++#endif
+Index: ql/methods/finitedifferences/tridiagonaloperator.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ql/methods/finitedifferences/tridiagonaloperator.cpp	(date 1631786025000)
++++ ql/methods/finitedifferences/tridiagonaloperator.cpp	(date 1631786025000)
+@@ -0,0 +1,165 @@
++/* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
++
++/*
++ Copyright (C) 2002, 2003, 2011 Ferdinando Ametrano
++ Copyright (C) 2000, 2001, 2002, 2003 RiskMap srl
++
++ This file is part of QuantLib, a free-software/open-source library
++ for financial quantitative analysts and developers - http://quantlib.org/
++
++ QuantLib is free software: you can redistribute it and/or modify it
++ under the terms of the QuantLib license.  You should have received a
++ copy of the license along with this program; if not, please email
++ <quantlib-dev@lists.sf.net>. The license is also available online at
++ <http://quantlib.org/license.shtml>.
++
++ This program is distributed in the hope that it will be useful, but WITHOUT
++ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ FOR A PARTICULAR PURPOSE.  See the license for more details.
++*/
++
++#include <ql/methods/finitedifferences/tridiagonaloperator.hpp>
++
++namespace QuantLib {
++
++    TridiagonalOperator::TridiagonalOperator(Size size) {
++        if (size>=2) {
++            n_ = size;
++            diagonal_      = Array(size);
++            lowerDiagonal_ = Array(size-1);
++            upperDiagonal_ = Array(size-1);
++            temp_          = Array(size);
++        } else if (size==0) {
++            n_ = 0;
++            diagonal_      = Array(0);
++            lowerDiagonal_ = Array(0);
++            upperDiagonal_ = Array(0);
++            temp_          = Array(0);
++        } else {
++            QL_FAIL("invalid size (" << size << ") for tridiagonal operator "
++                    "(must be null or >= 2)");
++        }
++    }
++
++    TridiagonalOperator::TridiagonalOperator(const Array& low,
++                                             const Array& mid,
++                                             const Array& high)
++    : n_(mid.size()),
++      diagonal_(mid), lowerDiagonal_(low), upperDiagonal_(high), temp_(n_) {
++        QL_REQUIRE(low.size() == n_-1,
++                   "low diagonal vector of size " << low.size() <<
++                   " instead of " << n_-1);
++        QL_REQUIRE(high.size() == n_-1,
++                   "high diagonal vector of size " << high.size() <<
++                   " instead of " << n_-1);
++    }
++
++    Disposable<Array> TridiagonalOperator::applyTo(const Array& v) const {
++        QL_REQUIRE(n_!=0,
++                   "uninitialized TridiagonalOperator");
++        QL_REQUIRE(v.size()==n_,
++                   "vector of the wrong size " << v.size() <<
++                   " instead of " << n_);
++        Array result(n_);
++        std::transform(diagonal_.begin(), diagonal_.end(),
++                       v.begin(),
++                       result.begin(),
++                       std::multiplies<Real>());
++
++        // matricial product
++        result[0] += upperDiagonal_[0]*v[1];
++        for (Size j=1; j<=n_-2; j++)
++            result[j] += lowerDiagonal_[j-1]*v[j-1]+
++                upperDiagonal_[j]*v[j+1];
++        result[n_-1] += lowerDiagonal_[n_-2]*v[n_-2];
++
++        return result;
++    }
++
++    Disposable<Array> TridiagonalOperator::solveFor(const Array& rhs) const  {
++
++        Array result(rhs.size());
++        solveFor(rhs, result);
++        return result;
++    }
++
++    void TridiagonalOperator::solveFor(const Array& rhs,
++                                       Array& result) const  {
++
++        QL_REQUIRE(n_!=0,
++                   "uninitialized TridiagonalOperator");
++        QL_REQUIRE(rhs.size()==n_,
++                   "rhs vector of size " << rhs.size() <<
++                   " instead of " << n_);
++
++        Real bet = diagonal_[0];
++        QL_REQUIRE(!close(bet, 0.0),
++                   "diagonal's first element (" << bet <<
++                   ") cannot be close to zero");
++        result[0] = rhs[0]/bet;
++        for (Size j=1; j<=n_-1; ++j) {
++            temp_[j] = upperDiagonal_[j-1]/bet;
++            bet = diagonal_[j]-lowerDiagonal_[j-1]*temp_[j];
++            QL_ENSURE(!close(bet, 0.0), "division by zero");
++            result[j] = (rhs[j] - lowerDiagonal_[j-1]*result[j-1])/bet;
++        }
++        // cannot be j>=0 with Size j
++        for (Size j=n_-2; j>0; --j)
++            result[j] -= temp_[j+1]*result[j+1];
++        result[0] -= temp_[1]*result[1];
++    }
++
++    Disposable<Array> TridiagonalOperator::SOR(const Array& rhs,
++                                               Real tol) const {
++        QL_REQUIRE(n_!=0,
++                   "uninitialized TridiagonalOperator");
++        QL_REQUIRE(rhs.size()==n_,
++                   "rhs vector of size " << rhs.size() <<
++                   " instead of " << n_);
++
++        // initial guess
++        Array result = rhs;
++
++        // solve tridiagonal system with SOR technique
++        Real omega = 1.5;
++        Real err = 2.0*tol;
++        Real temp;
++        for (Size sorIteration=0; err>tol ; ++sorIteration) {
++            QL_REQUIRE(sorIteration<100000,
++                       "tolerance (" << tol << ") not reached in " <<
++                       sorIteration << " iterations. " <<
++                       "The error still is " << err);
++
++            temp = omega * (rhs[0]     -
++                            upperDiagonal_[0]   * result[1]-
++                            diagonal_[0]        * result[0])/diagonal_[0];
++            err = temp*temp;
++            result[0] += temp;
++            Size i;
++            for (i=1; i<n_-1 ; ++i) {
++                temp = omega *(rhs[i]     -
++                               upperDiagonal_[i]   * result[i+1]-
++                               diagonal_[i]        * result[i] -
++                               lowerDiagonal_[i-1] * result[i-1])/diagonal_[i];
++                err += temp * temp;
++                result[i] += temp;
++            }
++
++            temp = omega * (rhs[i]     -
++                            diagonal_[i]        * result[i] -
++                            lowerDiagonal_[i-1] * result[i-1])/diagonal_[i];
++            err += temp*temp;
++            result[i] += temp;
++        }
++        return result;
++    }
++
++    Disposable<TridiagonalOperator>
++    TridiagonalOperator::identity(Size size) {
++        TridiagonalOperator I(Array(size-1, 0.0),     // lower diagonal
++                              Array(size,   1.0),     // diagonal
++                              Array(size-1, 0.0));    // upper diagonal
++        return I;
++    }
++
++}
+Index: ql/indexes/indexmanager.hpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ql/indexes/indexmanager.hpp	(date 1631786025000)
++++ ql/indexes/indexmanager.hpp	(date 1631786025000)
+@@ -0,0 +1,68 @@
++/* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
++
++/*
++ Copyright (C) 2004, 2005, 2006 StatPro Italia srl
++
++ This file is part of QuantLib, a free-software/open-source library
++ for financial quantitative analysts and developers - http://quantlib.org/
++
++ QuantLib is free software: you can redistribute it and/or modify it
++ under the terms of the QuantLib license.  You should have received a
++ copy of the license along with this program; if not, please email
++ <quantlib-dev@lists.sf.net>. The license is also available online at
++ <http://quantlib.org/license.shtml>.
++
++ This program is distributed in the hope that it will be useful, but WITHOUT
++ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ FOR A PARTICULAR PURPOSE.  See the license for more details.
++*/
++
++/*! \file indexmanager.hpp
++    \brief global repository for past index fixings
++*/
++
++#ifndef quantlib_index_manager_hpp
++#define quantlib_index_manager_hpp
++
++#include <ql/patterns/singleton.hpp>
++#include <ql/timeseries.hpp>
++#include <ql/utilities/observablevalue.hpp>
++
++
++namespace QuantLib {
++
++    //! global repository for past index fixings
++    /*! \note index names are case insensitive */
++    class IndexManager : public Singleton<IndexManager> {
++        friend class Singleton<IndexManager>;
++
++      private:
++        IndexManager() = default;
++
++      public:
++        //! returns whether historical fixings were stored for the index
++        bool hasHistory(const std::string& name) const;
++        //! returns the (possibly empty) history of the index fixings
++        const TimeSeries<Real>& getHistory(const std::string& name) const;
++        //! stores the historical fixings of the index
++        void setHistory(const std::string& name, const TimeSeries<Real>&);
++        //! observer notifying of changes in the index fixings
++        ext::shared_ptr<Observable> notifier(const std::string& name) const;
++        //! returns all names of the indexes for which fixings were stored
++        std::vector<std::string> histories() const;
++        //! clears the historical fixings of the index
++        void clearHistory(const std::string& name);
++        //! clears all stored fixings
++        void clearHistories();
++        //! returns whether a specific historical fixing was stored for the index and date
++        bool hasHistoricalFixing(const std::string& name, const Date& fixingDate) const;
++
++      private:
++        typedef std::map<std::string, ObservableValue<TimeSeries<Real> > > history_map;
++        mutable history_map data_;
++    };
++
++}
++
++
++#endif
+Index: ql/indexes/indexmanager.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ql/indexes/indexmanager.cpp	(date 1631786025000)
++++ ql/indexes/indexmanager.cpp	(date 1631786025000)
+@@ -0,0 +1,69 @@
++/* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
++
++/*
++ Copyright (C) 2004, 2005, 2006 StatPro Italia srl
++
++ This file is part of QuantLib, a free-software/open-source library
++ for financial quantitative analysts and developers - http://quantlib.org/
++
++ QuantLib is free software: you can redistribute it and/or modify it
++ under the terms of the QuantLib license.  You should have received a
++ copy of the license along with this program; if not, please email
++ <quantlib-dev@lists.sf.net>. The license is also available online at
++ <http://quantlib.org/license.shtml>.
++
++ This program is distributed in the hope that it will be useful, but WITHOUT
++ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
++ FOR A PARTICULAR PURPOSE.  See the license for more details.
++*/
++
++#include <ql/indexes/indexmanager.hpp>
++#if defined(__GNUC__) && (((__GNUC__ == 4) && (__GNUC_MINOR__ >= 8)) || (__GNUC__ > 4))
++#    pragma GCC diagnostic push
++#    pragma GCC diagnostic ignored "-Wunused-local-typedefs"
++#endif
++#include <boost/algorithm/string/case_conv.hpp>
++#if defined(__GNUC__) && (((__GNUC__ == 4) && (__GNUC_MINOR__ >= 8)) || (__GNUC__ > 4))
++#    pragma GCC diagnostic pop
++#endif
++
++using boost::algorithm::to_upper_copy;
++using std::string;
++
++namespace QuantLib {
++
++    bool IndexManager::hasHistory(const string& name) const {
++        return data_.find(to_upper_copy(name)) != data_.end();
++    }
++
++    const TimeSeries<Real>& IndexManager::getHistory(const string& name) const {
++        return data_[to_upper_copy(name)].value();
++    }
++
++    void IndexManager::setHistory(const string& name, const TimeSeries<Real>& history) {
++        data_[to_upper_copy(name)] = history;
++    }
++
++    ext::shared_ptr<Observable> IndexManager::notifier(const string& name) const {
++        return data_[to_upper_copy(name)];
++    }
++
++    std::vector<string> IndexManager::histories() const {
++        std::vector<string> temp;
++        temp.reserve(data_.size());
++        for (history_map::const_iterator i = data_.begin(); i != data_.end(); ++i)
++            temp.push_back(i->first);
++        return temp;
++    }
++
++    void IndexManager::clearHistory(const string& name) { data_.erase(to_upper_copy(name)); }
++
++    void IndexManager::clearHistories() { data_.clear(); }
++
++    bool IndexManager::hasHistoricalFixing(const std::string& name, const Date& fixingDate) const {
++        auto const& indexIter = data_.find(to_upper_copy(name));
++        return (indexIter != data_.end()) &&
++               ((*indexIter).second.value()[fixingDate] != Null<Real>());
++    }
++
++}
+Index: CMakeLists.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>cmake_minimum_required(VERSION 3.16)\r\nproject(SmartDongLib)\r\n\r\nset(CMAKE_CXX_STANDARD 14)\r\n\r\n#add_compile_options(-fno-elide-constructors)\r\ninclude_directories(.)\r\ninclude_directories(sdstructure\r\n        sdstructure/linearlist\r\n        entry)\r\nadd_executable(SmartDongLib\r\n        sdstructure/linearlist/linkList.cpp\r\n        sdstructure/linearlist/linkList.h\r\n        sdstructure/const.h\r\n        sdstructure/linearlist/circularLinkedlist.cpp\r\n        sdstructure/linearlist/circularLinkedlist.h\r\n        sdstructure/null.h\r\n        sdstructure/linearlist/SString.cpp\r\n        sdstructure/linearlist/SString.h\r\n        sdstructure/linearlist/Array.cpp\r\n        sdstructure/linearlist/Array.h\r\n        sdstructure/linearlist/tsMatrix.cpp\r\n        sdstructure/linearlist/tsMatrix.h\r\n        sdstructure/linearlist/generalList.cpp\r\n        sdstructure/linearlist/generalList.h\r\n        sdstructure/tree/tree.h\r\n        sdstructure/tree/binaryTree.cpp\r\n        sdstructure/tree/binaryTree.h\r\n        sdstructure/tree/tree.cpp\r\n        sdstructure/tree/forest.h\r\n        sdstructure/tree/commontree.cpp\r\n        sdstructure/tree/commontree.h\r\n        sdstructure/tree/huffmantree.cpp\r\n        sdstructure/tree/huffmantree.h\r\n        sdstructure/tree/binarySearchTree.cpp\r\n        sdstructure/tree/binarySearchTree.h\r\n        sdstructure/tree/balancedbinarytree.cpp\r\n        sdstructure/tree/balancedbinarytree.h\r\n        sdstructure/tree/redblacktree.cpp\r\n        sdstructure/tree/redblacktree.h\r\n        sdstructure/node.h\r\n        sdstructure/graph/graphadjacencylist.cpp\r\n        sdstructure/graph/graphadjacencylist.h\r\n        sdstructure/graph/graph.cpp\r\n        sdstructure/graph/graph.h\r\n        sdstructure/graph/graphadjacencyedge.h\r\n        sdalgorithm/math/independentalgorithm.h\r\n        sdalgorithm/util/sort.h\r\n        sdstructure/linearlist/Matrix.cpp\r\n        sdstructure/linearlist/Matrix.h\r\n        sdstructure/linearlist/SkipList.cpp\r\n        sdstructure/linearlist/SkipList.h\r\n        sdstructure/linearlist/priorityqueue.cpp\r\n        sdstructure/linearlist/priorityqueue.h\r\n        entry/PriorityQueueEntry.cpp)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>GBK
+===================================================================
+--- CMakeLists.txt	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ CMakeLists.txt	(date 1659159175147)
+@@ -2,54 +2,613 @@
+ project(SmartDongLib)
+ 
+ set(CMAKE_CXX_STANDARD 14)
+-
+-#add_compile_options(-fno-elide-constructors)
+ include_directories(.)
+-include_directories(sdstructure
+-        sdstructure/linearlist
+-        entry)
++include_directories(entry)
++include_directories(ql)
++include_directories(ql/experimental)
++include_directories(ql/experimental/math)
++include_directories(ql/math)
++include_directories(ql/math/copulas)
++include_directories(ql/math/distributions)
++include_directories(ql/math/integrals)
++include_directories(ql/math/interpolations)
++include_directories(ql/math/matrixutilities)
++include_directories(ql/math/ode)
++include_directories(ql/math/optimization)
++include_directories(ql/math/randomnumbers)
++include_directories(ql/math/solvers1d)
++include_directories(ql/math/statistics)
++include_directories(ql/methods)
++include_directories(ql/methods/finitedifferences)
++include_directories(ql/methods/finitedifferences/meshers)
++include_directories(ql/methods/finitedifferences/operators)
++include_directories(ql/methods/finitedifferences/schemes)
++include_directories(ql/methods/finitedifferences/solvers)
++include_directories(ql/methods/finitedifferences/stepconditions)
++include_directories(ql/methods/finitedifferences/utilities)
++include_directories(ql/methods/lattices)
++include_directories(ql/methods/montecarlo)
++include_directories(ql/patterns)
++include_directories(ql/time)
++include_directories(ql/time/calendars)
++include_directories(ql/time/daycounters)
++include_directories(ql/utilities)
++include_directories(sdalgorithm)
++include_directories(sdalgorithm/math)
++include_directories(sdalgorithm/util)
++include_directories(sdstructure)
++include_directories(sdstructure/graph)
++include_directories(sdstructure/linearlist)
++include_directories(sdstructure/tree)
++
+ add_executable(SmartDongLib
+-        sdstructure/linearlist/linkList.cpp
+-        sdstructure/linearlist/linkList.h
+-        sdstructure/const.h
+-        sdstructure/linearlist/circularLinkedlist.cpp
+-        sdstructure/linearlist/circularLinkedlist.h
+-        sdstructure/null.h
+-        sdstructure/linearlist/SString.cpp
+-        sdstructure/linearlist/SString.h
+-        sdstructure/linearlist/Array.cpp
+-        sdstructure/linearlist/Array.h
+-        sdstructure/linearlist/tsMatrix.cpp
+-        sdstructure/linearlist/tsMatrix.h
+-        sdstructure/linearlist/generalList.cpp
+-        sdstructure/linearlist/generalList.h
+-        sdstructure/tree/tree.h
+-        sdstructure/tree/binaryTree.cpp
+-        sdstructure/tree/binaryTree.h
+-        sdstructure/tree/tree.cpp
+-        sdstructure/tree/forest.h
+-        sdstructure/tree/commontree.cpp
+-        sdstructure/tree/commontree.h
+-        sdstructure/tree/huffmantree.cpp
+-        sdstructure/tree/huffmantree.h
+-        sdstructure/tree/binarySearchTree.cpp
+-        sdstructure/tree/binarySearchTree.h
+-        sdstructure/tree/balancedbinarytree.cpp
+-        sdstructure/tree/balancedbinarytree.h
+-        sdstructure/tree/redblacktree.cpp
+-        sdstructure/tree/redblacktree.h
+-        sdstructure/node.h
+-        sdstructure/graph/graphadjacencylist.cpp
+-        sdstructure/graph/graphadjacencylist.h
+-        sdstructure/graph/graph.cpp
+-        sdstructure/graph/graph.h
+-        sdstructure/graph/graphadjacencyedge.h
+-        sdalgorithm/math/independentalgorithm.h
+-        sdalgorithm/util/sort.h
+-        sdstructure/linearlist/Matrix.cpp
+-        sdstructure/linearlist/Matrix.h
+-        sdstructure/linearlist/SkipList.cpp
+-        sdstructure/linearlist/SkipList.h
+-        sdstructure/linearlist/priorityqueue.cpp
+-        sdstructure/linearlist/priorityqueue.h
+-        entry/PriorityQueueEntry.cpp)
+\ No newline at end of file
++#    entry/arrayEntry.cpp
++#    entry/AVLEntry.cpp
++#    entry/BinaryTreeEntry.cpp
++#    entry/BSTEntry.cpp
++#    entry/circularLinklistEntry.cpp
++#    entry/constructEntry.cpp
++#    entry/generalListEntry.cpp
++#    entry/graphEntry.cpp
++#    entry/graphMiniSpanTreeEntry.cpp
++#    entry/haffmanEntry.cpp
++#    entry/linklistEntry.cpp
++#    entry/MatrixEntry.cpp
++#    entry/PriorityQueueEntry.cpp
++#    entry/redblackEntry.cpp
++#    entry/SkipListEntry.cpp
++#    entry/sortEntry.cpp
++#    entry/STLEntry.cpp
++#    entry/stringEntry.cpp
++#    entry/treeConvertEntry.cpp
++#    entry/tripleMatrix.cpp
++    ql/methods/finitedifferences/tridiagonaloperator.cpp
++    ql/methods/finitedifferences/tridiagonaloperator.hpp
++    ql/experimental/math/all.hpp
++    ql/experimental/math/claytoncopularng.hpp
++    ql/experimental/math/convolvedstudentt.cpp
++    ql/experimental/math/convolvedstudentt.hpp
++    ql/experimental/math/expm.cpp
++    ql/experimental/math/expm.hpp
++    ql/experimental/math/farliegumbelmorgensterncopularng.hpp
++    ql/experimental/math/fireflyalgorithm.cpp
++    ql/experimental/math/fireflyalgorithm.hpp
++    ql/experimental/math/frankcopularng.hpp
++    ql/experimental/math/gaussiancopulapolicy.cpp
++    ql/experimental/math/gaussiancopulapolicy.hpp
++    ql/experimental/math/gaussiannoncentralchisquaredpolynomial.cpp
++    ql/experimental/math/gaussiannoncentralchisquaredpolynomial.hpp
++    ql/experimental/math/hybridsimulatedannealing.hpp
++    ql/experimental/math/hybridsimulatedannealingfunctors.hpp
++    ql/experimental/math/isotropicrandomwalk.hpp
++    ql/experimental/math/laplaceinterpolation.hpp
++    ql/experimental/math/latentmodel.hpp
++    ql/experimental/math/levyflightdistribution.hpp
++    ql/experimental/math/moorepenroseinverse.hpp
++    ql/experimental/math/multidimintegrator.cpp
++    ql/experimental/math/multidimintegrator.hpp
++    ql/experimental/math/multidimquadrature.cpp
++    ql/experimental/math/multidimquadrature.hpp
++    ql/experimental/math/particleswarmoptimization.cpp
++    ql/experimental/math/particleswarmoptimization.hpp
++    ql/experimental/math/piecewisefunction.hpp
++    ql/experimental/math/piecewiseintegral.cpp
++    ql/experimental/math/piecewiseintegral.hpp
++    ql/experimental/math/polarstudenttrng.hpp
++    ql/experimental/math/tcopulapolicy.cpp
++    ql/experimental/math/tcopulapolicy.hpp
++    ql/experimental/math/zigguratrng.cpp
++    ql/experimental/math/zigguratrng.hpp
++    ql/experimental/all.hpp
++    ql/indexes/indexmanager.cpp
++    ql/indexes/indexmanager.hpp
++    ql/math/copulas/alimikhailhaqcopula.cpp
++    ql/math/copulas/alimikhailhaqcopula.hpp
++    ql/math/copulas/all.hpp
++    ql/math/copulas/claytoncopula.cpp
++    ql/math/copulas/claytoncopula.hpp
++    ql/math/copulas/farliegumbelmorgensterncopula.cpp
++    ql/math/copulas/farliegumbelmorgensterncopula.hpp
++    ql/math/copulas/frankcopula.cpp
++    ql/math/copulas/frankcopula.hpp
++    ql/math/copulas/galamboscopula.cpp
++    ql/math/copulas/galamboscopula.hpp
++    ql/math/copulas/gaussiancopula.cpp
++    ql/math/copulas/gaussiancopula.hpp
++    ql/math/copulas/gumbelcopula.cpp
++    ql/math/copulas/gumbelcopula.hpp
++    ql/math/copulas/huslerreisscopula.cpp
++    ql/math/copulas/huslerreisscopula.hpp
++    ql/math/copulas/independentcopula.cpp
++    ql/math/copulas/independentcopula.hpp
++    ql/math/copulas/marshallolkincopula.cpp
++    ql/math/copulas/marshallolkincopula.hpp
++    ql/math/copulas/maxcopula.cpp
++    ql/math/copulas/maxcopula.hpp
++    ql/math/copulas/mincopula.cpp
++    ql/math/copulas/mincopula.hpp
++    ql/math/copulas/plackettcopula.cpp
++    ql/math/copulas/plackettcopula.hpp
++    ql/math/distributions/all.hpp
++    ql/math/distributions/binomialdistribution.hpp
++    ql/math/distributions/bivariatenormaldistribution.cpp
++    ql/math/distributions/bivariatenormaldistribution.hpp
++    ql/math/distributions/bivariatestudenttdistribution.cpp
++    ql/math/distributions/bivariatestudenttdistribution.hpp
++    ql/math/distributions/chisquaredistribution.cpp
++    ql/math/distributions/chisquaredistribution.hpp
++    ql/math/distributions/gammadistribution.cpp
++    ql/math/distributions/gammadistribution.hpp
++    ql/math/distributions/normaldistribution.cpp
++    ql/math/distributions/normaldistribution.hpp
++    ql/math/distributions/poissondistribution.hpp
++    ql/math/distributions/studenttdistribution.cpp
++    ql/math/distributions/studenttdistribution.hpp
++    ql/math/integrals/all.hpp
++    ql/math/integrals/discreteintegrals.cpp
++    ql/math/integrals/discreteintegrals.hpp
++    ql/math/integrals/exponentialintegrals.cpp
++    ql/math/integrals/exponentialintegrals.hpp
++    ql/math/integrals/filonintegral.cpp
++    ql/math/integrals/filonintegral.hpp
++    ql/math/integrals/gaussianorthogonalpolynomial.cpp
++    ql/math/integrals/gaussianorthogonalpolynomial.hpp
++    ql/math/integrals/gaussianquadratures.cpp
++    ql/math/integrals/gaussianquadratures.hpp
++    ql/math/integrals/gausslaguerrecosinepolynomial.hpp
++    ql/math/integrals/gausslobattointegral.cpp
++    ql/math/integrals/gausslobattointegral.hpp
++    ql/math/integrals/integral.cpp
++    ql/math/integrals/integral.hpp
++    ql/math/integrals/kronrodintegral.cpp
++    ql/math/integrals/kronrodintegral.hpp
++    ql/math/integrals/momentbasedgaussianpolynomial.hpp
++    ql/math/integrals/segmentintegral.cpp
++    ql/math/integrals/segmentintegral.hpp
++    ql/math/integrals/simpsonintegral.hpp
++    ql/math/integrals/trapezoidintegral.hpp
++    ql/math/integrals/twodimensionalintegral.hpp
++    ql/math/interpolations/abcdinterpolation.hpp
++    ql/math/interpolations/all.hpp
++    ql/math/interpolations/backwardflatinterpolation.hpp
++    ql/math/interpolations/backwardflatlinearinterpolation.hpp
++    ql/math/interpolations/bicubicsplineinterpolation.hpp
++    ql/math/interpolations/bilinearinterpolation.hpp
++    ql/math/interpolations/convexmonotoneinterpolation.hpp
++    ql/math/interpolations/cubicinterpolation.hpp
++    ql/math/interpolations/extrapolation.hpp
++    ql/math/interpolations/flatextrapolation2d.hpp
++    ql/math/interpolations/forwardflatinterpolation.hpp
++    ql/math/interpolations/interpolation2d.hpp
++    ql/math/interpolations/kernelinterpolation.hpp
++    ql/math/interpolations/kernelinterpolation2d.hpp
++    ql/math/interpolations/lagrangeinterpolation.hpp
++    ql/math/interpolations/linearinterpolation.hpp
++    ql/math/interpolations/loginterpolation.hpp
++    ql/math/interpolations/mixedinterpolation.hpp
++    ql/math/interpolations/multicubicspline.hpp
++    ql/math/interpolations/sabrinterpolation.hpp
++    ql/math/interpolations/xabrinterpolation.hpp
++    ql/math/matrixutilities/all.hpp
++    ql/math/matrixutilities/basisincompleteordered.cpp
++    ql/math/matrixutilities/basisincompleteordered.hpp
++    ql/math/matrixutilities/bicgstab.cpp
++    ql/math/matrixutilities/bicgstab.hpp
++    ql/math/matrixutilities/choleskydecomposition.cpp
++    ql/math/matrixutilities/choleskydecomposition.hpp
++    ql/math/matrixutilities/factorreduction.cpp
++    ql/math/matrixutilities/factorreduction.hpp
++    ql/math/matrixutilities/getcovariance.cpp
++    ql/math/matrixutilities/getcovariance.hpp
++    ql/math/matrixutilities/gmres.cpp
++    ql/math/matrixutilities/gmres.hpp
++    ql/math/matrixutilities/pseudosqrt.cpp
++    ql/math/matrixutilities/pseudosqrt.hpp
++    ql/math/matrixutilities/qrdecomposition.cpp
++    ql/math/matrixutilities/qrdecomposition.hpp
++    ql/math/matrixutilities/sparseilupreconditioner.cpp
++    ql/math/matrixutilities/sparseilupreconditioner.hpp
++    ql/math/matrixutilities/sparsematrix.hpp
++    ql/math/matrixutilities/svd.cpp
++    ql/math/matrixutilities/svd.hpp
++    ql/math/matrixutilities/symmetricschurdecomposition.cpp
++    ql/math/matrixutilities/symmetricschurdecomposition.hpp
++    ql/math/matrixutilities/tapcorrelations.cpp
++    ql/math/matrixutilities/tapcorrelations.hpp
++    ql/math/matrixutilities/tqreigendecomposition.cpp
++    ql/math/matrixutilities/tqreigendecomposition.hpp
++    ql/math/ode/adaptiverungekutta.hpp
++    ql/math/ode/all.hpp
++    ql/math/optimization/all.hpp
++    ql/math/optimization/armijo.cpp
++    ql/math/optimization/armijo.hpp
++    ql/math/optimization/bfgs.cpp
++    ql/math/optimization/bfgs.hpp
++    ql/math/optimization/conjugategradient.cpp
++    ql/math/optimization/conjugategradient.hpp
++    ql/math/optimization/constraint.cpp
++    ql/math/optimization/constraint.hpp
++    ql/math/optimization/costfunction.hpp
++    ql/math/optimization/differentialevolution.cpp
++    ql/math/optimization/differentialevolution.hpp
++    ql/math/optimization/endcriteria.cpp
++    ql/math/optimization/endcriteria.hpp
++    ql/math/optimization/goldstein.cpp
++    ql/math/optimization/goldstein.hpp
++    ql/math/optimization/leastsquare.cpp
++    ql/math/optimization/leastsquare.hpp
++    ql/math/optimization/levenbergmarquardt.cpp
++    ql/math/optimization/levenbergmarquardt.hpp
++    ql/math/optimization/linesearch.cpp
++    ql/math/optimization/linesearch.hpp
++    ql/math/optimization/linesearchbasedmethod.cpp
++    ql/math/optimization/linesearchbasedmethod.hpp
++    ql/math/optimization/lmdif.cpp
++    ql/math/optimization/lmdif.hpp
++    ql/math/optimization/method.hpp
++    ql/math/optimization/problem.hpp
++    ql/math/optimization/projectedconstraint.hpp
++    ql/math/optimization/projectedcostfunction.cpp
++    ql/math/optimization/projectedcostfunction.hpp
++    ql/math/optimization/projection.cpp
++    ql/math/optimization/projection.hpp
++    ql/math/optimization/simplex.cpp
++    ql/math/optimization/simplex.hpp
++    ql/math/optimization/simulatedannealing.hpp
++    ql/math/optimization/spherecylinder.cpp
++    ql/math/optimization/spherecylinder.hpp
++    ql/math/optimization/steepestdescent.cpp
++    ql/math/optimization/steepestdescent.hpp
++    ql/math/randomnumbers/all.hpp
++    ql/math/randomnumbers/boxmullergaussianrng.hpp
++    ql/math/randomnumbers/centrallimitgaussianrng.hpp
++    ql/math/randomnumbers/faurersg.cpp
++    ql/math/randomnumbers/faurersg.hpp
++    ql/math/randomnumbers/haltonrsg.cpp
++    ql/math/randomnumbers/haltonrsg.hpp
++    ql/math/randomnumbers/inversecumulativerng.hpp
++    ql/math/randomnumbers/inversecumulativersg.hpp
++    ql/math/randomnumbers/knuthuniformrng.cpp
++    ql/math/randomnumbers/knuthuniformrng.hpp
++    ql/math/randomnumbers/latticersg.cpp
++    ql/math/randomnumbers/latticersg.hpp
++    ql/math/randomnumbers/latticerules.cpp
++    ql/math/randomnumbers/latticerules.hpp
++    ql/math/randomnumbers/lecuyeruniformrng.cpp
++    ql/math/randomnumbers/lecuyeruniformrng.hpp
++    ql/math/randomnumbers/mt19937uniformrng.cpp
++    ql/math/randomnumbers/mt19937uniformrng.hpp
++    ql/math/randomnumbers/primitivepolynomials.cpp
++    ql/math/randomnumbers/primitivepolynomials.hpp
++    ql/math/randomnumbers/randomizedlds.hpp
++    ql/math/randomnumbers/randomsequencegenerator.hpp
++    ql/math/randomnumbers/ranluxuniformrng.hpp
++    ql/math/randomnumbers/rngtraits.hpp
++    ql/math/randomnumbers/seedgenerator.cpp
++    ql/math/randomnumbers/seedgenerator.hpp
++        ql/math/randomnumbers/sobolrsg.cpp
++    ql/math/randomnumbers/sobolrsg.hpp
++    ql/math/randomnumbers/stochasticcollocationinvcdf.cpp
++    ql/math/randomnumbers/stochasticcollocationinvcdf.hpp
++    ql/math/solvers1d/all.hpp
++    ql/math/solvers1d/bisection.hpp
++    ql/math/solvers1d/brent.hpp
++    ql/math/solvers1d/falseposition.hpp
++    ql/math/solvers1d/finitedifferencenewtonsafe.hpp
++    ql/math/solvers1d/newton.hpp
++    ql/math/solvers1d/newtonsafe.hpp
++    ql/math/solvers1d/ridder.hpp
++    ql/math/solvers1d/secant.hpp
++    ql/math/statistics/all.hpp
++    ql/math/statistics/convergencestatistics.hpp
++    ql/math/statistics/discrepancystatistics.cpp
++    ql/math/statistics/discrepancystatistics.hpp
++    ql/math/statistics/gaussianstatistics.hpp
++    ql/math/statistics/generalstatistics.cpp
++    ql/math/statistics/generalstatistics.hpp
++    ql/math/statistics/histogram.cpp
++    ql/math/statistics/histogram.hpp
++    ql/math/statistics/incrementalstatistics.cpp
++    ql/math/statistics/incrementalstatistics.hpp
++    ql/math/statistics/riskstatistics.hpp
++    ql/math/statistics/sequencestatistics.hpp
++    ql/math/statistics/statistics.hpp
++    ql/math/abcdmathfunction.cpp
++    ql/math/abcdmathfunction.hpp
++    ql/math/all.hpp
++    ql/math/array.hpp
++    ql/math/autocovariance.hpp
++    ql/math/bernsteinpolynomial.cpp
++    ql/math/bernsteinpolynomial.hpp
++    ql/math/beta.cpp
++    ql/math/beta.hpp
++    ql/math/bspline.cpp
++    ql/math/bspline.hpp
++    ql/math/comparison.hpp
++    ql/math/curve.hpp
++    ql/math/errorfunction.cpp
++    ql/math/errorfunction.hpp
++    ql/math/factorial.cpp
++    ql/math/factorial.hpp
++    ql/math/fastfouriertransform.hpp
++    ql/math/functional.hpp
++    ql/math/generallinearleastsquares.hpp
++    ql/math/incompletegamma.cpp
++    ql/math/incompletegamma.hpp
++    ql/math/initializers.hpp
++    ql/math/interpolation.hpp
++    ql/math/kernelfunctions.hpp
++    ql/math/lexicographicalview.hpp
++    ql/math/linearleastsquaresregression.hpp
++    ql/math/matrix.cpp
++    ql/math/matrix.hpp
++    ql/math/modifiedbessel.cpp
++    ql/math/modifiedbessel.hpp
++    ql/math/pascaltriangle.cpp
++    ql/math/pascaltriangle.hpp
++    ql/math/polynomialmathfunction.cpp
++    ql/math/polynomialmathfunction.hpp
++    ql/math/primenumbers.cpp
++    ql/math/primenumbers.hpp
++    ql/math/quadratic.cpp
++    ql/math/quadratic.hpp
++    ql/math/richardsonextrapolation.cpp
++    ql/math/richardsonextrapolation.hpp
++    ql/math/rounding.cpp
++    ql/math/rounding.hpp
++    ql/math/sampledcurve.cpp
++    ql/math/sampledcurve.hpp
++    ql/math/solver1d.hpp
++    ql/math/transformedgrid.hpp
++    ql/patterns/all.hpp
++    ql/patterns/composite.hpp
++    ql/patterns/curiouslyrecurring.hpp
++    ql/patterns/lazyobject.hpp
++    ql/patterns/observable.cpp
++    ql/patterns/observable.hpp
++    ql/patterns/singleton.hpp
++    ql/patterns/visitor.hpp
++    ql/time/calendars/all.hpp
++    ql/time/calendars/argentina.cpp
++    ql/time/calendars/argentina.hpp
++    ql/time/calendars/australia.cpp
++    ql/time/calendars/australia.hpp
++    ql/time/calendars/austria.cpp
++    ql/time/calendars/austria.hpp
++    ql/time/calendars/bespokecalendar.cpp
++    ql/time/calendars/bespokecalendar.hpp
++    ql/time/calendars/botswana.cpp
++    ql/time/calendars/botswana.hpp
++    ql/time/calendars/brazil.cpp
++    ql/time/calendars/brazil.hpp
++    ql/time/calendars/canada.cpp
++    ql/time/calendars/canada.hpp
++    ql/time/calendars/chile.cpp
++    ql/time/calendars/chile.hpp
++    ql/time/calendars/china.cpp
++    ql/time/calendars/china.hpp
++    ql/time/calendars/czechrepublic.cpp
++    ql/time/calendars/czechrepublic.hpp
++    ql/time/calendars/denmark.cpp
++    ql/time/calendars/denmark.hpp
++    ql/time/calendars/finland.cpp
++    ql/time/calendars/finland.hpp
++    ql/time/calendars/france.cpp
++    ql/time/calendars/france.hpp
++    ql/time/calendars/germany.cpp
++    ql/time/calendars/germany.hpp
++    ql/time/calendars/hongkong.cpp
++    ql/time/calendars/hongkong.hpp
++    ql/time/calendars/hungary.cpp
++    ql/time/calendars/hungary.hpp
++    ql/time/calendars/iceland.cpp
++    ql/time/calendars/iceland.hpp
++    ql/time/calendars/india.cpp
++    ql/time/calendars/india.hpp
++    ql/time/calendars/indonesia.cpp
++    ql/time/calendars/indonesia.hpp
++    ql/time/calendars/israel.cpp
++    ql/time/calendars/israel.hpp
++    ql/time/calendars/italy.cpp
++    ql/time/calendars/italy.hpp
++    ql/time/calendars/japan.cpp
++    ql/time/calendars/japan.hpp
++    ql/time/calendars/jointcalendar.cpp
++    ql/time/calendars/jointcalendar.hpp
++    ql/time/calendars/mexico.cpp
++    ql/time/calendars/mexico.hpp
++    ql/time/calendars/newzealand.cpp
++    ql/time/calendars/newzealand.hpp
++    ql/time/calendars/norway.cpp
++    ql/time/calendars/norway.hpp
++    ql/time/calendars/nullcalendar.hpp
++    ql/time/calendars/poland.cpp
++    ql/time/calendars/poland.hpp
++    ql/time/calendars/romania.cpp
++    ql/time/calendars/romania.hpp
++    ql/time/calendars/russia.cpp
++    ql/time/calendars/russia.hpp
++    ql/time/calendars/saudiarabia.cpp
++    ql/time/calendars/saudiarabia.hpp
++    ql/time/calendars/singapore.cpp
++    ql/time/calendars/singapore.hpp
++    ql/time/calendars/slovakia.cpp
++    ql/time/calendars/slovakia.hpp
++    ql/time/calendars/southafrica.cpp
++    ql/time/calendars/southafrica.hpp
++    ql/time/calendars/southkorea.cpp
++    ql/time/calendars/southkorea.hpp
++    ql/time/calendars/sweden.cpp
++    ql/time/calendars/sweden.hpp
++    ql/time/calendars/switzerland.cpp
++    ql/time/calendars/switzerland.hpp
++    ql/time/calendars/taiwan.cpp
++    ql/time/calendars/taiwan.hpp
++    ql/time/calendars/target.cpp
++    ql/time/calendars/target.hpp
++    ql/time/calendars/thailand.cpp
++    ql/time/calendars/thailand.hpp
++    ql/time/calendars/turkey.cpp
++    ql/time/calendars/turkey.hpp
++    ql/time/calendars/ukraine.cpp
++    ql/time/calendars/ukraine.hpp
++    ql/time/calendars/unitedkingdom.cpp
++    ql/time/calendars/unitedkingdom.hpp
++    ql/time/calendars/unitedstates.cpp
++    ql/time/calendars/unitedstates.hpp
++    ql/time/calendars/weekendsonly.cpp
++    ql/time/calendars/weekendsonly.hpp
++    ql/time/daycounters/actual360.hpp
++    ql/time/daycounters/actual364.hpp
++    ql/time/daycounters/actual365fixed.cpp
++    ql/time/daycounters/actual365fixed.hpp
++    ql/time/daycounters/actualactual.cpp
++    ql/time/daycounters/actualactual.hpp
++    ql/time/daycounters/all.hpp
++    ql/time/daycounters/business252.cpp
++    ql/time/daycounters/business252.hpp
++    ql/time/daycounters/one.hpp
++    ql/time/daycounters/simpledaycounter.cpp
++    ql/time/daycounters/simpledaycounter.hpp
++    ql/time/daycounters/thirty360.cpp
++    ql/time/daycounters/thirty360.hpp
++    ql/time/daycounters/thirty365.cpp
++    ql/time/daycounters/thirty365.hpp
++    ql/time/all.hpp
++    ql/time/asx.cpp
++    ql/time/asx.hpp
++    ql/time/businessdayconvention.cpp
++    ql/time/businessdayconvention.hpp
++    ql/time/calendar.cpp
++    ql/time/calendar.hpp
++    ql/time/date.cpp
++    ql/time/date.hpp
++    ql/time/dategenerationrule.cpp
++    ql/time/dategenerationrule.hpp
++    ql/time/daycounter.hpp
++    ql/time/ecb.cpp
++    ql/time/ecb.hpp
++    ql/time/frequency.cpp
++    ql/time/frequency.hpp
++    ql/time/imm.cpp
++    ql/time/imm.hpp
++    ql/time/period.cpp
++    ql/time/period.hpp
++    ql/time/schedule.cpp
++    ql/time/schedule.hpp
++    ql/time/timeunit.cpp
++    ql/time/timeunit.hpp
++    ql/time/weekday.cpp
++    ql/time/weekday.hpp
++    ql/utilities/all.hpp
++    ql/utilities/clone.hpp
++    ql/utilities/dataformatters.cpp
++    ql/utilities/dataformatters.hpp
++    ql/utilities/dataparsers.cpp
++    ql/utilities/dataparsers.hpp
++    ql/utilities/disposable.hpp
++    ql/utilities/null.hpp
++    ql/utilities/null_deleter.hpp
++    ql/utilities/observablevalue.hpp
++    ql/utilities/steppingiterator.hpp
++    ql/utilities/tracing.cpp
++    ql/utilities/tracing.hpp
++    ql/utilities/vectors.hpp
++    ql/auto_link.hpp
++    ql/auto_ptr.hpp
++        ql/compounding.hpp
++    ql/config.ansi.hpp
++    ql/config.mingw.hpp
++    ql/config.msvc.hpp
++    ql/config.sun.hpp
++        ql/default.hpp
++    ql/discretizedasset.cpp
++    ql/discretizedasset.hpp
++    ql/errors.cpp
++    ql/errors.hpp
++    ql/event.cpp
++    ql/event.hpp
++        ql/exercise.cpp
++    ql/exercise.hpp
++    ql/functional.hpp
++    ql/grid.hpp
++    ql/handle.hpp
++    ql/index.cpp
++    ql/index.hpp
++    ql/instrument.hpp
++    ql/interestrate.cpp
++    ql/interestrate.hpp
++    ql/mathconstants.hpp
++    ql/numericalmethod.hpp
++    ql/option.hpp
++    ql/payoff.hpp
++    ql/position.cpp
++    ql/position.hpp
++    ql/prices.cpp
++    ql/prices.hpp
++    ql/pricingengine.hpp
++    ql/qldefines.hpp
++    ql/quantlib.hpp
++    ql/quote.hpp
++    ql/rebatedexercise.cpp
++    ql/rebatedexercise.hpp
++    ql/settings.cpp
++    ql/settings.hpp
++    ql/shared_ptr.hpp
++    ql/stochasticprocess.cpp
++    ql/stochasticprocess.hpp
++    ql/termstructure.cpp
++    ql/termstructure.hpp
++    ql/timegrid.cpp
++    ql/timegrid.hpp
++    ql/timeseries.hpp
++    ql/tuple.hpp
++    ql/types.hpp
++    ql/userconfig.hpp
++    ql/version.cpp
++    ql/version.hpp
++    ql/volatilitymodel.hpp
++    sdalgorithm/math/independentalgorithm.h
++    sdalgorithm/util/sort.h
++    sdstructure/graph/graph.cpp
++    sdstructure/graph/graph.h
++    sdstructure/graph/graphadjacencyedge.h
++    sdstructure/graph/graphadjacencylist.cpp
++    sdstructure/graph/graphadjacencylist.h
++    sdstructure/linearlist/Array.cpp
++    sdstructure/linearlist/Array.h
++    sdstructure/linearlist/circularLinkedlist.cpp
++    sdstructure/linearlist/circularLinkedlist.h
++    sdstructure/linearlist/generalList.cpp
++    sdstructure/linearlist/generalList.h
++    sdstructure/linearlist/linkList.cpp
++    sdstructure/linearlist/linkList.h
++    sdstructure/linearlist/Matrix.cpp
++    sdstructure/linearlist/Matrix.h
++    sdstructure/linearlist/priorityqueue.cpp
++    sdstructure/linearlist/priorityqueue.h
++    sdstructure/linearlist/SkipList.cpp
++    sdstructure/linearlist/SkipList.h
++    sdstructure/linearlist/SString.cpp
++    sdstructure/linearlist/SString.h
++    sdstructure/linearlist/tsMatrix.cpp
++    sdstructure/linearlist/tsMatrix.h
++    sdstructure/tree/balancedbinarytree.cpp
++    sdstructure/tree/balancedbinarytree.h
++    sdstructure/tree/binarySearchTree.cpp
++    sdstructure/tree/binarySearchTree.h
++    sdstructure/tree/binaryTree.cpp
++    sdstructure/tree/binaryTree.h
++    sdstructure/tree/commontree.cpp
++    sdstructure/tree/commontree.h
++    sdstructure/tree/forest.h
++    sdstructure/tree/huffmantree.cpp
++    sdstructure/tree/huffmantree.h
++    sdstructure/tree/redblacktree.cpp
++    sdstructure/tree/redblacktree.h
++    sdstructure/tree/tree.cpp
++    sdstructure/tree/tree.h
++    sdstructure/const.h
++    sdstructure/node.h
++    sdstructure/null.h
++        )
+Index: sdstructure/tree/tree.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by hu on 2020/8/26.\r\n//\r\n\r\n#ifndef SMARTDONGLIB_TREE_H\r\n#define SMARTDONGLIB_TREE_H\r\n#include <boost/shared_ptr.hpp>\r\n#include <cstdarg>\r\n#include <boost/enable_shared_from_this.hpp>\r\n#include <iostream>\r\n#include \"const.h\"\r\nnamespace SmartDongLib {\r\n    class TreeRunTimeException: public std::runtime_error{\r\n    public:\r\n        TreeRunTimeException(): std::runtime_error(\"tree out of range Exception\"){}\r\n        TreeRunTimeException(const std::string& __arg): std::runtime_error(\"tree overflow_error Exception:\" + __arg){}\r\n\r\n    };\r\n    template<class KeyType,class ElemType >\r\n    class TreeNode: public boost::enable_shared_from_this<TreeNode <KeyType,ElemType>> {\r\n    public:\r\n        TreeNode(Size cnum=0) {\r\n            initTree(cnum);\r\n\r\n        };\r\n        TreeNode(const TreeNode& t);\r\n        TreeNode& operator =(const TreeNode  & t);\r\n        TreeNode& operator =( TreeNode && t)noexcept;\r\n        TreeNode (TreeNode && t) noexcept;\r\n        TreeNode(KeyType key,ElemType e ,Size cnum=0);\r\n        bool isLeaf();\r\n\r\n         boost::shared_ptr<TreeNode> getThis()\r\n        {\r\n            return this->shared_from_this();\r\n        }\r\n        Size nodeCount();\r\n        Size treeDeep();\r\n        Size nodeHeight(){return treeDeep();}\r\n        Size nodeDeep();\r\n        KeyType key() const {\r\n            return key_;\r\n        }\r\n        KeyType key(KeyType k)  {\r\n            key_=k;\r\n            return key_;\r\n        }\r\n        ElemType elem(ElemType e)  {\r\n            elem_=e;\r\n            return elem_;\r\n        }\r\n        ElemType elem() const {\r\n            return elem_;\r\n        }\r\n\r\n        Size  getChildnum() const {\r\n            return childnum_;\r\n        }\r\n        const boost::shared_ptr<TreeNode> &parent() const {\r\n            return parent_;\r\n        }\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>>& parent(boost::shared_ptr<TreeNode<KeyType, ElemType>> p){\r\n            parent_ =p;\r\n            return parent_;\r\n        }\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> brother(){\r\n            boost::shared_ptr<TreeNode<KeyType, ElemType>> root= getThis();\r\n            Size findIndexonParent=findIndexOnParent();\r\n            if (findIndexonParent == -1 )\r\n                return NULL;\r\n            for (Size i = 0; i < root->parent()->childnum_; ++i) {\r\n                if (root->parent()->children_[i] !=root )\r\n                    return root->parent()->children_[i];\r\n            }\r\n            return NULL;\r\n        }\r\n        static void prSizeData(boost::shared_ptr<TreeNode<KeyType, ElemType>> c);\r\n\r\n        void postOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::prSizeData);\r\n        void preOrderTraversal(void (*Visit)(boost::shared_ptr<TreeNode<KeyType, ElemType>> ) = TreeNode::prSizeData);\r\n\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByKey(KeyType key,bool mustleaf= false);\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> getNodeByElem(ElemType elem,bool mustleaf= false);\r\n\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> deleteNodeByKey(KeyType key);\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> deleteNodeByElem(ElemType elem);\r\n        Size findIndexOnParent();\r\n        void getAllTreeNode(std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> & retVec);\r\n\r\n    protected:\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType> >& setChild(Size i , boost::shared_ptr<TreeNode > & c);\r\n        boost::shared_ptr<TreeNode<KeyType, ElemType>> setChild(Size i , TreeNode  c);\r\n        virtual boost::shared_ptr<TreeNode>& getChild(Size i);\r\n        virtual boost::shared_ptr<TreeNode>& getChildEx(Size i);\r\n\r\n    private:\r\n        KeyType key_;\r\n        ElemType elem_;\r\n        Size childnum_;\r\n        boost::shared_ptr<TreeNode> parent_;\r\n        boost::shared_ptr< boost::shared_ptr<TreeNode>[] > children_;\r\n        void initTree(Size childnum);\r\n    };\r\n\r\n\r\n}\r\n#endif //SMARTDONGLIB_TREE_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdstructure/tree/tree.h	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdstructure/tree/tree.h	(date 1659159003906)
+@@ -9,6 +9,7 @@
+ #include <boost/enable_shared_from_this.hpp>
+ #include <iostream>
+ #include "const.h"
++#include <vector>
+ namespace SmartDongLib {
+     class TreeRunTimeException: public std::runtime_error{
+     public:
+@@ -87,7 +88,7 @@
+         Size findIndexOnParent();
+         void getAllTreeNode(std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> & retVec);
+ 
+-    protected:
++//    protected:
+         boost::shared_ptr<TreeNode<KeyType, ElemType> >& setChild(Size i , boost::shared_ptr<TreeNode > & c);
+         boost::shared_ptr<TreeNode<KeyType, ElemType>> setChild(Size i , TreeNode  c);
+         virtual boost::shared_ptr<TreeNode>& getChild(Size i);
+Index: sdstructure/linearlist/SkipList.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Administrator on 2020/12/22.\r\n// 跳表：在有序链表的基础上再加上索引链表。效率同平衡二叉树，链表头数据不放任何数据\r\n//\r\n\r\n#ifndef SMARTDONGLIB_SKIPLIST_H\r\n#define SMARTDONGLIB_SKIPLIST_H\r\n\r\n#include <boost/shared_ptr.hpp>\r\n#include \"linkList.cpp\"\r\n#include <math.h>\r\nnamespace SmartDongLib {\r\n    template<class ElemType>\r\n    class SkipList {\r\n    public:\r\n        class IndexStruct{\r\n        public:\r\n            ElemType position() const;\r\n            void position(ElemType position);\r\n\r\n            bool operator <(IndexStruct a);\r\n            bool operator ==(IndexStruct a);\r\n            bool operator >(IndexStruct a);\r\n            IndexStruct& operator =(const IndexStruct & a);\r\n            IndexStruct(ElemType position, const boost::shared_ptr<LinkList<ElemType>> &pointer);\r\n            IndexStruct(){}\r\n\r\n        public:\r\n            struct U{\r\n                boost::shared_ptr<LinkList<IndexStruct>> indexPointer;\r\n                boost::shared_ptr<LinkList<ElemType>> dataPointer;\r\n            }pointer_;\r\n            const U &pointer() const;\r\n\r\n            void pointer(const U &pointer);\r\n            ElemType position_;      //datalist的索引位\r\n\r\n        };\r\n        explicit SkipList(Integer skipstep = 2):skipstep_(skipstep+1){}\r\n\r\n    public:\r\n        int findIndexListPosition(int indexlevel,ElemType dataPos,boost::shared_ptr<LinkList<IndexStruct>>& idxlist);\r\n        void rebuildIndex(ElemType startElem );\r\n        int findPosByElem(ElemType elem);\r\n        void removeByPos(Size pos);\r\n        boost::shared_ptr<LinkList<ElemType>> findNodeByPos(Size pos);\r\n        void removeByElem(ElemType e);\r\n        void insertElem(ElemType e);\r\n        boost::shared_ptr<LinkList<ElemType>>findDataNode(ElemType elem,bool isAccurate = true);\r\n        boost::shared_ptr<LinkList<IndexStruct>> findIndexNode(int indexlevel,ElemType dataPos);\r\n        const std::vector<boost::shared_ptr<LinkList<IndexStruct>>> &indexLinklist() const{\r\n            return indexLinklist_;\r\n        };\r\n        void indexLinklist(const std::vector<boost::shared_ptr<LinkList<IndexStruct>>> &indexLinklist){\r\n            indexLinklist_=indexLinklist;\r\n        };\r\n        const boost::shared_ptr<LinkList<ElemType>> &dataLinklist() const{\r\n            return  dataLinklist_;\r\n        };\r\n        void dataLinklist(const boost::shared_ptr<LinkList<ElemType>> &dataLinklist){\r\n            dataLinklist_=dataLinklist;\r\n            if (dataLinklist_ ->next){\r\n                rebuildIndex(dataLinklist_->next->data);\r\n            }else{\r\n                indexLinklist_.clear();\r\n            }\r\n        };\r\n\r\n    private:\r\n        std::vector< boost::shared_ptr<LinkList<IndexStruct>>> indexLinklist_;//索引链表,数据是地址\r\n        boost::shared_ptr<LinkList<ElemType>> dataLinklist_; //有序数据链表\r\n        LinkListUtil<ElemType> dataListUtil_;\r\n        LinkListUtil<IndexStruct> indexListUtil_;\r\n\r\n        const Integer  skipstep_;\r\n    };\r\n\r\n\r\n}\r\n\r\n#endif //SMARTDONGLIB_SKIPLIST_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdstructure/linearlist/SkipList.h	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdstructure/linearlist/SkipList.h	(date 1659152989962)
+@@ -9,6 +9,7 @@
+ #include <boost/shared_ptr.hpp>
+ #include "linkList.cpp"
+ #include <math.h>
++#include <vector>
+ namespace SmartDongLib {
+     template<class ElemType>
+     class SkipList {
+Index: sdstructure/graph/graph.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Administrator on 2020/9/11.\r\n//\r\n#include \"graph.h\"\r\n\r\n#include <utility>\r\nnamespace SmartDongLib {\r\n    /**\r\n     * <p>通过Key找到对应的结点在邻接表的下标\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param k\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Size Graph<KeyType, ElemType>::findKeyOnIndex(KeyType k) {\r\n       for (Size i=0;i< nodes_.size();i++){\r\n           if (nodes_[i].key() == k){\r\n               return  i ;\r\n           }\r\n       }\r\n       return  -1;\r\n    }\r\n    /**\r\n     * <p> 给图插入新的结点\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param n\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::addNode(GraphAdjacencyList<KeyType, ElemType> n) {\r\n        if (findKeyOnIndex(n->key()) ==-1) {\r\n            nodes_.push_back(n);\r\n        }\r\n        return *this;\r\n    }\r\n    /**\r\n     * <p> 给图插入新的结点\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param k 结点键值\r\n     * @param e 结点数据\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::addNode(KeyType k, ElemType e) {\r\n        if (findKeyOnIndex(k) ==-1){\r\n            GraphAdjacencyList<KeyType, ElemType> n(k,e);\r\n            nodes_.push_back(n);\r\n        }\r\n        return *this;\r\n    }\r\n    /**\r\n     * <p>根据Key值删除图的结点\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param key\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::deleteNodeByKey(KeyType key) {\r\n        Size keyIndex = findKeyOnIndex(key);\r\n        if (keyIndex ==-1){\r\n            return *this;\r\n        }\r\n        // 大于keyIndex 的结点下标都要减1\r\n        for (Size i = 0; i < nodes_.size(); ++i) {\r\n            //每个结点删除对应的边\r\n            nodes_.at(i).deleteEdge(keyIndex);\r\n            boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[i].edge();\r\n            while (edge){\r\n                //大于keyIndex 的结点下标都要减1\r\n                if (edge->data.nodeIndex_ > keyIndex){\r\n                    edge->data.nodeIndex_ = edge->data.nodeIndex_ -1;\r\n                }\r\n                edge=edge->next;\r\n            }\r\n        }\r\n        //刪除结点\r\n        typename std::vector<GraphAdjacencyList<KeyType,ElemType>>::iterator iter=nodes_.begin();\r\n        nodes_.erase(iter + keyIndex);\r\n        return  * this;\r\n    }\r\n    /**\r\n     * <p> 建立 源节点到目标结点的单向边\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param src 源节点\r\n     * @param target 目标结点\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdge(KeyType src, KeyType target,Real weight ) {\r\n        Size srcIndex = findKeyOnIndex(src);\r\n        Size targetIndex = findKeyOnIndex(target);\r\n        setEdgeByIndex(srcIndex,targetIndex,weight);\r\n//        if (srcIndex == -1 || targetIndex == -1){\r\n//            //不存在所谓的结点\r\n//            return *this;\r\n//        }\r\n//        nodes_.at(srcIndex).insertEdge(targetIndex,weight);\r\n//        if (isUndirectedgraph_){\r\n//            nodes_.at(targetIndex).insertEdge(srcIndex,weight);\r\n//        }\r\n        return *this;\r\n    }\r\n\r\n    /**\r\n     * <p> 添加边src对target方向的边\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param src       源节点下标\r\n     * @param target    目标节点下标\r\n     * @param weight    边的权重\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::setEdgeByIndex(Size src, Size target, Real weight) {\r\n        if (src >= 0 && target>=0 && src<nodes_.size() && target < nodes_.size()) {\r\n            nodes_.at(src).insertEdge(target, weight);\r\n            if (isUndirectedgraph_) {\r\n                nodes_.at(target).insertEdge(src, weight);\r\n            }\r\n        }\r\n        return *this;\r\n    }\r\n    /**\r\n     * <p>删除 src结点到target结点的单向边\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param src   出度结点\r\n     * @param target  入度结点\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> &Graph<KeyType, ElemType>::deleteEdge(KeyType src, KeyType target) {\r\n        Size srcIndex = findKeyOnIndex(src);\r\n        Size targetIndex = findKeyOnIndex(target);\r\n        if (srcIndex == -1 || targetIndex == -1){\r\n            return *this;\r\n        }\r\n        nodes_.at(srcIndex).deleteEdge(targetIndex);\r\n        if (isUndirectedgraph_){\r\n            nodes_.at(targetIndex).deleteEdge(srcIndex);\r\n        }\r\n        return *this;\r\n    }\r\n    /**\r\n     * <p>深度优先搜索调用函数\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点\r\n     * @param visitIndex    开始遍历的起始点位置\r\n     * @param Visit         对点的操作函数\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size> Graph<KeyType, ElemType>::depthFirstSearch(bool isSearchAllNode , Size visitIndex, Size (*Visit)(Graph& , Size)) {\r\n        std::vector<Size> visitNode;\r\n        if (vexnum()<=0)\r\n            return std::vector<Size>();\r\n        bool visited[vexnum()];\r\n        for (Size i = 0; i < vexnum(); ++i) {\r\n            visited[i]= false;\r\n        };\r\n        DFS(visitIndex, visited, visitNode, Visit);\r\n        if (isSearchAllNode) {\r\n            for (Size i = 0; i < vexnum(); ++i) {\r\n                if (!visited[i])\r\n                    DFS(i, visited, visitNode, Visit);\r\n            };\r\n        }\r\n        return visitNode;\r\n    }\r\n    /**\r\n     * <p> 深度优先搜索重载函数\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param key             开始遍历的键值\r\n     * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点\r\n     * @param Visit         对点的操作函数\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size> Graph<KeyType, ElemType>::depthFirstSearch(KeyType key, bool isSearchAllNode,\r\n                                                                Size (*Visit)(Graph &, Size)) {\r\n        Size keyindex = findKeyOnIndex(key);\r\n        if (keyindex == -1)\r\n            return std::vector<Size>();\r\n        return depthFirstSearch(isSearchAllNode,keyindex,Visit);\r\n    }\r\n\r\n    /**\r\n     * <p>深度优先搜索\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param visitIndex 正在遍历的点\r\n     * @param visited    已经遍历的点标识\r\n     * @param output     已走的结点路径\r\n     * @param Visit      结点函数\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    void Graph<KeyType, ElemType>::DFS(Size visitIndex, bool visited[], std::vector<Size> & output, Size (*Visit)(Graph& , Size)) {\r\n        Visit(*this,visitIndex);\r\n        visited[visitIndex] = true;\r\n        output.push_back(visitIndex);\r\n\r\n        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[visitIndex].edge();\r\n        while (edge->next) {\r\n            edge = edge->next;\r\n            if (!visited[edge->data.nodeIndex_]){\r\n                DFS(edge->data.nodeIndex_,visited,output,Visit);\r\n            }\r\n        }\r\n    }\r\n    /**\r\n     * <p> 广度优先遍历\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param isSearchAllNode  是否查询全部结点\r\n     * @param visitIndex        首先开始查询的结点\r\n     * @param Visit             对结点的操作函数\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size>\r\n    Graph<KeyType, ElemType>::breadthFirstSearch(bool isSearchAllNode, Size visitIndex, Size (*Visit)(Graph &, Size)) {\r\n        std::vector<Size> visitNode;\r\n        if (vexnum()<=0)\r\n            return std::vector<Size>();\r\n        bool visited[vexnum()];\r\n        for (Size i = 0; i < vexnum(); ++i) {\r\n            visited[i]= false;\r\n        }\r\n        std::queue<Size> indexQueue;\r\n        //把结点的边入访问队列,之后弹出,再把对应结点的边入队列\r\n        Visit(*this,visitIndex);\r\n        visited[visitIndex] = true;\r\n        visitNode.push_back(visitIndex);\r\n        indexQueue.push(visitIndex);\r\n        while (!indexQueue.empty()){\r\n            Size nextindex = indexQueue.front();\r\n            indexQueue.pop();\r\n            boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();\r\n            while (edge->next) {\r\n                edge = edge->next;\r\n                if (!visited[edge->data.nodeIndex_]){\r\n                    visited[edge->data.nodeIndex_] = true;\r\n                    Visit(*this,edge->data.nodeIndex_);\r\n                    visitNode.push_back(edge->data.nodeIndex_);\r\n                    indexQueue.push(edge->data.nodeIndex_);\r\n                } //if\r\n            } // while (edge->next) {\r\n        }   //while (!indexQueue.empty()){\r\n\r\n        if (isSearchAllNode){\r\n            for (Size i = 0; i < vexnum(); ++i) {\r\n                if (!visited[i]){\r\n                    Visit(*this,i);\r\n                    visited[i] = true;\r\n                    visitNode.push_back(i);\r\n                    indexQueue.push(i);\r\n                    while (!indexQueue.empty()){\r\n                        Size nextindex = indexQueue.front();\r\n                        indexQueue.pop();\r\n                        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[nextindex].edge();\r\n                        while (edge->next) {\r\n                            edge = edge->next;\r\n                            if (!visited[edge->data.nodeIndex_]){\r\n                                visited[edge->data.nodeIndex_] = true;\r\n                                Visit(*this,edge->data.nodeIndex_);\r\n                                visitNode.push_back(edge->data.nodeIndex_);\r\n                                indexQueue.push(edge->data.nodeIndex_);\r\n                            } //if\r\n                        } // while (edge->next) {\r\n                    }//while (!indexQueue.empty()){\r\n                }//  if (!visited[i]){\r\n            }// for (Size i = 0; i < vexnum(); ++i) {\r\n        }//  if (isSearchAllNode){\r\n        return visitNode;\r\n    }\r\n\r\n    /**\r\n     * <p> 广度优先遍历重载函数\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param key             开始遍历的键值\r\n     * @param isSearchAllNode 是否遍历所有的点,默认只遍历一个起始点\r\n     * @param Visit         对点的操作函数\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size> Graph<KeyType, ElemType>::breadthFirstSearch(KeyType key, bool isSearchAllNode,\r\n                                                                Size (*Visit)(Graph &, Size)) {\r\n        Size keyindex = findKeyOnIndex(key);\r\n        if (keyindex == -1)\r\n            return std::vector<Size>();\r\n        return breadthFirstSearch(isSearchAllNode,keyindex,Visit);\r\n    }\r\n    /**\r\n     * <p> 根据深度优先遍历返回有向图和无向图的连通分量\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param visitIndex  要查询的起点\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size> Graph<KeyType, ElemType>::connectedComponent(KeyType visitIndex) {\r\n        return  depthFirstSearch(visitIndex);\r\n    }\r\n    /**\r\n     * <p> 私有成员函数,用深度优先原理迭代出第一个回路\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param visitIndex 正在遍历的点\r\n     * @param visited    已经遍历的点标识\r\n     * @param output     已走的结点路径\r\n     * @param Visit      结点函数\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    bool Graph<KeyType, ElemType>::circuitJudge(Size visitIndex, bool visited[], std::vector<Size> &output,\r\n                                                   Size (*Visit)(Graph &, Size)) {\r\n        Visit(*this,visitIndex);\r\n        visited[visitIndex] = true;\r\n        Size outputsize=output.size();\r\n        output.push_back(visitIndex);\r\n        bool flag= false;\r\n        boost::shared_ptr<LinkList<GraphAdjacencyEdge>> edge=nodes_[visitIndex].edge();\r\n        while (edge->next) {\r\n            edge = edge->next;\r\n            if (!visited[edge->data.nodeIndex_]){\r\n                flag = circuitJudge(edge->data.nodeIndex_,visited,output,Visit);\r\n                if (!flag){\r\n                    //深度优先回退\r\n                    output.pop_back();\r\n                } else{\r\n                    return flag;\r\n                }\r\n            } else{\r\n                if (!isUndirectedgraph_){\r\n                    //有向图,如果访问访问过的点 那就是有回路\r\n                    output.push_back(edge->data.nodeIndex_);\r\n                    return true;\r\n                } else{\r\n                    //无向图 如果访问的点是已访问的祖先结点 那就是回路\r\n                    for (Size i = 0; i < outputsize -1 ; ++i) {\r\n                        if (edge->data.nodeIndex_ == output[i]){\r\n                            output.push_back(edge->data.nodeIndex_);\r\n                            return true;\r\n                        }\r\n                    }\r\n                }//isUndirectedgraph_\r\n            }\r\n        }\r\n        return flag;\r\n    }\r\n    /**\r\n     * <p> 根据深度优先搜索来返回 结点下标回路,空集表示无回路\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param visitIndex 开始的结点下标\r\n     * @param Visit     函数...\r\n     * @return 结点下标回路集\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size>\r\n    Graph<KeyType, ElemType>::simpleCircuitOnIndex(Size visitIndex, Size (*Visit)(Graph &, Size)) {\r\n        std::vector<Size> visitNode;\r\n        if (vexnum()<=0)\r\n            return std::vector<Size>();\r\n        bool visited[vexnum()];\r\n        for (Size i = 0; i < vexnum(); ++i) {\r\n            visited[i]= false;\r\n        };\r\n        bool flag=circuitJudge(visitIndex, visited, visitNode, Visit);\r\n        if (!flag){\r\n            visitNode.clear();\r\n        }\r\n        return visitNode;\r\n    }\r\n\r\n\r\n    /**\r\n     * <p>  根据深度优先搜索来返回 结点下标回路,空集表示无回路\r\n     * @tparam KeyType    结点的key类型\r\n     * @tparam ElemType   和结点所带的数据\r\n     * @param key    要开始的结点key\r\n     * @param Visit   函数\r\n     * @return 结点下标回路集\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<Size> Graph<KeyType, ElemType>::simpleCircuitOnKey(KeyType key, Size (*Visit)(Graph &, Size)) {\r\n        Size keyindex = findKeyOnIndex(key);\r\n        if (keyindex == -1)\r\n            return std::vector<Size>();\r\n        return simpleCircuitOnIndex(keyindex, Visit);\r\n    }\r\n\r\n    template<class KeyType, class ElemType>\r\n    const std::vector<GraphAdjacencyList<KeyType, ElemType>> &Graph<KeyType, ElemType>::getNodes() const {\r\n        return nodes_;\r\n    }\r\n\r\n    template<class KeyType, class ElemType>\r\n    const std::vector<std::vector<Real>> &Graph<KeyType, ElemType>::getAdjacencyMatrix() const {\r\n        return adjacencyMatrix_;\r\n    }\r\n    /**\r\n     * <p> 普利姆算法-最小生成树\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param nodeIndex  开始节点下标\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnIndex(Size nodeIndex) {\r\n\r\n        std::vector<Size> usedIndex; //已经加入最小树的顶点集\r\n        std::vector<LowestCost> closedge; //已加入的顶点集到各其他顶点的最短路径\r\n        Graph retGraph(this->isUndirectedgraph_);\r\n        if (nodeIndex<0 || nodeIndex>=nodes_.size())\r\n            return retGraph;\r\n        for (Size j = 0; j < nodes_.size(); ++j) {\r\n            retGraph.addNode(nodes_[j].key(),nodes_[j].elem());\r\n        }\r\n        usedIndex.push_back(nodeIndex);\r\n        closedge.resize(nodes_.size());\r\n        closedge[nodeIndex] = LowestCost(nodeIndex,0.0);\r\n        //初始化 closedge\r\n        boost::shared_ptr<LinkList<GraphAdjacencyEdge> >edge =  nodes_[nodeIndex].edge();\r\n        while (edge->next){\r\n            edge =edge->next;\r\n            closedge[edge->data.nodeIndex_] =LowestCost(nodeIndex,edge->data.weight_);\r\n        }\r\n//        std::cout<<nodes_[nodeIndex].key()<<\":\";\r\n//        for (Size i = 0; i < closedge.size(); ++i) {\r\n//            std::cout<<i<<\"-\"<<nodes_[closedge[i].nodeIndex_].key()<<\"-\"<<closedge[i].lowcost_<<\"\\t\";\r\n//        }\r\n//        std::cout<<\"\\n\";\r\n        for (Size meaninglessVar = 0; meaninglessVar < nodes_.size(); ++meaninglessVar) {\r\n            //获取closedge 中最小的下标\r\n            Size newNodeIndex = getMinCostnodeIndex(closedge);\r\n            if (newNodeIndex < 0 )\r\n                break;\r\n            retGraph.setEdgeByIndex(closedge[newNodeIndex].nodeIndex_,newNodeIndex,closedge[newNodeIndex].lowcost_);\r\n            usedIndex.push_back(newNodeIndex);\r\n            closedge[newNodeIndex] =LowestCost(closedge[newNodeIndex].nodeIndex_,0.0);\r\n            boost::shared_ptr<LinkList<GraphAdjacencyEdge> >newNodeEdge =  nodes_[newNodeIndex].edge();\r\n            while (newNodeEdge->next){\r\n                newNodeEdge =newNodeEdge->next;\r\n                if (newNodeEdge->data.weight_ < closedge[newNodeEdge->data.nodeIndex_].lowcost_) {\r\n                    closedge[newNodeEdge->data.nodeIndex_] = LowestCost(newNodeIndex, newNodeEdge->data.weight_);\r\n                }\r\n            }\r\n//            std::cout<<nodes_[newNodeIndex].key()<<\":\";\r\n//            for (Size i = 0; i < closedge.size(); ++i) {\r\n//                std::cout<<i<<\"-\"<<nodes_[closedge[i].nodeIndex_].key()<<\"-\"<<closedge[i].lowcost_<<\"\\t\";\r\n//            }\r\n//            std::cout<<\"\\n\";\r\n\r\n        }\r\n\r\n        return retGraph;\r\n    }\r\n    /**\r\n     * <p> 初始化邻接矩阵\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    void Graph<KeyType, ElemType>::initialAdjacencyMatrix(){\r\n        adjacencyMatrix_.clear();\r\n        adjacencyMatrix_.resize(nodes_.size());\r\n        for (auto & i : adjacencyMatrix_) {\r\n            Real maxReal=SD_CONST::SD_MAXDOUBLE;\r\n            i.resize(nodes_.size(),maxReal);\r\n        }\r\n        for (Size j = 0; j < nodes_.size(); ++j) {\r\n            boost::shared_ptr<LinkList<GraphAdjacencyEdge> >edge =  nodes_[j].edge();\r\n            while (edge->next){\r\n                edge =edge->next;\r\n                adjacencyMatrix_[j][edge->data.nodeIndex_] = edge->data.weight_;\r\n            }\r\n        }\r\n    }\r\n    /**\r\n     * <p> 获取路径最小权重的点的下标\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param closedge  路径集\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Size Graph<KeyType, ElemType>::getMinCostnodeIndex(std::vector<LowestCost> &closedge) {\r\n        Size ret = -1;\r\n        Real minValue=SD_CONST::SD_MAXDOUBLE;\r\n        for (Size i = 0; i < closedge.size(); ++i) {\r\n            if (closedge[i].lowcost_<minValue && closedge[i].lowcost_>0.0){\r\n                minValue =closedge[i].lowcost_;\r\n                ret = i;\r\n            }\r\n        }\r\n        return  ret;\r\n    }\r\n    /**\r\n     * <p>普利姆算法 - 最小生成树\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param nodekey 开始节点Key\r\n     * @return\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Graph<KeyType, ElemType> Graph<KeyType, ElemType>::miniSpanTreePrimOnKey(KeyType nodekey) {\r\n        return miniSpanTreePrimOnIndex(findKeyOnIndex(nodekey));\r\n    }\r\n    /**\r\n     * <p> 迪杰斯特拉-最短路径\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param srcIndex               源节点下标\r\n     * @param isInitAdjacencyMatrix  是否初始化邻接矩阵\r\n     * @return 返回源节点到其他节点的最短路径和损耗\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<LowestPath>\r\n    Graph<KeyType, ElemType>::shortPathOnIndex(Size srcIndex, bool isInitAdjacencyMatrix) {\r\n        if (isInitAdjacencyMatrix){\r\n            initialAdjacencyMatrix();\r\n        }\r\n        if (srcIndex<0 || srcIndex>=nodes_.size())\r\n            return std::vector<LowestPath>();\r\n        //邻接矩阵从第 srcIndex行开始选择最小值\r\n        std::vector<LowestPath> retLowestPaths ;\r\n        std::vector<LowestPath> lowestPaths ;\r\n        retLowestPaths.resize(this->vexnum());\r\n        lowestPaths.resize(this->vexnum());\r\n        for (Size first = 0; first < lowestPaths.size(); ++first) {\r\n            lowestPaths.at(first).pathIndex_.push_back(srcIndex);\r\n            lowestPaths.at(first).lowcost_=adjacencyMatrix_[srcIndex][first];\r\n        }\r\n        //0      1      2       3       4       5           currentPathIndex    currentPath   lowestcost\r\n        //∞(0,)  ∞(0,)  10(0,)  ∞(0,)   30(0,)  100(0,)     2                   0,2           10\r\n        //∞(0,)  ∞(0,)          60(0,2) 30(0,)  100(0,)     4                   0,4           30\r\n        //∞(0,)  ∞(0,)          50(0,4)         90(0,4,)    3                   0,4,3         50\r\n        //∞(0,)  ∞(0,)                          60(0,4,3,)  5                   0,4,3,5       60\r\n        //∞(0,)  ∞(0,)                                      0                   0,0           ∞\r\n        //       ∞(0,)                                      1                   0,1           ∞\r\n        std::vector<Size> currentPath;\r\n        Real lowestCost;\r\n        for (Size i = 0; i < lowestPaths.size(); ++i) {\r\n            //获取最小lostCost的下标 并且返回结果\r\n            Size currentPathIndex = LowestPath::getMincost(lowestPaths);\r\n            currentPath= lowestPaths[currentPathIndex].pathIndex_;\r\n            currentPath.push_back(currentPathIndex);\r\n            lowestCost=lowestPaths[currentPathIndex].lowcost_;\r\n            retLowestPaths[currentPathIndex].lowcost_=lowestCost;\r\n            retLowestPaths[currentPathIndex].pathIndex_=currentPath;\r\n            lowestPaths[currentPathIndex].hasVisit_= true;\r\n            //----------------------\r\n            for (Size j = 0; j < lowestPaths.size(); ++j) {\r\n                //如果当前路径是更短的路径，从新设置路径和该路径的最小值\r\n                if (lowestCost+ adjacencyMatrix_[currentPathIndex][j] <lowestPaths[j].lowcost_) {\r\n                    lowestPaths[j].lowcost_= lowestCost+ adjacencyMatrix_[currentPathIndex][j] ;\r\n                    lowestPaths[j].pathIndex_=currentPath;\r\n                }\r\n            }\r\n\r\n        }\r\n\r\n        return retLowestPaths;\r\n    }\r\n    /**\r\n     * <p> 迪杰斯特拉-最短路径\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param srcKey                源节点Key\r\n     * @param isInitAdjacencyMatrix 是否初始化邻接矩阵\r\n     * @return 返回源节点到其他节点的最短路径和损耗\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    std::vector<LowestPath> Graph<KeyType, ElemType>::shortPathOnKey(KeyType srcKey, bool isInitAdjacencyMatrix) {\r\n        return shortPathOnIndex(findKeyOnIndex(srcKey),isInitAdjacencyMatrix);\r\n    }\r\n    /**\r\n     * <p>最长路径(不走重复路)\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param srcIndex  源节点下标\r\n     * @param target    目标节点下标\r\n     * @param hasVisitIndex 已经访问过的点集，路径\r\n     * @param isInitAdjacencyMatrix     是否初始化邻接矩阵\r\n     * @return  返回最长路径的消耗\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    Real Graph<KeyType, ElemType>::longPathOnIndex(Size srcIndex,Size target,std::vector<Size>& hasVisitIndex, bool isInitAdjacencyMatrix) {\r\n        if (isInitAdjacencyMatrix){\r\n            initialAdjacencyMatrix();\r\n        }\r\n\r\n        if (srcIndex == target){\r\n            return 0;\r\n        }\r\n\r\n        hasVisitIndex.insert(hasVisitIndex.begin(), target);\r\n        std::vector<Size> hasVisitIndex_temp=hasVisitIndex;  //保留递归入栈时的状态\r\n\r\n        std::vector<Size> preNode;//入栈时,未访问的前驱节点集合\r\n        for (Size i = 0; i <  adjacencyMatrix_.size();++i) {\r\n            if (adjacencyMatrix_[i][target] != SD_CONST::SD_MAXDOUBLE){\r\n                //判断是否已经访问,把入栈时未访问的前驱节点加进去\r\n                bool isVisit=isContain(hasVisitIndex,i);\r\n                if (!isVisit) {\r\n                    preNode.push_back(i);\r\n                }\r\n            }\r\n        }\r\n        Real maxvalue=SD_CONST::SD_MINDOUBLE;\r\n        if (adjacencyMatrix_[srcIndex][target] !=SD_CONST::SD_MAXDOUBLE){\r\n            //如果再邻接矩阵有直接值，先初始化\r\n            maxvalue = adjacencyMatrix_[srcIndex][target];\r\n        }\r\n        for (Size & pnode : preNode) {\r\n            //取 源节点到前驱节点,前驱节点到目标节点的最大值,并最大值且返回递归的路经\r\n           if (adjacencyMatrix_[pnode][target] != SD_CONST::SD_MAXDOUBLE ){\r\n               //使用复制后继节点入栈时的已访问状态\r\n               //count  hasVisitIndex&     target      hasVisitIndex_temp      hasVisitIndextemp\r\n               //1       null               9           9                       9\r\n               //2       9                  7           7,9                     7,9\r\n               //3       7,9                5           5,7,9                   5,7,9\r\n               //4       5,7,9              2           2,5,7,9                 2,5,7,9\r\n               //5       2,5,7,9            1           1,2,5,7,9               2,5,7,9          cost::18\r\n               //3->6                       3                                   3,5,7,9\r\n               //7       3,5,7,9            1           1,3,5,7,9\r\n               std::vector<Size> hasVisitIndextemp=hasVisitIndex_temp;\r\n               Real value = longPathOnIndex(srcIndex, pnode, hasVisitIndextemp, false)\r\n                              + adjacencyMatrix_[pnode][target];\r\n               if (maxvalue<value){\r\n                   maxvalue=value;\r\n                   hasVisitIndex=hasVisitIndextemp;\r\n               }\r\n           }\r\n\r\n        }\r\n        return maxvalue;\r\n    }\r\n    /**\r\n     * <p>最长路径(不走重复路)\r\n     * @tparam KeyType\r\n     * @tparam ElemType\r\n     * @param srcIndex 源节点下标\r\n     * @param target    目标节点下标\r\n     * @param isInitAdjacencyMatrix  是否初始化邻接矩阵\r\n     * @return 已经访问过的点集和最长路径的消耗\r\n     */\r\n    template<class KeyType, class ElemType>\r\n    LongestPath Graph<KeyType, ElemType>::longPathOnIndex(Size srcIndex, Size target, bool isInitAdjacencyMatrix) {\r\n\r\n        std::vector<Size> retPath;\r\n        Real maxPath=longPathOnIndex(srcIndex,target,retPath, isInitAdjacencyMatrix);\r\n        retPath.insert(retPath.begin(),srcIndex);\r\n        return LowestPath(retPath,maxPath);\r\n    }\r\n\r\n    /**\r\n     * <p> 获取未访问过的最小消耗路径\r\n     * @param vec 路径集\r\n     * @return  最小消耗路径下标\r\n     */\r\n    inline Size LowestPath::getMincost(std::vector<LowestPath> vec) {\r\n        Size minIndex=-1;\r\n        for (Size i = 0; i <vec.size() ; ++i) {\r\n            if (!(vec[i].hasVisit_)){\r\n                minIndex = i;\r\n                break;\r\n            }\r\n        }\r\n        for (Size i = 0; i <vec.size() ; ++i) {\r\n            if (vec[i] < vec[minIndex] && !(vec[i].hasVisit_)){\r\n                minIndex = i;\r\n            }\r\n        }\r\n        return minIndex;\r\n    }\r\n\r\n    inline LowestPath::LowestPath(std::vector<Size> pathIndex, Real lowcost, bool hasVisit ) : pathIndex_(std::move(pathIndex)),\r\n                                                                                               lowcost_(lowcost),\r\n                                                                                               hasVisit_(hasVisit) {}\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdstructure/graph/graph.cpp	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdstructure/graph/graph.cpp	(date 1659157699589)
+@@ -3,7 +3,6 @@
+ //
+ #include "graph.h"
+ 
+-#include <utility>
+ namespace SmartDongLib {
+     /**
+      * <p>通过Key找到对应的结点在邻接表的下标
+Index: sdalgorithm/math/independentalgorithm.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//\r\n// Created by Administrator on 2020/10/31.\r\n//\r\n\r\n#ifndef SMARTDONGLIB_INDEPENDENTALGORITHM_H\r\n#define SMARTDONGLIB_INDEPENDENTALGORITHM_H\r\n#include \"const.h\"\r\n#include <math.h>\r\n#include <vector>\r\n#include <iostream>\r\n#include <stdexcept>\r\n\r\nusing std::vector;\r\nnamespace SmartDongLib{\r\n    namespace SDmath{\r\n        class DataTypeIllegalException: public std::runtime_error{\r\n        public:\r\n            DataTypeIllegalException():runtime_error(\"DataTypeIllegalException Exception\"){}\r\n            DataTypeIllegalException(const std::string& __arg):std::runtime_error(\"DataTypeIllegalException Exception:\"+__arg){}\r\n\r\n        };\r\n        /**\r\n         * <p> 最大公因数\r\n         * @tparam Type 整数类型\r\n         * @param x\r\n         * @param y\r\n         * @return\r\n         */\r\n        template<typename Type>\r\n        Type greatestCommonDivisor(Type xx, Type yy){\r\n            if (!   (typeid (Type) == typeid(short)  ||\r\n                    typeid(Type) == typeid(int) ||\r\n                    typeid(Type) == typeid(long) ||\r\n                    typeid(Type) == typeid(long long) )\r\n               ) {\r\n                throw DataTypeIllegalException(\"The Type can't be decimal\");\r\n            }\r\n            long long x =xx;\r\n            long long y= yy;\r\n\r\n            if (y == 0)\r\n                return x;\r\n            else\r\n                return  greatestCommonDivisor(y,x % y);\r\n\r\n        }\r\n        /**\r\n         * <p>最小公倍数\r\n         * @tparam Type 整数类型\r\n         * @param x\r\n         * @param y\r\n         * @return\r\n         */\r\n        template<typename Type>\r\n        Type leastCommonMultiple( Type x , Type y ){\r\n            return x*y/greatestCommonDivisor(x,y);\r\n\r\n        }\r\n        /**\r\n         * <p> 获取所有子集\r\n         * @tparam ElemType  返回值类型\r\n         * @tparam _InputIterator 线性表的迭代器类型\r\n         * @param _first1      线性表的起始地址\r\n         * @param _last1    线性表的结束地址\r\n         * @param _null     用变量来指定返回值类型避免编译不过\r\n         * @return  所有子集\r\n         */\r\n        template<class ElemType,typename _InputIterator>\r\n        vector<vector<ElemType>> makeSubset(_InputIterator _first1, _InputIterator _last1, ElemType _null ){\r\n            int n = _last1 - _first1;\r\n            vector<vector<ElemType>> ret;\r\n            // 2的n次方   1<<n\r\n            for(int s=0;s<(1<<n);s++) {\r\n                vector<ElemType> subRet;\r\n                for (int i = 0; i < n; i++) {\r\n                    if (s & (1 << i)) //1左移i位，监测s的哪一位为1，为1的话输出\r\n                    {\r\n                        subRet.push_back(*(_first1 + i));\r\n//                        std::cout<<i;\r\n                    }\r\n                }\r\n                ret.push_back(subRet);\r\n//                std::cout << std::endl;\r\n            }\r\n            return  ret;\r\n        }\r\n\r\n\r\n\r\n    }\r\n}\r\n#endif //SMARTDONGLIB_INDEPENDENTALGORITHM_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- sdalgorithm/math/independentalgorithm.h	(revision 997dd0a7cc78cf5beae872ca54e7c033e2494455)
++++ sdalgorithm/math/independentalgorithm.h	(date 1659158717749)
+@@ -5,11 +5,11 @@
+ #ifndef SMARTDONGLIB_INDEPENDENTALGORITHM_H
+ #define SMARTDONGLIB_INDEPENDENTALGORITHM_H
+ #include "const.h"
+-#include <math.h>
++#include <cmath>
+ #include <vector>
+ #include <iostream>
+ #include <stdexcept>
+-
++#include <numeric>
+ using std::vector;
+ namespace SmartDongLib{
+     namespace SDmath{

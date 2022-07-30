@@ -9,6 +9,7 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <iostream>
 #include "const.h"
+#include <vector>
 namespace SmartDongLib {
     class TreeRunTimeException: public std::runtime_error{
     public:
@@ -87,7 +88,7 @@ namespace SmartDongLib {
         Size findIndexOnParent();
         void getAllTreeNode(std::vector<boost::shared_ptr<TreeNode<KeyType, ElemType>>> & retVec);
 
-    protected:
+//    protected:
         boost::shared_ptr<TreeNode<KeyType, ElemType> >& setChild(Size i , boost::shared_ptr<TreeNode > & c);
         boost::shared_ptr<TreeNode<KeyType, ElemType>> setChild(Size i , TreeNode  c);
         virtual boost::shared_ptr<TreeNode>& getChild(Size i);

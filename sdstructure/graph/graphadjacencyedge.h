@@ -15,6 +15,9 @@ namespace SmartDongLib {
         bool operator ==(GraphAdjacencyEdge & ge){
             return nodeIndex_ == ge.nodeIndex_ ;
         }
+        bool operator <(GraphAdjacencyEdge & ge){
+            return nodeIndex_ < ge.nodeIndex_ ;
+        }
         bool operator ==(Size index){
             return nodeIndex_ == index;
         }

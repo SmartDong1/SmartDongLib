@@ -9,6 +9,7 @@
 #include <boost/shared_ptr.hpp>
 #include "linkList.cpp"
 #include <math.h>
+#include <vector>
 namespace SmartDongLib {
     template<class ElemType>
     class SkipList {

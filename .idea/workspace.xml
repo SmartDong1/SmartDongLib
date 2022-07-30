@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="SmartDongLib" targetName="SmartDongLib" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="23f4f15e-0827-4946-9fc1-6001b2bce4e6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ql/indexes/indexmanager.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ql/indexes/indexmanager.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ql/methods/finitedifferences/tridiagonaloperator.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ql/methods/finitedifferences/tridiagonaloperator.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdalgorithm/math/independentalgorithm.h" beforeDir="false" afterPath="$PROJECT_DIR$/sdalgorithm/math/independentalgorithm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdstructure/graph/graph.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sdstructure/graph/graph.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdstructure/graph/graphadjacencyedge.h" beforeDir="false" afterPath="$PROJECT_DIR$/sdstructure/graph/graphadjacencyedge.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdstructure/linearlist/SkipList.h" beforeDir="false" afterPath="$PROJECT_DIR$/sdstructure/linearlist/SkipList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdstructure/tree/commontree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sdstructure/tree/commontree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdstructure/tree/tree.h" beforeDir="false" afterPath="$PROJECT_DIR$/sdstructure/tree/tree.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2CcgQBmfuBFJ9BlFHTmtgjrH2Qw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/ql/methods/finitedifferences" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\CProject\SmartDongLib\ql\methods\finitedifferences" />
+      <recent name="D:\CProject\SmartDongLib\ql\indexes" />
+      <recent name="D:\CProject\SmartDongLib" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="SmartDongLib" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SmartDongLib" TARGET_NAME="SmartDongLib" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SmartDongLib" RUN_TARGET_NAME="SmartDongLib">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="23f4f15e-0827-4946-9fc1-6001b2bce4e6" name="Default Changelist" comment="" />
+      <created>1659107268581</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659107268581</updated>
+      <workItem from="1659107271724" duration="2560000" />
+      <workItem from="1659109965868" duration="74000" />
+      <workItem from="1659144847122" duration="692000" />
+      <workItem from="1659151820095" duration="4400000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="736" y="123" key="#com.intellij.ide.ui.customization.CustomizableActionsPanel.FindAvailableActionsDialog" timestamp="1659109085293">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="736" y="123" key="#com.intellij.ide.ui.customization.CustomizableActionsPanel.FindAvailableActionsDialog/0.0.1366.768@0.0.1366.768" timestamp="1659109085293" />
+    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1659152914151">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="413" y="130" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.768@0.0.1366.768" timestamp="1659152914151" />
+    <state x="463" y="138" key="FileChooserDialogImpl" timestamp="1659152091608">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="463" y="138" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1659152091608" />
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom" timestamp="1659159096200">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.bottom/0.0.1366.768@0.0.1366.768" timestamp="1659159096200" />
+    <state width="1323" height="192" key="GridCell.Tab.0.center" timestamp="1659159096200">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.center/0.0.1366.768@0.0.1366.768" timestamp="1659159096200" />
+    <state width="1323" height="192" key="GridCell.Tab.0.left" timestamp="1659159096199">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.left/0.0.1366.768@0.0.1366.768" timestamp="1659159096199" />
+    <state width="1323" height="192" key="GridCell.Tab.0.right" timestamp="1659159096200">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state width="1323" height="192" key="GridCell.Tab.0.right/0.0.1366.768@0.0.1366.768" timestamp="1659159096200" />
+    <state x="184" y="28" key="SettingsEditor" timestamp="1659152094955">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="184" y="28" key="SettingsEditor/0.0.1366.768@0.0.1366.768" timestamp="1659152094955" />
+    <state x="384" y="116" width="598" height="536" key="find.popup" timestamp="1659157661687">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="384" y="116" width="598" height="536" key="find.popup/0.0.1366.768@0.0.1366.768" timestamp="1659157661687" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1659157924110">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.0.1366.768@0.0.1366.768" timestamp="1659157924110" />
+  </component>
+</project>
