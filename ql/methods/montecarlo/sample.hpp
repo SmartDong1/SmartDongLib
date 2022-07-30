@@ -1,7 +1,7 @@
 /* -*- mode: c++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 /*
- Copyright (C) 2014 StatPro Italia srl
+ Copyright (C) 2000, 2001, 2002, 2003 RiskMap srl
 
  This file is part of QuantLib, a free-software/open-source library
  for financial quantitative analysts and developers - http://quantlib.org/
@@ -17,34 +17,30 @@
  FOR A PARTICULAR PURPOSE.  See the license for more details.
 */
 
-/*! \file actual364.hpp
-    \brief Actual/364 day counter
+/*! \file sample.hpp
+    \brief weighted sample
 */
 
-#ifndef quantlib_actual364_day_counter_hpp
-#define quantlib_actual364_day_counter_hpp
+#ifndef quantlib_sample_h
+#define quantlib_sample_h
 
-#include <ql/time/daycounter.hpp>
+#include <ql/types.hpp>
+#include <utility>
 
 namespace QuantLib {
 
-    //! Actual/364 day count convention
-    /*! \ingroup daycounters */
-    class Actual364 : public DayCounter {
-      private:
-        class Impl : public DayCounter::Impl {
-          public:
-            std::string name() const override { return std::string("Actual/364"); }
-            Time
-            yearFraction(const Date& d1, const Date& d2, const Date&, const Date&) const override {
-                return dayCount(d1,d2)/364.0;
-            }
-        };
+    //! weighted sample
+    /*! \ingroup mcarlo */
+    template <class T>
+    struct Sample {
       public:
-        Actual364()
-        : DayCounter(ext::shared_ptr<DayCounter::Impl>(new Actual364::Impl)) {}
+        typedef T value_type;
+        Sample(T value, Real weight) : value(std::move(value)), weight(weight) {}
+        T value;
+        Real weight;
     };
 
 }
+
 
 #endif

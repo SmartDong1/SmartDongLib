@@ -8,37 +8,21 @@
 #endif
 
 #include <ql/auto_ptr.hpp>
-#include <ql/compounding.hpp>
 #include <ql/default.hpp>
-#include <ql/discretizedasset.hpp>
 #include <ql/errors.hpp>
-#include <ql/exercise.hpp>
 #include <ql/event.hpp>
 #include <ql/functional.hpp>
 #include <ql/grid.hpp>
 #include <ql/handle.hpp>
-#include <ql/index.hpp>
-#include <ql/instrument.hpp>
 #include <ql/numericalmethod.hpp>
-#include <ql/option.hpp>
-#include <ql/payoff.hpp>
-#include <ql/position.hpp>
-#include <ql/prices.hpp>
-#include <ql/pricingengine.hpp>
-#include <ql/quote.hpp>
-#include <ql/rebatedexercise.hpp>
 #include <ql/settings.hpp>
 #include <ql/shared_ptr.hpp>
 #include <ql/stochasticprocess.hpp>
-#include <ql/termstructure.hpp>
 #include <ql/timegrid.hpp>
 #include <ql/timeseries.hpp>
 #include <ql/tuple.hpp>
 #include <ql/types.hpp>
-#include <ql/volatilitymodel.hpp>
 
-#include <ql/cashflows/all.hpp>
-#include <ql/currencies/all.hpp>
 #include <ql/experimental/all.hpp>
 #include <ql/indexes/all.hpp>
 #include <ql/instruments/all.hpp>

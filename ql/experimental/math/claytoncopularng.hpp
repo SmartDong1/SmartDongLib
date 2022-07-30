@@ -28,6 +28,7 @@
 #include <ql/methods/montecarlo/sample.hpp>
 #include <ql/errors.hpp>
 #include <vector>
+#include <ql/types.hpp>
 
 namespace QuantLib {
 

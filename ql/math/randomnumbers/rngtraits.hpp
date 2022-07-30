@@ -26,7 +26,7 @@
 #ifndef quantlib_rng_traits_hpp
 #define quantlib_rng_traits_hpp
 
-#include <ql/methods/montecarlo/pathgenerator.hpp>
+//#include <ql/methods/montecarlo/pathgenerator.hpp>
 #include <ql/math/randomnumbers/mt19937uniformrng.hpp>
 #include <ql/math/randomnumbers/inversecumulativerng.hpp>
 #include <ql/math/randomnumbers/randomsequencegenerator.hpp>

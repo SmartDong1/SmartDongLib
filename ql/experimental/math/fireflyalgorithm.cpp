@@ -21,7 +21,6 @@ FOR A PARTICULAR PURPOSE.  See the license for more details.
 #include <ql/math/randomnumbers/sobolrsg.hpp>
 #include <algorithm>
 #include <cmath>
-#include <utility>
 
 namespace QuantLib {
     FireflyAlgorithm::FireflyAlgorithm(Size M,

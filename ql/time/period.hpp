@@ -27,7 +27,6 @@
 #ifndef quantlib_period_hpp
 #define quantlib_period_hpp
 
-#include <ql/time/frequency.hpp>
 #include <ql/time/timeunit.hpp>
 #include <ql/types.hpp>
 
@@ -46,10 +45,8 @@ namespace QuantLib {
         Period() = default;
         Period(Integer n, TimeUnit units)
         : length_(n), units_(units) {}
-        explicit Period(Frequency f);
         Integer length() const { return length_; }
         TimeUnit units() const { return units_; }
-        Frequency frequency() const;
         Period& operator+=(const Period&);
         Period& operator-=(const Period&);
         Period& operator/=(Integer);

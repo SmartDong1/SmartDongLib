@@ -26,7 +26,6 @@
 #include <ql/math/ode/adaptiverungekutta.hpp>
 #include <algorithm>
 #include <numeric>
-#include <utility>
 
 namespace QuantLib {
 
