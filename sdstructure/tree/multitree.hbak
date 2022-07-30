@@ -1,0 +1,63 @@
+//
+// Created by Administrator on 2021/1/15.
+// 多阶节点树,一个节点有多个键值和多个孩子
+
+#ifndef SMARTDONGLIB_MULTITREE_HBAK
+#define SMARTDONGLIB_MULTITREE_HBAK
+#include <boost/shared_ptr.hpp>
+#include <cstdarg>
+#include <boost/enable_shared_from_this.hpp>
+#include <sdstructure/linearlist/SString.h>
+#include "const.h"
+namespace  SmartDongLib {
+    template<class KeyType,class ElemType >
+    class MultiTreeNode;
+    template<class KeyType,class ElemType >
+    class MultiWayTree;
+
+    template<class KeyType,class ElemType >
+    class MultiTreeNode{
+    public:
+        MultiTreeNode(){}
+        MultiTreeNode(KeyType key, ElemType elem) : key_(key), elem_(elem) {}
+        KeyType key_;
+        ElemType elem_;
+        bool operator <(MultiTreeNode s2){ return key_ < s2.key_;}
+        bool operator ==(MultiTreeNode s2){ return key_ == s2.key_;}
+        bool operator <=(MultiTreeNode s2){ return *this < s2 || *this == s2;};
+        bool operator <(KeyType s2){ return  key_ < s2;}
+        bool operator >(KeyType s2){ return   !(*this<s2) && !(*this == s2); }
+        bool operator ==(KeyType s2){ return  key_ == s2;}
+        bool operator <=(KeyType s2){ return  key_ < s2 || key_== s2;}
+    };
+    template<class KeyType,class ElemType >
+    class MultiWayTree {
+    public:
+        MultiWayTree (Size m_waytree):dim_(m_waytree),isleaf(true),cvalidData_(0){multinodes_.resize(dim_);pchilds_.resize(dim_+1);}
+        virtual void insertNode(KeyType , ElemType)=0;
+        virtual void deleteNode(KeyType) =0;
+        virtual ElemType findElemByKey(KeyType key) = 0;
+        virtual boost::shared_ptr<MultiWayTree<KeyType,ElemType>> findTreeNode(KeyType) = 0;
+        virtual MultiTreeNode<KeyType,ElemType>& findSingleWayNode(KeyType key, boost::shared_ptr<MultiWayTree<KeyType,ElemType>>&)=0;
+        virtual boost::shared_ptr<MultiWayTree<KeyType,ElemType>> getThis(){
+            boost::shared_ptr<MultiWayTree<KeyType,ElemType>> ret = boost::static_pointer_cast<MultiWayTree<KeyType,ElemType>>(this->shared_from_this());
+            return ret;
+        }
+
+    public:
+        virtual void multinodesInsert(KeyType , ElemType,boost::shared_ptr<MultiWayTree<KeyType,ElemType>> ,boost::shared_ptr<MultiWayTree<KeyType,ElemType>> right)=0;
+
+    public:
+        std::vector<MultiTreeNode<KeyType,ElemType>> multinodes_;
+        std::vector<boost::shared_ptr<MultiWayTree<KeyType,ElemType>>> pchilds_;
+        boost::shared_ptr<MultiWayTree<KeyType,ElemType>> parent_;
+        const Size dim_; // m个节点，m+1叉树
+        Integer cvalidData_;  //有效的数据MultiTreeNode数量，初始化为0
+        bool  isleaf;
+    };
+
+
+}
+
+
+#endif //SMARTDONGLIB_MULTITREE_HBAK

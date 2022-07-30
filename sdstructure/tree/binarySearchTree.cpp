@@ -79,8 +79,10 @@ namespace SmartDongLib {
     BinarySearchTree<KeyType, ElemType>::getNodeByKey(KeyType key, bool mustleaf) {
         boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> root =this->getThis() ;
         Size childpos=-1;
+        bool isleaf =root ->isLeaf();
         while (root !=NULL){
-            if (root->key()== key){
+            //add 2021-1-91 20:20 要求是否是叶子节点
+            if (root->key()== key &&(!mustleaf || isleaf)){
                 boost::shared_ptr<BinarySearchTree<KeyType, ElemType>> ret = boost::static_pointer_cast<BinarySearchTree<KeyType, ElemType>>(root);
                 return ret;
             }

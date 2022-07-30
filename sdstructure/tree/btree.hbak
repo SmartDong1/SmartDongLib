@@ -1,0 +1,26 @@
+//
+// Created by Administrator on 2021/2/19.
+// B 树 不能有重复的关键字
+//
+#ifndef SMARTDONGLIB_BTREE_HBAK
+#define SMARTDONGLIB_BTREE_HBAK
+#include "multisearchtree.hbak"
+namespace  SmartDongLib {
+
+     
+    template<class KeyType,class ElemType >
+    class BTree : public MultiSearchTree<KeyType,ElemType> {
+    public:
+        explicit BTree(Size m_waytree):MultiWayTree<KeyType,ElemType>(m_waytree){ minDegree_ = (this->dim_+1)/2;}
+        void insertNode(KeyType type, ElemType elem) override;
+        void deleteNode(KeyType type) override ;
+
+    public:
+        const Integer minDegree_;     //最小度数
+    protected:
+        boost::shared_ptr<BTree> splitChild( boost::shared_ptr<BTree> x, int i);
+    };
+
+
+}
+#endif //SMARTDONGLIB_BTREE_HBAK

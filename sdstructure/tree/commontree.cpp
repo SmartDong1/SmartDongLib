@@ -101,8 +101,7 @@ namespace SmartDongLib {
             secElem=vecElem.at(secindex);
             boost::shared_ptr <HuffmanTree<KeyType, ElemType>> newNode(
                     new HuffmanTree<KeyType, ElemType>(secElem->key() + minElem->key(), -1));
-            newNode->leftChild(minElem);
-            newNode->rightChild(secElem);
+
             if (minindex<secindex){
                 vecElem.erase(secindex+vecElem.begin());
                 vecElem.erase(minindex+vecElem.begin());

@@ -7,7 +7,7 @@
 #ifndef SMARTDONGLIB_BINARYTREE_H
 #define SMARTDONGLIB_BINARYTREE_H
 #include "tree.cpp"
-#include <iostream>
+#include <ostream>
 #include <math.h>
 #include <queue>
 using namespace std;

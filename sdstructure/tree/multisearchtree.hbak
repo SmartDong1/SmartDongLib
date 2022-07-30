@@ -1,0 +1,27 @@
+//
+// Created by Administrator on 2021/1/21.
+// m叉搜索树
+//
+
+#ifndef SMARTDONGLIB_MULTISEARCHTREE_HBAK
+#define SMARTDONGLIB_MULTISEARCHTREE_HBAK
+#include "multitree.hbak"
+namespace  SmartDongLib {
+    template<class KeyType,class ElemType >
+    class MultiSearchTree : public MultiWayTree<KeyType,ElemType> {
+    public:
+        explicit MultiSearchTree(Size m_waytree):MultiWayTree<KeyType,ElemType>(m_waytree){  }
+        void insertNode(KeyType type, ElemType elemType) override;
+        void deleteNode(KeyType type) override ;
+        ElemType findElemByKey(KeyType key) override;
+        boost::shared_ptr<MultiWayTree<KeyType, ElemType>> findTreeNode(KeyType type) override;
+        MultiTreeNode<KeyType, ElemType> &findSingleWayNode(KeyType key,boost::shared_ptr<MultiWayTree<KeyType,ElemType>>&) override;
+
+    protected:
+        virtual void multinodesInsert(KeyType type, ElemType elemType,boost::shared_ptr<MultiWayTree<KeyType,ElemType>> pleft=NULL,boost::shared_ptr<MultiWayTree<KeyType,ElemType>> pright=NULL);
+    };
+
+
+}
+
+#endif //SMARTDONGLIB_MULTISEARCHTREE_HBAK

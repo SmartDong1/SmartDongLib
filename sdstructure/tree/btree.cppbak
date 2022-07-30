@@ -1,0 +1,56 @@
+//
+// Created by Administrator on 2021/2/19.
+//
+
+#include "btree.hbak"
+namespace  SmartDongLib {
+    //插入到最后一个元素的内部节点中
+    template<class KeyType, class ElemType>
+    void BTree<KeyType, ElemType>::insertNode(KeyType key, ElemType elem) {
+        boost::shared_ptr<MultiWayTree<KeyType,ElemType>> leafnode =NULL;
+        //找到了叶子节点
+        if (this->isleaf){
+            leafnode  = this->getThis();
+        }else{
+            leafnode = this->findTreeNode(key);
+        }
+
+        if (leafnode->cvalidData_ == leafnode->dim_){
+            //TODO:如果当前叶子节点所存的键值以达到最大值则进行分裂
+            boost::shared_ptr<BTree<KeyType, ElemType>> bleafnode =
+                    boost::static_pointer_cast<BTree<KeyType, ElemType>>(leafnode);
+        }else{
+            //否则直接加入键值
+            leafnode->multinodesInsert(key,elem);
+        }
+    }
+
+    template<class KeyType, class ElemType>
+    boost::shared_ptr<BTree<KeyType, ElemType>> BTree<KeyType, ElemType>::splitChild(boost::shared_ptr<BTree> x, int i) {
+        return boost::shared_ptr<BTree>();
+    }
+
+//    template<class KeyType, class ElemType>
+//    BTree<KeyType, ElemType> BTree<KeyType, ElemType>::Split_Child(BTree x, int i, BTree y) {
+//        int j;
+//        BTree z;
+//        z = (BTree *)malloc(sizeof(struct BTreeNode));
+//        z->leaf = y->leaf;
+//        z->num = M-1;
+//        for( j = 0; j < M-1; j++)
+//            z->key[j] = y->key[j+M];
+//        if( !(y->leaf) )
+//            for( j = 0; j < M; j++)
+//                z->p[j] = y->p[j+M];
+//        y->num = M-1;
+//        for( j = x->num; j > i; j--)
+//            x->p[j+1] = x->p[j];
+//        x->p[i+1] = z;
+//        for( j = x->num-1; j > i-1; j--)
+//            x->key[j+1] = x->key[j];
+//        x->key[i] = y->key[M-1];
+//        x->num += 1;
+//
+//        return x;
+//    }
+}

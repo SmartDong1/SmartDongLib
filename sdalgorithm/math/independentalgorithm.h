@@ -5,11 +5,11 @@
 #ifndef SMARTDONGLIB_INDEPENDENTALGORITHM_H
 #define SMARTDONGLIB_INDEPENDENTALGORITHM_H
 #include "const.h"
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <iostream>
 #include <stdexcept>
-
+#include <numeric>
 using std::vector;
 namespace SmartDongLib{
     namespace SDmath{
