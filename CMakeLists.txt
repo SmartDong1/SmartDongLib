@@ -33,7 +33,9 @@ include_directories(sdstructure/graph)
 include_directories(sdstructure/linearlist)
 include_directories(sdstructure/tree)
 
-add_library(SmartDongLib SHARED
+#add_library(SmartDongLib SHARED
+add_executable(SmartDongLib
+        entry/LevenbergMarquardtEntry.cpp
         ql/experimental/math/all.hpp
         ql/experimental/math/claytoncopularng.hpp
         ql/experimental/math/convolvedstudentt.cpp
