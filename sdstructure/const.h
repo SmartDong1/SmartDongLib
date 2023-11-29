@@ -7,6 +7,7 @@
 
 #include <climits>
 #include <cfloat>
+#include <stdexcept>
 
 namespace SmartDongLib{
     typedef int STATUS ;
